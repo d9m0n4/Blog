@@ -1,0 +1,48 @@
+.root {
+  background-color: #fff;
+  padding: 16px 0;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 30px;
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  color: #1c5998;
+  font-weight: 700;
+  line-height: 35px;
+  text-transform: uppercase;
+  letter-spacing: 0.15px;
+  border-radius: 5px;
+  padding: 0 10px;
+  text-decoration: none;
+}
+
+.search {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 0 4px;
+  margin-left: 8px;
+  button {
+    padding: 0;
+  }
+}
+
+.buttons {
+  margin-left: auto;
+  button {
+    margin-left: 10px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
