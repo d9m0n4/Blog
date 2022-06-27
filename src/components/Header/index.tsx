@@ -35,19 +35,25 @@ export const Header = () => {
             {isAuth ? (
               <>
                 <Link to="/posts/create">
-                  <Button variant="contained">Написать статью</Button>
+                  <Button variant="contained" sx={{ borderRadius: 16 }}>
+                    Написать статью
+                  </Button>
                 </Link>
-                <Button onClick={onClickLogout} variant="outlined">
+                <Button onClick={onClickLogout} variant="outlined" sx={{ borderRadius: 16 }}>
                   Выйти
                 </Button>
               </>
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outlined">Войти</Button>
+                  <Button size="medium" variant="text" sx={{ borderRadius: 16 }}>
+                    Войти
+                  </Button>
                 </Link>
                 <Link to="/registration">
-                  <Button variant="contained">Создать аккаунт</Button>
+                  <Button size="medium" variant="outlined" sx={{ borderRadius: 16 }}>
+                    Создать аккаунт
+                  </Button>
                 </Link>
               </>
             )}

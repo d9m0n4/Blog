@@ -3,6 +3,7 @@ import React from 'react';
 export interface IUserInfo {
   avatarUrl: string;
   fullName: string;
+  rating: string;
 }
 
 export interface ISideBlock {

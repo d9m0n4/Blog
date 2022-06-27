@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -10,7 +10,9 @@ import { theme } from './theme';
 import App from './App';
 import './index.scss';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+root.render(
   <BrowserRouter>
     <CssBaseline />
     <ThemeProvider theme={theme}>
@@ -19,7 +21,6 @@ ReactDOM.render(
       </Provider>
     </ThemeProvider>
   </BrowserRouter>,
-  document.getElementById('root'),
 );
 
 reportWebVitals();

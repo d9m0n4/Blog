@@ -32,13 +32,15 @@ export const Post: React.FC<any> = ({
 
   const onClickRemove = () => {};
 
+  console.log(user);
+
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       <div className={styles.wrapper}>
         <div className={styles.indention}>
           {isFullPost && (
             <div className={styles.author}>
-              <UserInfo avatarUrl={user.avatarUrl} fullName={user.fullName} />
+              <UserInfo avatarUrl={user.avatarUrl} fullName={user.fullName} rating={user.rating} />
               <span className={styles.date}>{createdAt}</span>
             </div>
           )}

@@ -1,9 +1,10 @@
-import { Avatar } from '@mui/material';
 import React from 'react';
+import { Avatar } from '@mui/material';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { IUserInfo } from '../../types';
 import styles from './UserInfo.module.scss';
 
-export const UserInfo: React.FC<IUserInfo> = ({ avatarUrl, fullName }) => {
+export const UserInfo: React.FC<IUserInfo> = ({ avatarUrl, fullName, rating }) => {
   return (
     <div className={styles.root}>
       <Avatar alt="Cindy Baker" src={avatarUrl} />

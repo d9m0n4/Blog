@@ -1,5 +1,5 @@
 .root {
-  background-color: #fff;
+  background: rgba(255, 255, 255, 0.8);
   padding: 16px 0;
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 30px;
@@ -8,6 +8,8 @@
   top: 0;
   left: 0;
   right: 0;
+
+  backdrop-filter: blur(6px);
 }
 
 .inner {
@@ -28,8 +30,8 @@
 
 .search {
   border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 0 4px;
+  border-radius: 16px;
+  padding: 1px 4px;
   margin-left: 8px;
   button {
     padding: 0;
