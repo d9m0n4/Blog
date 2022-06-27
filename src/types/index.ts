@@ -1,4 +1,15 @@
-import React from 'react';
+import React, { JSXElementConstructor } from 'react';
+
+type Key = string | number;
+
+interface ReactElement<
+  P = any,
+  T extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>,
+> {
+  type: T;
+  props: P;
+  key: Key | null;
+}
 
 export interface IUserInfo {
   avatarUrl: string;
@@ -18,6 +29,6 @@ export interface ITagsblock {
 
 export interface ICommentsBlock {
   items: Object[];
-  children?: React.ReactElement | React.ReactElement[];
+
   isLoading: boolean;
 }

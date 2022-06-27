@@ -10,7 +10,7 @@ import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import { ICommentsBlock } from '../types';
 
-export const CommentsBlock: React.FC<ICommentsBlock> = ({ items, children, isLoading = true }) => {
+export const CommentsBlock: React.FC<ICommentsBlock> = ({ items, isLoading = true }) => {
   return (
     <SideBlock title="Последние комментарии">
       <List>
@@ -37,7 +37,6 @@ export const CommentsBlock: React.FC<ICommentsBlock> = ({ items, children, isLoa
           </React.Fragment>
         ))}
       </List>
-      {/* {children} */}
     </SideBlock>
   );
 };

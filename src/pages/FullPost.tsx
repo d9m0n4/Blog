@@ -29,6 +29,7 @@ export const FullPost = () => {
           repo and roast as hard as you can!!
         </p>
       </Post>
+      <Index />
       <CommentsBlock
         items={[
           {
@@ -46,9 +47,8 @@ export const FullPost = () => {
             text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
           },
         ]}
-        isLoading={false}>
-        <Index />
-      </CommentsBlock>
+        isLoading={false}
+      />
     </>
   );
 };
