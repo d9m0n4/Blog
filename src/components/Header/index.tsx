@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { IconButton, InputBase } from '@mui/material';
 
 export const Header = () => {
-  const isAuth = true;
+  const isAuth = false;
 
   const onClickLogout = () => {};
 

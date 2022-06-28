@@ -1,19 +1,26 @@
 .root {
   display: flex;
-  margin-top: 10px;
-  padding-bottom: 20px;
-  margin-right: 20px;
-  margin-left: 17px;
+  margin: 16px 0;
+  padding: 24px 16px;
+  border-radius: 8px;
+  background-color: #fff;
 }
 
 .avatar {
-  margin-right: 15px;
+  margin-right: 16px;
 }
 
 .form {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 
-  button {
-    margin-top: 10px;
+  .formFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    .addFile {
+    }
   }
 }

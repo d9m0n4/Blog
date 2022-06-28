@@ -5,10 +5,12 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
 import styles from './Login.module.scss';
+import Alert from 'components/Alert';
 
 export const Registration = () => {
   return (
     <Paper classes={{ root: styles.root }}>
+      <Alert openState={true} />
       <Typography classes={{ root: styles.title }} variant="h5">
         Создание аккаунта
       </Typography>
