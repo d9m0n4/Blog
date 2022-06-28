@@ -32,8 +32,6 @@ export const Post: React.FC<any> = ({
 
   const onClickRemove = () => {};
 
-  console.log(user);
-
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       <div className={styles.wrapper}>

@@ -43,55 +43,57 @@ export const Home = () => {
           ))}
         </Grid>
         <Grid xs={4} item>
-          <TopUsers
-            items={[
-              {
-                avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                fullName: 'Иван Иванов',
-                rating: 367,
-              },
-              {
-                avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                fullName: 'Василий Пупкин',
-                rating: 343,
-              },
-              {
-                avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                fullName: 'Петр Петров',
-                rating: 212,
-              },
-              {
-                avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                fullName: 'Сергеев Сергей',
-                rating: 156,
-              },
-              {
-                avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                fullName: 'Дмитрий Чесноков',
-                rating: 11,
-              },
-            ]}
-            isLoading={false}
-          />
-          <CommentsBlock
-            items={[
-              {
-                user: {
-                  fullName: 'Вася Пупкин',
+          <Grid sx={{ position: 'sticky', top: '80px' }}>
+            <TopUsers
+              items={[
+                {
                   avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                },
-                text: 'Это тестовый комментарий',
-              },
-              {
-                user: {
                   fullName: 'Иван Иванов',
-                  avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
+                  rating: 367,
                 },
-                text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
-              },
-            ]}
-            isLoading={false}
-          />
+                {
+                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
+                  fullName: 'Василий Пупкин',
+                  rating: 343,
+                },
+                {
+                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
+                  fullName: 'Петр Петров',
+                  rating: 212,
+                },
+                {
+                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
+                  fullName: 'Сергеев Сергей',
+                  rating: 156,
+                },
+                {
+                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
+                  fullName: 'Дмитрий Чесноков',
+                  rating: 11,
+                },
+              ]}
+              isLoading={false}
+            />
+            <CommentsBlock
+              items={[
+                {
+                  user: {
+                    fullName: 'Вася Пупкин',
+                    avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
+                  },
+                  text: 'Это тестовый комментарий',
+                },
+                {
+                  user: {
+                    fullName: 'Иван Иванов',
+                    avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
+                  },
+                  text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
+                },
+              ]}
+              isLoading={false}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </>

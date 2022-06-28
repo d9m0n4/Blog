@@ -146,11 +146,14 @@ $blue: #4361ee;
   margin-bottom: 15px;
 
   &Content {
-    padding: 20px;
+    padding: 16px 0;
   }
 
   &Info {
-    margin-left: 50px;
+    margin: 0 24px;
+    .skeletonPrevText {
+      margin: 16px 0;
+    }
   }
 }
 
@@ -166,6 +169,14 @@ $blue: #4361ee;
 .skeletonTags {
   display: flex;
 
+  span {
+    margin-right: 16px;
+  }
+}
+
+.skeletonIcons {
+  display: flex;
+  margin-top: 16px;
   span {
     margin-right: 16px;
   }

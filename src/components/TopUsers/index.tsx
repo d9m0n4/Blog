@@ -16,7 +16,13 @@ export const TopUsers: React.FC<any> = ({ items, children, isLoading = true }) =
           <ListItem
             key={index}
             alignItems="center"
-            secondaryAction={<div className={styles.rating}>{user.rating}</div>}>
+            secondaryAction={
+              isLoading ? (
+                <Skeleton height={24} width={32} />
+              ) : (
+                <div className={styles.rating}>{user.rating}</div>
+              )
+            }>
             <ListItemAvatar>
               {isLoading ? (
                 <Skeleton variant="circular" width={40} height={40} />
@@ -26,8 +32,7 @@ export const TopUsers: React.FC<any> = ({ items, children, isLoading = true }) =
             </ListItemAvatar>
             {isLoading ? (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <Skeleton variant="text" height={25} width={120} />
-                <Skeleton variant="text" height={18} width={230} />
+                <Skeleton variant="text" height={24} width={200} />
               </div>
             ) : (
               <ListItemText primary={user.fullName} />

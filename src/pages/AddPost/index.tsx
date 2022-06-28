@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -16,8 +16,8 @@ export const AddPost = () => {
 
   const onClickRemoveImage = () => {};
 
-  const onChange = React.useCallback((value: string) => {
-    setValue(value);
+  const onChange = React.useCallback((e: any) => {
+    setValue(e);
   }, []);
 
   const options = React.useMemo(
@@ -31,10 +31,15 @@ export const AddPost = () => {
         autosave: {
           enabled: true,
           delay: 1000,
+          uniqueId: 1,
         },
-      } as EasyMDE.Options),
+      } as unknown as EasyMDE.Options),
     [],
   );
+
+  useEffect(() => {
+    console.log(value);
+  }, [value]);
 
   return (
     <Paper style={{ padding: 30 }}>
