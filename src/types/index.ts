@@ -32,3 +32,31 @@ export interface ICommentsBlock {
 
   isLoading: boolean;
 }
+
+export interface IPost {
+  id: string;
+  title: string;
+  tags?: string[] | null;
+  text: string;
+  user: IUser;
+  likes: number;
+  views: number;
+  comments?: IComments;
+  previewImage: string;
+  createdAt: string;
+}
+export interface IUser {
+  id: string;
+  email: string;
+  fullName: string;
+  createdAt: string;
+  rating: string;
+}
+export interface IComments {
+  id?: null;
+  text?: null;
+  createdAt?: null;
+  updatedAt?: null;
+  postId?: null;
+  userId?: null;
+}
