@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import { UserInfo } from 'components/UserInfo';
 
 export const Post: React.FC<any> = ({
-  _id,
+  id,
   title,
   createdAt,
   imageUrl,
@@ -25,6 +25,7 @@ export const Post: React.FC<any> = ({
   isFullPost,
   isLoading,
   isEditable,
+  likesCount,
 }) => {
   if (isLoading) {
     return <PostSkeleton />;
@@ -43,15 +44,16 @@ export const Post: React.FC<any> = ({
             </div>
           )}
           <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
-            {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
+            {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
           </h2>
 
           <ul className={styles.tags}>
-            {tags.map((name: string) => (
-              <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
-              </li>
-            ))}
+            {tags &&
+              tags.map((name: string) => (
+                <li key={name}>
+                  <Link to={`/tag/${name}`}>#{name}</Link>
+                </li>
+              ))}
           </ul>
           {children && (
             <div
@@ -74,14 +76,14 @@ export const Post: React.FC<any> = ({
             </li>
             <li>
               <FavoriteBorderIcon />
-              <span>{12}</span>
+              <span>{likesCount}</span>
             </li>
           </ul>
         </div>
       </div>
       {isEditable && (
         <div className={styles.editButtons}>
-          <Link to={`/posts/${_id}/edit`}>
+          <Link to={`/posts/edit/${id}`}>
             <IconButton color="info">
               <EditIcon />
             </IconButton>
@@ -92,11 +94,13 @@ export const Post: React.FC<any> = ({
         </div>
       )}
       {imageUrl && (
-        <img
-          className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
-          src={imageUrl}
-          alt={title}
-        />
+        <div className={clsx(styles.imageWrapper, { [styles.imageHeight]: isFullPost })}>
+          <img
+            className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
+            src={imageUrl}
+            alt={title}
+          />
+        </div>
       )}
     </div>
   );

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { IconButton, InputBase } from '@mui/material';
 
 export const Header = () => {
-  const isAuth = false;
+  const isAuth = true;
 
   const onClickLogout = () => {};
 
@@ -19,7 +19,7 @@ export const Header = () => {
       <Container maxWidth="lg">
         <div className={styles.inner}>
           <Link className={styles.logo} to="/">
-            <div>MY BLOG</div>
+            <div>{`</MY BLOG>`}</div>
           </Link>
           <div className={styles.search}>
             <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">

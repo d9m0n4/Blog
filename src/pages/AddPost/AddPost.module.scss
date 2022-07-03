@@ -12,8 +12,16 @@
   }
 }
 
+.previewImage {
+  margin-top: 16px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
 .image {
   width: 100%;
+  height: 500px;
+  object-fit: cover;
 }
 
 .tags {
@@ -27,6 +35,7 @@
     .cm-s-easymde {
       border: 0;
       font-size: 22px;
+      padding: 16px;
     }
     .editor-toolbar {
       border: 0;

@@ -8,20 +8,25 @@ import { TagsBlock } from 'components/TagsBlock/TagsBlock';
 import { TabsComponent } from 'components/Tabs';
 import { TopUsers } from 'components/TopUsers';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { fetchAllPosts } from 'store/actionCreators/post';
+import { fetchAllPosts, getTags } from 'store/actionCreators/post';
+import Alert from 'components/Alert';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
 
   useState(() => {
     dispatch(fetchAllPosts());
+    dispatch(getTags());
   });
 
-  const { items, isLoading, error } = useAppSelector((state) => state.posts);
+  const { items, tags, isLoading, error } = useAppSelector((state) => state.posts);
 
   return (
     <>
-      <TagsBlock items={['react', 'typescript', 'заметки']} isLoading={false} />
+      {error && <Alert openState={true} />}
+      <TagsBlock items={tags} isLoading={isLoading} />
       <TabsComponent />
       <Grid container spacing={4}>
         <Grid xs={8} item>
@@ -37,18 +42,16 @@ export const Home = () => {
                 rating: item.user.rating,
               }}
               createdAt={item.createdAt}
-              viewsCount={150}
-              commentsCount={3}
-              tags={['react', 'fun', 'typescript']}
+              viewsCount={item.views}
+              commentsCount={item.comments?.length}
+              tags={item.tags}
+              likesCount={item.likes}
+              isLoading={isLoading}
               isEditable>
-              {
-                <p>
-                  Hey there! 👋 I'm starting a new series called "Roast the Code", where I will
-                  share some code, and let YOU roast and improve it. There's not much more to it,
-                  just be polite and constructive, this is an exercise so we can all learn together.
-                  Now then, head over to the repo and roast as hard as you can!!
-                </p>
-              }
+              <ReactMarkdown
+                rehypePlugins={[rehypeRaw]}
+                children={item.text.split(/\.|-|:|;/, 1).join()}
+              />
             </Post>
           ))}
         </Grid>
@@ -82,7 +85,7 @@ export const Home = () => {
                   rating: 11,
                 },
               ]}
-              isLoading={false}
+              isLoading={isLoading}
             />
             <CommentsBlock
               items={[
@@ -101,7 +104,7 @@ export const Home = () => {
                   text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
                 },
               ]}
-              isLoading={false}
+              isLoading={isLoading}
             />
           </Grid>
         </Grid>

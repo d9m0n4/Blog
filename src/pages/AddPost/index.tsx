@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -7,17 +7,51 @@ import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import EasyMDE from 'easymde';
+import { API } from 'service/axios';
+import posts from 'service/posts';
+import { useNavigate } from 'react-router-dom';
 
 export const AddPost = () => {
-  const imageUrl = '';
-  const [value, setValue] = React.useState('');
+  const navigate = useNavigate();
+  const [text, settext] = useState('');
+  const [title, setTitle] = useState('');
+  const [tags, setTags] = useState('');
 
-  const handleChangeFile = () => {};
+  const [imageUrl, setImageUrl] = useState('');
+  const [image, setImage] = useState<any>();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e?.target?.files;
+    if (file) {
+      const objectUrl = URL.createObjectURL(file[0]);
+      setImageUrl(objectUrl);
+      setImage(file[0]);
+    }
+  };
+
+  const submit = async () => {
+    let formData = new FormData();
+    formData.append('img', image);
+    formData.append('title', title);
+    formData.append('text', text);
+    formData.append('tags', tags);
+    formData.append('userId', '55916a2c-ee5e-4afe-98b2-0341cd99fbab');
+
+    posts.createPost(formData).then(({ data }) => {
+      navigate(`/posts/${data.id}`);
+    });
+  };
+
+  const setTagNames = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTags(e.target.value);
+  };
 
   const onClickRemoveImage = () => {};
 
-  const onChange = React.useCallback((e: any) => {
-    setValue(e);
+  const onChange = React.useCallback((e: string) => {
+    settext(e);
   }, []);
 
   const options = React.useMemo(
@@ -37,40 +71,55 @@ export const AddPost = () => {
     [],
   );
 
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
-
   return (
     <Paper style={{ padding: 30 }}>
-      <Button variant="outlined" size="large">
+      <Button
+        onClick={() => inputRef.current?.click()}
+        variant="outlined"
+        size="medium"
+        sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
         Загрузить превью
       </Button>
-      <input type="file" onChange={handleChangeFile} hidden />
+      <input ref={inputRef} type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
-        <Button variant="contained" color="error" onClick={onClickRemoveImage}>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={onClickRemoveImage}
+          size="medium"
+          sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
           Удалить
         </Button>
       )}
-      {imageUrl && (
-        <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
-      )}
-      <br />
-      <br />
+      <div className={styles.previewImage}>
+        {imageUrl && <img className={styles.image} src={`${imageUrl}`} alt="Uploaded" />}
+      </div>
+
       <TextField
         classes={{ root: styles.title }}
         variant="standard"
         placeholder="Заголовок статьи..."
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         fullWidth
       />
-      <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Тэги" fullWidth />
-      <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
+      <TextField
+        classes={{ root: styles.tags }}
+        variant="standard"
+        placeholder="Тэги"
+        value={tags}
+        onChange={setTagNames}
+        fullWidth
+      />
+      <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
-        <Button size="large" variant="contained">
+        <Button onClick={submit} size="medium" sx={{ borderRadius: '16px' }} variant="contained">
           Опубликовать
         </Button>
         <a href="/">
-          <Button size="large">Отмена</Button>
+          <Button size="medium" sx={{ borderRadius: '16px' }}>
+            Отмена
+          </Button>
         </a>
       </div>
     </Paper>

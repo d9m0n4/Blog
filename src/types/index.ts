@@ -41,7 +41,7 @@ export interface IPost {
   user: IUser;
   likes: number;
   views: number;
-  comments?: IComments;
+  comments?: IComments[];
   previewImage: string;
   createdAt: string;
 }
@@ -51,6 +51,7 @@ export interface IUser {
   fullName: string;
   createdAt: string;
   rating: string;
+  avatar: string;
 }
 export interface IComments {
   id?: null;
@@ -59,4 +60,12 @@ export interface IComments {
   updatedAt?: null;
   postId?: null;
   userId?: null;
+}
+
+export interface IPostData {
+  title: string;
+  tags: string;
+  text: string;
+  userId: string;
+  previewImage: File;
 }
