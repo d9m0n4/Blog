@@ -11,6 +11,8 @@ import styles from './Post.module.scss';
 import { PostSkeleton } from './Skeleton';
 import { Link } from 'react-router-dom';
 import { UserInfo } from 'components/UserInfo';
+import moment from 'moment';
+import 'moment/locale/ru';
 
 export const Post: React.FC<any> = ({
   id,
@@ -33,6 +35,11 @@ export const Post: React.FC<any> = ({
 
   const onClickRemove = () => {};
 
+  const toDate = (date: string) => {
+    moment.locale('ru');
+    return moment(date).format('LLL');
+  };
+
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       <div className={styles.wrapper}>
@@ -40,7 +47,7 @@ export const Post: React.FC<any> = ({
           {isFullPost && (
             <div className={styles.author}>
               <UserInfo avatarUrl={user.avatarUrl} fullName={user.fullName} rating={user.rating} />
-              <span className={styles.date}>{createdAt}</span>
+              <span className={styles.date}>{toDate(createdAt)}</span>
             </div>
           )}
           <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>

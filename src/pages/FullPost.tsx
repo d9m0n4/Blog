@@ -27,8 +27,6 @@ export const FullPost = () => {
     }
   }, [id]);
 
-  console.log(postData);
-
   return (
     <>
       {postData && (

@@ -11,6 +11,9 @@ class PostService {
   async createPost(postData: FormData) {
     return await API.post('/posts', postData);
   }
+  async fetchPostsByTag(tag: string) {
+    return await API.get(`/posts/tags/${tag}`);
+  }
   async getTags() {
     return await API.get('/tags');
   }

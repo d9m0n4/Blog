@@ -11,6 +11,19 @@ export const fetchAllPosts = createAsyncThunk('posts/getAll', async (_, { reject
   }
 });
 
+export const fetchPostsByTag = createAsyncThunk(
+  'posts/getByTag',
+  async (tag: string, { rejectWithValue }) => {
+    try {
+      const { data } = await PostService.fetchPostsByTag(tag);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
 export const getTags = createAsyncThunk('posts/getTags', async (_, { rejectWithValue }) => {
   try {
     const { data } = await PostService.getTags();

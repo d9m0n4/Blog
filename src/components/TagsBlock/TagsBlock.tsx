@@ -3,15 +3,28 @@ import React from 'react';
 import { ITagsblock } from '../../types';
 import { Chip } from '@mui/material';
 import styles from './Tags.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { useAppDispatch } from 'hooks/redux';
+import { fetchPostsByTag } from 'store/actionCreators/post';
+import clsx from 'clsx';
 
-export const TagsBlock: React.FC<ITagsblock> = ({ items, isLoading = true }) => {
+export const TagsBlock: React.FC<ITagsblock> = ({ items, isLoading }) => {
+  const dispatch = useAppDispatch();
+  const fetchPosts = (name: string) => {
+    dispatch(fetchPostsByTag(name));
+  };
+
+  const activeClassName = 'active';
   return (
     <div className={styles.tags}>
       {(isLoading ? [...Array(5)] : items).map((name, i) => (
-        <Link key={name} className={styles.link} to={`posts/tags/${name}`}>
-          <Chip label={`#${name}`} component="a" key={i} clickable />
-        </Link>
+        <NavLink
+          key={name}
+          // className={[({ isActive }) => (isActive ? activeClassName : undefined), 'a']}
+          to={`/posts/tags/${name}`}
+          onClick={() => fetchPosts(name)}>
+          <Chip label={`#${name}`} component="span" key={i} clickable />
+        </NavLink>
       ))}
     </div>
   );
