@@ -23,7 +23,7 @@ export interface ISideBlock {
 }
 
 export interface ITagsblock {
-  items: Object[];
+  items: Tag[];
   isLoading: boolean;
 }
 
@@ -69,3 +69,5 @@ export interface IPostData {
   userId: string;
   previewImage: File;
 }
+
+export type Tag = string;

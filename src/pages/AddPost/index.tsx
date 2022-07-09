@@ -7,7 +7,6 @@ import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import EasyMDE from 'easymde';
-import { API } from 'service/axios';
 import posts from 'service/posts';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,7 +30,7 @@ export const AddPost = () => {
     }
   };
 
-  const submit = async () => {
+  const submit = () => {
     let formData = new FormData();
     formData.append('img', image);
     formData.append('title', title);

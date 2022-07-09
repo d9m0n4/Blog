@@ -8,11 +8,12 @@ import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import styles from './TopUsers.module.scss';
 
-export const TopUsers: React.FC<any> = ({ items, children, isLoading = true }) => {
+export const TopUsers: React.FC<any> = ({ items, children, isLoading }) => {
+  isLoading = false;
   return (
     <SideBlock title="Популярные авторы">
       <List>
-        {(isLoading ? [...Array(5)] : items).map((user: any, index: any) => (
+        {items.map((user: any, index: any) => (
           <ListItem
             key={index}
             alignItems="center"

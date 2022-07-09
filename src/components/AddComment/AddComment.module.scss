@@ -20,7 +20,14 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 16px;
-    .addFile {
+  }
+  .filesPreview {
+    display: flex;
+    width: 100%;
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 }
