@@ -18,9 +18,9 @@ export const Header = () => {
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
-          <Link className={styles.logo} to="/">
-            <div>{`</MY BLOG>`}</div>
-          </Link>
+          <a className={styles.logo} href="/">
+            {`</MY BLOG>`}
+          </a>
           <div className={styles.search}>
             <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
               <Search />
