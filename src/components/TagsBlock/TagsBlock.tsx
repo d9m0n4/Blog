@@ -1,35 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ITagsblock } from '../../types';
 import { Chip } from '@mui/material';
-import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from 'hooks/redux';
 import { fetchPostsByTag, fetchAllPosts } from 'store/actionCreators/post';
 import styles from './Tags.module.scss';
+import clsx from 'clsx';
 
 export const TagsBlock: React.FC<ITagsblock> = ({ items, isLoading }) => {
   const dispatch = useAppDispatch();
+  const [activeItem, setActiveItem] = useState('Все');
 
-  const fetchPosts = (action: any) => {
+  const fetchPosts = (name: string, action: any) => {
     dispatch(action);
+    setActiveItem(name);
   };
+
+  useEffect(() => {
+    console.log(activeItem);
+  }, [activeItem]);
 
   return (
     <div className={styles.tags}>
-      <NavLink
-        className={({ isActive }) => styles.link + ' ' + (isActive ? styles.activeLink : '')}
-        to={`/`}
-        onClick={() => fetchPosts(fetchAllPosts())}>
-        <Chip label={`Все`} component="span" clickable />
-      </NavLink>
+      <Chip
+        label={`Все`}
+        className={clsx(styles.link, activeItem === 'Все' ? styles.activeLink : '')}
+        component="span"
+        clickable
+        onClick={() => fetchPosts('Все', fetchAllPosts())}
+      />
+
       {items.map((name, i) => (
-        <NavLink
-          key={name}
-          className={({ isActive }) => styles.link + ' ' + (isActive ? styles.activeLink : '')}
-          to={`/posts/tags/${name}`}
-          onClick={() => fetchPosts(fetchPostsByTag(name))}>
-          <Chip label={`#${name}`} component="span" key={i} clickable />
-        </NavLink>
+        <Chip
+          label={`#${name}`}
+          className={clsx(styles.link, activeItem === name ? styles.activeLink : '')}
+          component="span"
+          key={i}
+          clickable
+          onClick={() => fetchPosts(name, fetchPostsByTag(name))}
+        />
       ))}
     </div>
   );

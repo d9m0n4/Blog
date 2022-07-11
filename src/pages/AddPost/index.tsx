@@ -36,7 +36,7 @@ export const AddPost = () => {
     formData.append('title', title);
     formData.append('text', text);
     formData.append('tags', tags);
-    formData.append('userId', '55916a2c-ee5e-4afe-98b2-0341cd99fbab');
+    formData.append('userId', '3f4cd372-0f14-42d2-9d6e-2c69593bb85c');
 
     posts.createPost(formData).then(({ data }) => {
       navigate(`/posts/${data.id}`);

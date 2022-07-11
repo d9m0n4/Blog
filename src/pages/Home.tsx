@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
 import Grid from '@mui/material/Grid';
 
@@ -17,10 +17,10 @@ import Loader from 'components/Loader';
 export const Home = () => {
   const dispatch = useAppDispatch();
 
-  useState(() => {
+  useEffect(() => {
     dispatch(fetchAllPosts());
     dispatch(getTags());
-  });
+  }, [dispatch]);
 
   const { items, tags, isLoading, error } = useAppSelector((state) => state.posts);
 
