@@ -36,6 +36,7 @@ export const Home = () => {
           ) : (
             items.map((item) => (
               <Post
+                key={item.id}
                 id={item.id}
                 title={item.title}
                 imageUrl={`http://localhost:5000/${item.previewImage}`}

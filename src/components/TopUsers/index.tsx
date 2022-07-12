@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { SideBlock } from 'components/SideBlock';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -8,7 +8,7 @@ import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import styles from './TopUsers.module.scss';
 
-export const TopUsers: React.FC<any> = ({ items, children, isLoading }) => {
+export const TopUsers: React.FC<any> = memo(({ items, children, isLoading }) => {
   isLoading = false;
   return (
     <SideBlock title="Популярные авторы">
@@ -44,4 +44,4 @@ export const TopUsers: React.FC<any> = ({ items, children, isLoading }) => {
       {/* {children} */}
     </SideBlock>
   );
-};
+});

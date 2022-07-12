@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { SideBlock } from './SideBlock';
 import ListItem from '@mui/material/ListItem';
@@ -10,7 +10,7 @@ import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import { ICommentsBlock } from '../types';
 
-export const CommentsBlock: React.FC<ICommentsBlock> = ({ items, isLoading = true }) => {
+export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading }) => {
   return (
     <SideBlock title="Последние комментарии">
       <List>
@@ -39,4 +39,4 @@ export const CommentsBlock: React.FC<ICommentsBlock> = ({ items, isLoading = tru
       </List>
     </SideBlock>
   );
-};
+});
