@@ -70,4 +70,10 @@ export interface IPostData {
   previewImage: File;
 }
 
+export interface IUserPostData {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export type Tag = string;

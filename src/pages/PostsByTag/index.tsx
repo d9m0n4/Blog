@@ -8,7 +8,7 @@ import Alert from 'components/Alert';
 import { TagsBlock } from 'components/TagsBlock/TagsBlock';
 import { Post } from 'components/Post';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { fetchPostsByTag, getTags } from 'store/actionCreators/post';
+import { fetchPostsByTag, getTags } from 'store/actions/post';
 import { useParams } from 'react-router-dom';
 
 import styles from './postsByTag.module.scss';

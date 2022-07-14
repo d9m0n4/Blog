@@ -8,7 +8,7 @@ import { TagsBlock } from 'components/TagsBlock/TagsBlock';
 import { TabsComponent } from 'components/Tabs';
 import { TopUsers } from 'components/TopUsers';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { fetchAllPosts, getTags } from 'store/actionCreators/post';
+import { fetchAllPosts, getTags } from 'store/actions/post';
 import Alert from 'components/Alert';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';

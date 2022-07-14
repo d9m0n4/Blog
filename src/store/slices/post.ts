@@ -1,5 +1,5 @@
 import { IPost } from './../../types/index';
-import { fetchAllPosts, fetchPostsByTag, getTags } from './../actionCreators/post';
+import { fetchAllPosts, fetchPostsByTag, getTags } from '../actions/post';
 import { createSlice } from '@reduxjs/toolkit';
 
 type SliceState = {

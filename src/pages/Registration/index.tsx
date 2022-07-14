@@ -7,33 +7,40 @@ import Button from '@mui/material/Button';
 import styles from './Login.module.scss';
 import Alert from 'components/Alert';
 import { useForm } from 'react-hook-form';
+import BasicForm from 'components/BasicForm';
+
+interface IInputTypes {
+  name: string;
+  email: string;
+  password: string;
+}
 
 export const Registration = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    mode: 'onBlur',
-  });
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<IInputTypes>({
+  //   mode: 'all',
+  // });
 
-  const registerOptions = {
-    name: { required: 'Name is required' },
-    email: {
-      required: true,
-      pattern: {
-        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'Enter a valid e-mail address',
-      },
-    },
-    password: {
-      required: 'Password is required',
-      minLength: {
-        value: 8,
-        message: 'Password must have at least 8 characters',
-      },
-    },
-  };
+  // const registerOptions = {
+  //   name: { required: 'Введите имя' },
+  //   email: {
+  //     required: 'Введите адрес email',
+  //     pattern: {
+  //       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+  //       message: 'Введите корректный адрес email',
+  //     },
+  //   },
+  //   password: {
+  //     required: 'Введите пароль',
+  //     minLength: {
+  //       value: 8,
+  //       message: 'Пароль должен содержать не менее 8 символов',
+  //     },
+  //   },
+  // };
 
   const submit = (data: any) => {
     console.log(data);
@@ -45,36 +52,27 @@ export const Registration = () => {
           Создание аккаунта
         </Typography>
 
-        <form onSubmit={handleSubmit(submit)}>
+        <BasicForm onSubmit={submit}>
           <TextField
-            {...register('name', registerOptions.name)}
             size="small"
             className={styles.field}
             label="Полное имя"
+            name="name"
             fullWidth
-            error={Boolean(errors.name?.message)}
           />
+          <TextField size="small" className={styles.field} label="E-Mail" name="email" fullWidth />
           <TextField
-            {...register('email', registerOptions.email)}
-            size="small"
-            className={styles.field}
-            label="E-Mail"
-            fullWidth
-            error={Boolean(errors.email?.message)}
-            helperText={<span>{123123}</span>}
-          />
-          <TextField
-            {...register('password', registerOptions.password)}
             size="small"
             className={styles.field}
             label="Пароль"
+            name="password"
             fullWidth
-            error={Boolean(errors.password?.message)}
           />
+
           <Button type="submit" size="large" variant="contained" fullWidth>
             Зарегистрироваться
           </Button>
-        </form>
+        </BasicForm>
       </Paper>
     </>
   );

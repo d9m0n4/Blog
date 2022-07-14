@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ITagsblock } from '../../types';
 import { Chip } from '@mui/material';
 import { useAppDispatch } from 'hooks/redux';
-import { fetchPostsByTag, fetchAllPosts } from 'store/actionCreators/post';
+import { fetchPostsByTag, fetchAllPosts } from 'store/actions/post';
 import styles from './Tags.module.scss';
 import clsx from 'clsx';
 
