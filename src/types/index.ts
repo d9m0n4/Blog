@@ -49,10 +49,11 @@ export interface IUser {
   id: string;
   email: string;
   fullName: string;
-  createdAt: string;
-  rating: string;
-  avatar: string;
+  createdAt: Date;
+  rating: number;
+  avatar?: string;
 }
+
 export interface IComments {
   id?: null;
   text?: null;
@@ -71,9 +72,14 @@ export interface IPostData {
 }
 
 export interface IUserPostData {
-  name: string;
+  fullName: string;
   email: string;
   password: string;
+}
+
+export interface IErrorResponse {
+  errors: [];
+  message: string;
 }
 
 export type Tag = string;

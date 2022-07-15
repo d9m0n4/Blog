@@ -1,9 +1,10 @@
+import { IUser } from './../../types/index';
 import { login } from './../actions/auth';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: {},
-  error: {},
+  user: null,
+  error: { message: null },
   loadig: false,
 };
 
@@ -13,19 +14,19 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: {
     [login.pending.type]: (state) => {
-      state.error = {};
+      state.error = { message: null };
       state.loadig = true;
-      state.user = {};
+      state.user = null;
     },
-    [login.fulfilled.type]: (state, action: PayloadAction<string>) => {
-      state.error = {};
+    [login.fulfilled.type]: (state, action) => {
+      state.error = { message: null };
       state.loadig = false;
       state.user = action.payload;
     },
-    [login.rejected.type]: (state, action: PayloadAction<Object>) => {
+    [login.rejected.type]: (state, action) => {
       state.error = action.payload;
       state.loadig = false;
-      state.user = {};
+      state.user = null;
     },
   },
 });

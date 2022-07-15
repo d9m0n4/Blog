@@ -8,9 +8,10 @@ import { Search } from '@mui/icons-material';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { IconButton, InputBase } from '@mui/material';
+import { useAppSelector } from 'hooks/redux';
 
 export const Header = () => {
-  const isAuth = false;
+  const { user, error, loadig } = useAppSelector((state) => state.auth);
 
   const onClickLogout = () => {};
 
@@ -32,7 +33,7 @@ export const Header = () => {
             />
           </div>
           <div className={styles.buttons}>
-            {isAuth ? (
+            {user ? (
               <>
                 <Link to="/posts/create">
                   <Button variant="contained" sx={{ borderRadius: 16 }}>

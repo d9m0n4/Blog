@@ -28,7 +28,7 @@ export const PostsByTag = () => {
 
   return (
     <>
-      {error && <Alert openState={true} />}
+      {error && <Alert openState={true} message="error" />}
       <TagsBlock items={tags} isLoading={isLoading} />
       <Grid container spacing={4} sx={{ marginTop: '32px', marginLeft: 0 }}>
         {items.map((item) => (

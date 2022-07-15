@@ -1,15 +1,10 @@
 import React from 'react';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { IUserPostData } from 'types';
 
 interface IForm {
   onSubmit: SubmitHandler<FieldValues>;
   children: React.ReactElement | React.ReactElement[];
-}
-
-interface IInputTypes {
-  name: string;
-  email: string;
-  password: string;
 }
 
 const BasicForm: React.FC<IForm> = ({ onSubmit, children }) => {
@@ -17,12 +12,12 @@ const BasicForm: React.FC<IForm> = ({ onSubmit, children }) => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<IInputTypes>({
+  } = useForm<IUserPostData>({
     mode: 'all',
   });
 
   const registerOptions = {
-    name: { required: 'Введите имя' },
+    fullName: { required: 'Введите имя' },
     email: {
       required: 'Введите адрес email',
       pattern: {

@@ -10,6 +10,7 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { BASEURL } from '../constants';
 
 export const FullPost = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ export const FullPost = () => {
           <Post
             id={1}
             title={postData?.title}
-            imageUrl={`http://localhost:5000/${postData?.previewImage}`}
+            imageUrl={`${BASEURL}/${postData?.previewImage}`}
             user={{
               avatarUrl: postData?.user.avatar,
               fullName: postData?.user.fullName,

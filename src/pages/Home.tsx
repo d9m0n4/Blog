@@ -13,6 +13,7 @@ import Alert from 'components/Alert';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import Loader from 'components/Loader';
+import { BASEURL } from '../constants';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +27,7 @@ export const Home = () => {
 
   return (
     <>
-      {error && <Alert openState={true} />}
+      {error && <Alert openState={true} message={'error'} />}
       <TagsBlock items={tags} isLoading={isLoading} />
       <TabsComponent />
       <Grid container spacing={4}>
@@ -39,7 +40,7 @@ export const Home = () => {
                 key={item.id}
                 id={item.id}
                 title={item.title}
-                imageUrl={`http://localhost:5000/${item.previewImage}`}
+                imageUrl={`${BASEURL}/${item.previewImage}`}
                 user={{
                   avatarUrl:
                     'https://res.cloudinary.com/practicaldev/image/fetch/s--uigxYVRB--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/187971/a5359a24-b652-46be-8898-2c5df32aa6e0.png',

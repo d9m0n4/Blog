@@ -5,46 +5,18 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
 import styles from './Login.module.scss';
-import Alert from 'components/Alert';
-import { useForm } from 'react-hook-form';
 import BasicForm from 'components/BasicForm';
-
-interface IInputTypes {
-  name: string;
-  email: string;
-  password: string;
-}
+import { useAppDispatch } from 'hooks/redux';
+import { registration } from 'store/actions/auth';
+import AuthService from '../../service/auth';
 
 export const Registration = () => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<IInputTypes>({
-  //   mode: 'all',
-  // });
-
-  // const registerOptions = {
-  //   name: { required: 'Введите имя' },
-  //   email: {
-  //     required: 'Введите адрес email',
-  //     pattern: {
-  //       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-  //       message: 'Введите корректный адрес email',
-  //     },
-  //   },
-  //   password: {
-  //     required: 'Введите пароль',
-  //     minLength: {
-  //       value: 8,
-  //       message: 'Пароль должен содержать не менее 8 символов',
-  //     },
-  //   },
-  // };
-
-  const submit = (data: any) => {
-    console.log(data);
+  const submit = async (data: any) => {
+    await AuthService.registration(data)
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
   };
+
   return (
     <>
       <Paper classes={{ root: styles.root }}>
@@ -57,7 +29,7 @@ export const Registration = () => {
             size="small"
             className={styles.field}
             label="Полное имя"
-            name="name"
+            name="fullName"
             fullWidth
           />
           <TextField size="small" className={styles.field} label="E-Mail" name="email" fullWidth />

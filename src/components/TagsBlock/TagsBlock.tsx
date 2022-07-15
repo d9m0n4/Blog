@@ -6,10 +6,11 @@ import { useAppDispatch } from 'hooks/redux';
 import { fetchPostsByTag, fetchAllPosts } from 'store/actions/post';
 import styles from './Tags.module.scss';
 import clsx from 'clsx';
+import { MAIN_TAGS_CATEGORY } from '../../constants';
 
 export const TagsBlock: React.FC<ITagsblock> = ({ items, isLoading }) => {
   const dispatch = useAppDispatch();
-  const [activeItem, setActiveItem] = useState('Все');
+  const [activeItem, setActiveItem] = useState(`${MAIN_TAGS_CATEGORY}`);
 
   const fetchPosts = (name: string, action: any) => {
     dispatch(action);
@@ -23,11 +24,14 @@ export const TagsBlock: React.FC<ITagsblock> = ({ items, isLoading }) => {
   return (
     <div className={styles.tags}>
       <Chip
-        label={`Все`}
-        className={clsx(styles.link, activeItem === 'Все' ? styles.activeLink : '')}
+        label={`${MAIN_TAGS_CATEGORY}`}
+        className={clsx(
+          styles.link,
+          activeItem === `${MAIN_TAGS_CATEGORY}` ? styles.activeLink : '',
+        )}
         component="span"
         clickable
-        onClick={() => fetchPosts('Все', fetchAllPosts())}
+        onClick={() => fetchPosts(`${MAIN_TAGS_CATEGORY}`, fetchAllPosts())}
       />
 
       {items.map((name, i) => (

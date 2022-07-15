@@ -9,9 +9,10 @@ export interface State extends SnackbarOrigin {
 
 interface IAlert {
   openState: boolean;
+  message: string | null;
 }
 
-export default function Alert({ openState }: IAlert) {
+export default function Alert({ openState, message }: IAlert) {
   const [state, setState] = React.useState<State>({
     open: openState || false,
     vertical: 'top',
@@ -30,7 +31,7 @@ export default function Alert({ openState }: IAlert) {
       open={open}
       onClose={handleClose}
       autoHideDuration={3000}
-      message="I love snacks"
+      message={message}
       key={vertical + horizontal}
       action={
         <IconButton aria-label="close" color="inherit" sx={{ p: 0.5 }} onClick={handleClose}>
