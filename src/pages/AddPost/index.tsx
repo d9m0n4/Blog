@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -53,10 +53,23 @@ export const AddPost = () => {
     settext(e);
   }, []);
 
-  const options = React.useMemo(
+  const uploadImage = async (image: any, onSuccess: any, onError: any) => {
+    try {
+      const objectURL = URL.createObjectURL(image);
+      onSuccess(objectURL);
+    } catch (error) {
+      return onError(error);
+    }
+  };
+
+  const options = useMemo(
     () =>
       ({
         spellChecker: false,
+        showIcons: ['strikethrough', 'table', 'code', 'upload-image'],
+        previewImagesInEditor: true,
+        uploadImage: true,
+        imageUploadFunction: uploadImage,
         maxHeight: '400px',
         autofocus: true,
         placeholder: 'Введите текст...',
@@ -110,7 +123,12 @@ export const AddPost = () => {
         onChange={setTagNames}
         fullWidth
       />
-      <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
+      <SimpleMDE
+        className={styles.editor}
+        value={text}
+        onChange={onChange}
+        options={{ ...options }}
+      />
       <div className={styles.buttons}>
         <Button onClick={submit} size="medium" sx={{ borderRadius: '16px' }} variant="contained">
           Опубликовать

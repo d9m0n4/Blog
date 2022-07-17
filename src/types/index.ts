@@ -40,7 +40,7 @@ export interface IPost {
   text: string;
   user: IUser;
   likes: number;
-  views: number;
+  viewsCount: number;
   comments?: IComments[];
   previewImage: string;
   createdAt: string;

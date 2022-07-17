@@ -33,9 +33,6 @@ export const Index: React.FC = () => {
     let formData = new FormData();
     formData.append('comment', comment);
     formData.append('files', files);
-    console.log('comment', comment);
-    console.log('previewFiles', previewFiles);
-    console.log('files', files);
   };
 
   return (
@@ -72,14 +69,18 @@ export const Index: React.FC = () => {
                 </IconButton>
               </label>
             </div>
-            <Button variant="contained" sx={{ borderRadius: '16px' }} onClick={submit}>
+            <Button
+              disabled={!comment}
+              variant="contained"
+              sx={{ borderRadius: '16px' }}
+              onClick={submit}>
               Отправить
             </Button>
           </div>
           <div className={styles.filesPreview}>
-            <ImageList cols={3} rowHeight={80}>
-              {previewFiles &&
-                previewFiles.map((item: string) => (
+            {previewFiles && (
+              <ImageList cols={3} rowHeight={80}>
+                {previewFiles.map((item: string) => (
                   <ImageListItem key={item} sx={{ width: '80px' }}>
                     <img
                       src={`${item}`}
@@ -90,7 +91,8 @@ export const Index: React.FC = () => {
                     />
                   </ImageListItem>
                 ))}
-            </ImageList>
+              </ImageList>
+            )}
           </div>
         </div>
       </div>

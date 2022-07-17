@@ -17,9 +17,12 @@ export const FullPost = () => {
   const [postData, setPostData] = useState<IPost>();
 
   const fetchPost = async (id: string) => {
-    return await posts.getPostById(id).then(({ data }) => {
-      setPostData(data);
-    });
+    return await posts
+      .getPostById(id)
+      .then(({ data }) => {
+        setPostData(data);
+      })
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -33,18 +36,18 @@ export const FullPost = () => {
       {postData && (
         <>
           <Post
-            id={1}
-            title={postData?.title}
-            imageUrl={`${BASEURL}/${postData?.previewImage}`}
+            id={postData.id}
+            title={postData.title}
+            imageUrl={`${BASEURL}/${postData.previewImage}`}
             user={{
-              avatarUrl: postData?.user.avatar,
-              fullName: postData?.user.fullName,
-              rating: postData?.user.rating,
+              avatarUrl: postData.user.avatar,
+              fullName: postData.user.fullName,
+              rating: postData.user.rating,
             }}
-            createdAt={postData?.createdAt}
-            viewsCount={postData?.views}
+            createdAt={postData.createdAt}
+            viewsCount={postData.viewsCount}
             commentsCount={postData?.comments?.length}
-            tags={postData?.tags}
+            tags={postData.tags}
             isFullPost>
             <ReactMarkdown
               rehypePlugins={[rehypeRaw]}

@@ -45,7 +45,7 @@ export const PostsByTag = () => {
                 rating: item.user.rating,
               }}
               createdAt={item.createdAt}
-              viewsCount={item.views}
+              viewsCount={item.viewsCount}
               commentsCount={item.comments?.length}
               tags={item.tags}
               likesCount={item.likes}
