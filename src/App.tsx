@@ -8,10 +8,25 @@ import { Registration } from 'pages/Registration';
 import { Login } from 'pages/Login';
 import Footer from 'components/Footer';
 import NotFound from 'pages/NotFound';
+import { useEffect } from 'react';
+import { checkAuth } from 'store/actions/auth';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import Alert from 'components/Alert';
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(checkAuth());
+    }
+  }, []);
+
+  const { error } = useAppSelector((state) => state.auth);
+
   return (
     <>
+      {error.message && <Alert openState={true} message={error.message} />}
       <Header />
       <div className="Main_content">
         <Container maxWidth="lg">

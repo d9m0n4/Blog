@@ -1,5 +1,5 @@
-import { IPost } from './../types/index';
-import { API } from './axios';
+import { IPost } from '../models/index';
+import API from './axios';
 
 class PostService {
   async getAll() {

@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 
 import posts from 'service/posts';
 import { Post } from '../components/Post';
-import { Index } from '../components/AddComment';
+import { AddComment } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { useParams } from 'react-router-dom';
-import { IPost } from 'types';
+import { IPost } from 'models';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { BASEURL } from '../constants';
+import { useAppSelector } from 'hooks/redux';
 
 export const FullPost = () => {
   const { id } = useParams();
   const [postData, setPostData] = useState<IPost>();
+
+  const { user } = useAppSelector((state) => state.auth);
 
   const fetchPost = async (id: string) => {
     return await posts
@@ -70,7 +73,7 @@ export const FullPost = () => {
               }}
             />
           </Post>
-          <Index />
+          {user && <AddComment user={user} />}
           <CommentsBlock
             items={[
               {

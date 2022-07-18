@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
-import { IUserPostData } from 'types';
+import { IUserPostData } from 'models';
 
 interface IForm {
   onSubmit: SubmitHandler<FieldValues>;

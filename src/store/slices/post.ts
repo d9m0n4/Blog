@@ -1,4 +1,4 @@
-import { IPost } from './../../types/index';
+import { IPost } from '../../models/index';
 import { fetchAllPosts, fetchPostsByTag, getTags } from '../actions/post';
 import { createSlice } from '@reduxjs/toolkit';
 

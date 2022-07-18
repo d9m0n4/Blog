@@ -54,6 +54,12 @@ export interface IUser {
   avatar?: string;
 }
 
+export interface AuthResponse {
+  userData: IUser;
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface IComments {
   id?: null;
   text?: null;

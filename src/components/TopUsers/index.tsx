@@ -7,15 +7,20 @@ import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import styles from './TopUsers.module.scss';
+import { IUser } from 'models';
 
-export const TopUsers: React.FC<any> = memo(({ items, children, isLoading }) => {
-  isLoading = false;
+interface ITopUsers {
+  items: IUser[];
+  isLoading: boolean;
+}
+
+export const TopUsers: React.FC<ITopUsers> = memo(({ items, isLoading }) => {
   return (
     <SideBlock title="Популярные авторы">
       <List>
-        {items.map((user: any, index: any) => (
+        {items.map((user) => (
           <ListItem
-            key={index}
+            key={user.id}
             alignItems="center"
             secondaryAction={
               isLoading ? (
@@ -28,7 +33,7 @@ export const TopUsers: React.FC<any> = memo(({ items, children, isLoading }) => 
               {isLoading ? (
                 <Skeleton variant="circular" width={40} height={40} />
               ) : (
-                <Avatar alt={user.fullName} src={user.avatarUrl} />
+                <Avatar alt={user.fullName} src={user.avatar} />
               )}
             </ListItemAvatar>
             {isLoading ? (
@@ -41,7 +46,6 @@ export const TopUsers: React.FC<any> = memo(({ items, children, isLoading }) => 
           </ListItem>
         ))}
       </List>
-      {/* {children} */}
     </SideBlock>
   );
 });

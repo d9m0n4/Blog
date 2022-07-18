@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { ITagsblock } from '../../types';
+import { ITagsblock } from '../../models';
 import { Chip } from '@mui/material';
 import { useAppDispatch } from 'hooks/redux';
 import { fetchPostsByTag, fetchAllPosts } from 'store/actions/post';

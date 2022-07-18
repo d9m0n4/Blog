@@ -35,6 +35,7 @@ export const Header = () => {
           <div className={styles.buttons}>
             {user ? (
               <>
+                <Link to="/posts/create"></Link>
                 <Link to="/posts/create">
                   <Button variant="contained" sx={{ borderRadius: 16 }}>
                     Написать статью

@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
-import { ICommentsBlock } from '../types';
+import { ICommentsBlock } from '../models';
 
 export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading }) => {
   return (

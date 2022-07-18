@@ -7,8 +7,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import { IconButton, ImageList, ImageListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { IUser } from 'models';
 
-export const Index: React.FC = () => {
+interface IAddComment {
+  user: IUser;
+}
+
+export const AddComment: React.FC<IAddComment> = ({ user }) => {
   const [previewFiles, setPreviewFiles] = useState<any>();
   const [files, setFiles] = useState<any>();
   const [comment, setComment] = useState('');
@@ -33,15 +38,14 @@ export const Index: React.FC = () => {
     let formData = new FormData();
     formData.append('comment', comment);
     formData.append('files', files);
+    formData.append('userId', user.id);
+    // AddComment(formData)
   };
 
   return (
     <>
       <div className={styles.root}>
-        <Avatar
-          classes={{ root: styles.avatar }}
-          src="https://mui.com/static/images/avatar/5.jpg"
-        />
+        <Avatar classes={{ root: styles.avatar }} src={user.avatar} />
         <div className={styles.form}>
           <TextField
             label="Оставьте свой комментарий"

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Grid from '@mui/material/Grid';
 
@@ -14,13 +14,23 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import Loader from 'components/Loader';
 import { BASEURL } from '../constants';
+import { IUser } from 'models';
+import users from 'service/users';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
+  const [popUsers, setPopUsers] = useState<IUser[]>([]);
 
   useEffect(() => {
     dispatch(fetchAllPosts());
     dispatch(getTags());
+    users
+      .getUsers()
+      .then(({ data }) => {
+        console.log(data);
+        setPopUsers(data);
+      })
+      .catch((error) => console.log(error));
   }, [dispatch]);
 
   const { items, tags, isLoading, error } = useAppSelector((state) => state.posts);
@@ -42,8 +52,7 @@ export const Home = () => {
                 title={item.title}
                 imageUrl={`${BASEURL}/${item.previewImage}`}
                 user={{
-                  avatarUrl:
-                    'https://res.cloudinary.com/practicaldev/image/fetch/s--uigxYVRB--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/187971/a5359a24-b652-46be-8898-2c5df32aa6e0.png',
+                  avatarUrl: item.user.avatar,
                   fullName: item.user.fullName,
                   rating: item.user.rating,
                 }}
@@ -64,36 +73,7 @@ export const Home = () => {
         </Grid>
         <Grid xs={4} item>
           <Grid sx={{ position: 'sticky', top: '80px' }}>
-            <TopUsers
-              items={[
-                {
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                  fullName: 'Иван Иванов',
-                  rating: 367,
-                },
-                {
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                  fullName: 'Василий Пупкин',
-                  rating: 343,
-                },
-                {
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                  fullName: 'Петр Петров',
-                  rating: 212,
-                },
-                {
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                  fullName: 'Сергеев Сергей',
-                  rating: 156,
-                },
-                {
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                  fullName: 'Дмитрий Чесноков',
-                  rating: 11,
-                },
-              ]}
-              isLoading={isLoading}
-            />
+            <TopUsers items={popUsers} isLoading={isLoading} />
             <CommentsBlock
               items={[
                 {

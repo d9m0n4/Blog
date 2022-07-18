@@ -1,9 +1,9 @@
-import { IUser, IUserPostData } from './../types/index';
-import { API } from './axios';
+import { IUserPostData, AuthResponse } from '../models/index';
+import API from './axios';
 
 class AuthService {
   async login(postData: IUserPostData) {
-    return await API.post<IUser>('/auth/login', postData);
+    return await API.post<AuthResponse>('/auth/login', postData);
   }
   async registration(postData: IUserPostData) {
     return await API.post('/auth/registration', postData);

@@ -1,5 +1,4 @@
-import { IUser } from './../../types/index';
-import { login } from './../actions/auth';
+import { checkAuth, login } from './../actions/auth';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -24,6 +23,22 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     [login.rejected.type]: (state, action) => {
+      state.error = action.payload;
+      state.loadig = false;
+      state.user = null;
+    },
+
+    [checkAuth.pending.type]: (state) => {
+      state.error = { message: null };
+      state.loadig = true;
+      state.user = null;
+    },
+    [checkAuth.fulfilled.type]: (state, action) => {
+      state.error = { message: null };
+      state.loadig = false;
+      state.user = action.payload;
+    },
+    [checkAuth.rejected.type]: (state, action) => {
       state.error = action.payload;
       state.loadig = false;
       state.user = null;
