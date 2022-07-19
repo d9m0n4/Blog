@@ -28,8 +28,7 @@ export interface ITagsblock {
 }
 
 export interface ICommentsBlock {
-  items: Object[];
-
+  items: IComment[];
   isLoading: boolean;
 }
 
@@ -41,7 +40,7 @@ export interface IPost {
   user: IUser;
   likes: number;
   viewsCount: number;
-  comments?: IComments[];
+  comments: IComment[];
   previewImage: string;
   createdAt: string;
 }
@@ -60,13 +59,14 @@ export interface AuthResponse {
   refreshToken: string;
 }
 
-export interface IComments {
-  id?: null;
-  text?: null;
-  createdAt?: null;
-  updatedAt?: null;
-  postId?: null;
-  userId?: null;
+export interface IComment {
+  id: string;
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+  postId: string;
+  user: IUser;
+  files: string[];
 }
 
 export interface IPostData {

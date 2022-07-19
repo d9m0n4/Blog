@@ -9,34 +9,48 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import { ICommentsBlock } from '../models';
+import { BASEURL } from '../constants';
 
 export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading }) => {
+  console.log(items);
+
   return (
     <SideBlock title="Последние комментарии">
-      <List>
-        {(isLoading ? [...Array(5)] : items).map((obj, index) => (
-          <React.Fragment key={index}>
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
+      {items && (
+        <List>
+          {items.map((comment) => (
+            <React.Fragment key={comment.id}>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  {isLoading ? (
+                    <Skeleton variant="circular" width={40} height={40} />
+                  ) : (
+                    <Avatar alt={comment.user?.fullName} src={comment.user?.avatar} />
+                  )}
+                </ListItemAvatar>
                 {isLoading ? (
-                  <Skeleton variant="circular" width={40} height={40} />
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Skeleton variant="text" height={25} width={120} />
+                    <Skeleton variant="text" height={18} width={230} />
+                  </div>
                 ) : (
-                  <Avatar alt={obj.user.fullName} src={obj.user.avatarUrl} />
+                  <>
+                    <ListItemText primary={comment.user?.fullName} secondary={comment.text} />
+                    {comment.files.map((file) => (
+                      <img
+                        style={{ width: '60px', height: '40px', objectFit: 'cover' }}
+                        src={`${BASEURL}${file}`}
+                        alt=""
+                      />
+                    ))}
+                  </>
                 )}
-              </ListItemAvatar>
-              {isLoading ? (
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <Skeleton variant="text" height={25} width={120} />
-                  <Skeleton variant="text" height={18} width={230} />
-                </div>
-              ) : (
-                <ListItemText primary={obj.user.fullName} secondary={obj.text} />
-              )}
-            </ListItem>
-            <Divider variant="inset" component="li" />
-          </React.Fragment>
-        ))}
-      </List>
+              </ListItem>
+              <Divider variant="inset" component="li" />
+            </React.Fragment>
+          ))}
+        </List>
+      )}
     </SideBlock>
   );
 });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styles from './AddComment.module.scss';
 
@@ -8,20 +8,26 @@ import Button from '@mui/material/Button';
 import { IconButton, ImageList, ImageListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { IUser } from 'models';
+import comments from 'service/comments';
 
 interface IAddComment {
   user: IUser;
+  postId: string;
 }
 
-export const AddComment: React.FC<IAddComment> = ({ user }) => {
+export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
   const [previewFiles, setPreviewFiles] = useState<any>();
-  const [files, setFiles] = useState<any>();
+  const [files, setFiles] = useState<any>([]);
   const [comment, setComment] = useState('');
+
+  useEffect(() => {
+    console.log(files);
+  }, [files]);
 
   const setFileHandler = (e: any) => {
     const fileList = e.currentTarget.files;
     if (fileList.length > 3) {
-      alert('you may upload up maximum of five files');
+      alert('you may upload up maximum of free files');
       return;
     }
     const f = [];
@@ -30,16 +36,24 @@ export const AddComment: React.FC<IAddComment> = ({ user }) => {
       const fileUrl = URL.createObjectURL(file);
       f.push(fileUrl);
     }
-    setFiles(fileList);
+    setFiles([...fileList]);
     setPreviewFiles(f);
   };
+
+  useEffect(() => {
+    console.log(files);
+  }, [files]);
 
   const submit = () => {
     let formData = new FormData();
     formData.append('comment', comment);
-    formData.append('files', files);
     formData.append('userId', user.id);
-    // AddComment(formData)
+    formData.append('postId', postId);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      formData.append('file', file);
+    }
+    comments.createComment(formData);
   };
 
   return (
