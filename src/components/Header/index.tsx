@@ -9,9 +9,10 @@ import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { IconButton, InputBase } from '@mui/material';
 import { useAppSelector } from 'hooks/redux';
+import { UserInfo } from 'components/UserInfo';
 
 export const Header = () => {
-  const { user, error, loadig } = useAppSelector((state) => state.auth);
+  const { user, error, loading } = useAppSelector((state) => state.auth);
 
   const onClickLogout = () => {};
 
@@ -19,9 +20,9 @@ export const Header = () => {
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
-          <a className={styles.logo} href="/">
+          <Link className={styles.logo} to="/">
             {`</MY BLOG>`}
-          </a>
+          </Link>
           <div className={styles.search}>
             <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
               <Search />
@@ -35,15 +36,14 @@ export const Header = () => {
           <div className={styles.buttons}>
             {user ? (
               <>
-                <Link to="/posts/create"></Link>
+                <Link to="/profile">
+                  <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar={true} />
+                </Link>
                 <Link to="/posts/create">
                   <Button variant="contained" sx={{ borderRadius: 16 }}>
                     Написать статью
                   </Button>
                 </Link>
-                <Button onClick={onClickLogout} variant="outlined" sx={{ borderRadius: 16 }}>
-                  Выйти
-                </Button>
               </>
             ) : (
               <>

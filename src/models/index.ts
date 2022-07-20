@@ -12,9 +12,10 @@ interface ReactElement<
 }
 
 export interface IUserInfo {
-  avatarUrl: string;
+  avatarUrl?: string;
   fullName: string;
-  rating: string;
+  rating?: string;
+  onlyAvatar: boolean;
 }
 
 export interface ISideBlock {

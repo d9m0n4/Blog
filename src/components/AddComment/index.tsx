@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import styles from './AddComment.module.scss';
 
@@ -9,6 +9,7 @@ import { IconButton, ImageList, ImageListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { IUser } from 'models';
 import comments from 'service/comments';
+import { UserInfo } from 'components/UserInfo';
 
 interface IAddComment {
   user: IUser;
@@ -19,10 +20,6 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
   const [previewFiles, setPreviewFiles] = useState<any>();
   const [files, setFiles] = useState<any>([]);
   const [comment, setComment] = useState('');
-
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
 
   const setFileHandler = (e: any) => {
     const fileList = e.currentTarget.files;
@@ -40,10 +37,6 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
     setPreviewFiles(f);
   };
 
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
-
   const submit = () => {
     let formData = new FormData();
     formData.append('comment', comment);
@@ -53,13 +46,15 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
       const file = files[i];
       formData.append('file', file);
     }
-    comments.createComment(formData);
+    comments.createComment(formData).then((data) => console.log(data));
   };
 
   return (
     <>
       <div className={styles.root}>
-        <Avatar classes={{ root: styles.avatar }} src={user.avatar} />
+        <div className={styles.avatar}>
+          <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar={true} />
+        </div>
         <div className={styles.form}>
           <TextField
             label="Оставьте свой комментарий"

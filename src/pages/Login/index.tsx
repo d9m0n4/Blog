@@ -41,6 +41,7 @@ export const Login = () => {
             label="Пароль"
             name="password"
             fullWidth
+            type="password"
           />
           <Button type="submit" size="large" variant="contained" fullWidth>
             Войти

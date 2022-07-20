@@ -27,7 +27,6 @@ export const Home = () => {
     users
       .getUsers()
       .then(({ data }) => {
-        console.log(data);
         setPopUsers(data);
       })
       .catch((error) => console.log(error));
@@ -52,6 +51,7 @@ export const Home = () => {
                 title={item.title}
                 imageUrl={`${BASEURL}/${item.previewImage}`}
                 user={{
+                  id: item.user.id,
                   avatarUrl: item.user.avatar,
                   fullName: item.user.fullName,
                   rating: item.user.rating,

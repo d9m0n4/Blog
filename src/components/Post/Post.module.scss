@@ -47,8 +47,8 @@ $blue: #4361ee;
 
 .content {
   p {
-    font-size: 22px;
-    line-height: 36px;
+    font-size: 16px;
+    line-height: 18px;
   }
   img {
     width: 100%;
@@ -97,6 +97,7 @@ $blue: #4361ee;
     justify-content: space-between;
     align-items: center;
     padding: 4px 0;
+    margin-bottom: 4px;
     .date {
       color: #fe9870;
     }
@@ -141,9 +142,11 @@ $blue: #4361ee;
       font-size: 18px;
       margin-right: 5px;
     }
-    &:hover {
-      opacity: 1;
-      cursor: pointer;
+    &.postDetailItem {
+      &:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
     }
   }
 }
@@ -200,6 +203,10 @@ $blue: #4361ee;
   border-radius: 8px;
   opacity: 0;
   transition: all 0.15s ease-in-out;
+  &.Top {
+    top: 16px;
+    bottom: initial;
+  }
 }
 .last {
   order: 99;

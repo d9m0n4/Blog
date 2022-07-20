@@ -51,7 +51,8 @@ export const FullPost = () => {
             viewsCount={postData.viewsCount}
             commentsCount={postData?.comments?.length}
             tags={postData.tags}
-            isFullPost>
+            isFullPost
+            isEditable>
             <ReactMarkdown
               rehypePlugins={[rehypeRaw]}
               children={postData.text}
@@ -74,7 +75,9 @@ export const FullPost = () => {
             />
           </Post>
           {user && <AddComment user={user} postId={postData.id} />}
-          <CommentsBlock items={postData.comments} isLoading={false} />
+          {postData.comments.length > 0 && (
+            <CommentsBlock items={postData.comments} isLoading={false} />
+          )}
         </>
       )}
     </>

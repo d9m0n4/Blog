@@ -9,15 +9,20 @@ import styles from './AddPost.module.scss';
 import EasyMDE from 'easymde';
 import posts from 'service/posts';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from 'hooks/redux';
 
 export const AddPost = () => {
+  const autosavedValue = localStorage.getItem(`smde_1`) || '';
+
   const navigate = useNavigate();
-  const [text, settext] = useState('');
+  const [text, settext] = useState(autosavedValue);
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
 
   const [imageUrl, setImageUrl] = useState('');
   const [image, setImage] = useState<any>();
+
+  const { user } = useAppSelector((state) => state.auth);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -36,7 +41,7 @@ export const AddPost = () => {
     formData.append('title', title);
     formData.append('text', text);
     formData.append('tags', tags);
-    formData.append('userId', '3f4cd372-0f14-42d2-9d6e-2c69593bb85c');
+    formData.append('userId', user?.id!);
 
     posts.createPost(formData).then(({ data }) => {
       navigate(`/posts/${data.id}`);
@@ -49,9 +54,9 @@ export const AddPost = () => {
 
   const onClickRemoveImage = () => {};
 
-  const onChange = React.useCallback((e: string) => {
+  const onChange = (e: string) => {
     settext(e);
-  }, []);
+  };
 
   const uploadImage = async (image: any, onSuccess: any, onError: any) => {
     try {
@@ -67,11 +72,13 @@ export const AddPost = () => {
       ({
         spellChecker: false,
         showIcons: ['strikethrough', 'table', 'code', 'upload-image'],
+        shortcuts: { toggleFullScreen: null, toggleSideBySide: null },
+        hideIcons: ['quote', 'side-by-side', 'fullscreen'],
         previewImagesInEditor: true,
         uploadImage: true,
+        autofocus: true,
         imageUploadFunction: uploadImage,
         maxHeight: '400px',
-        autofocus: true,
         placeholder: 'Введите текст...',
         status: false,
         autosave: {
@@ -123,12 +130,7 @@ export const AddPost = () => {
         onChange={setTagNames}
         fullWidth
       />
-      <SimpleMDE
-        className={styles.editor}
-        value={text}
-        onChange={onChange}
-        options={{ ...options }}
-      />
+      <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button onClick={submit} size="medium" sx={{ borderRadius: '16px' }} variant="contained">
           Опубликовать

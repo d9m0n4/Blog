@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { UserInfo } from 'components/UserInfo';
 import moment from 'moment';
 import 'moment/locale/ru';
+import { useAppSelector } from 'hooks/redux';
 
 export const Post: React.FC<any> = ({
   id,
@@ -29,9 +30,9 @@ export const Post: React.FC<any> = ({
   isEditable,
   likesCount,
 }) => {
-  if (isLoading) {
-    return <PostSkeleton />;
-  }
+  const { user: currentUser } = useAppSelector((state) => state.auth);
+
+  isEditable = currentUser && user.id === currentUser?.id;
 
   const onClickRemove = () => {};
 
@@ -40,13 +41,22 @@ export const Post: React.FC<any> = ({
     return moment(date).format('LLL');
   };
 
+  if (isLoading) {
+    return <PostSkeleton />;
+  }
+
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       <div className={styles.wrapper}>
         <div className={styles.indention}>
           {isFullPost && (
             <div className={styles.author}>
-              <UserInfo avatarUrl={user.avatarUrl} fullName={user.fullName} rating={user.rating} />
+              <UserInfo
+                avatarUrl={user.avatarUrl}
+                fullName={user.fullName}
+                rating={user.rating}
+                onlyAvatar={false}
+              />
               <span className={styles.date}>{toDate(createdAt)}</span>
             </div>
           )}
@@ -77,19 +87,21 @@ export const Post: React.FC<any> = ({
               <EyeIcon />
               <span>{viewsCount}</span>
             </li>
-            <li>
+            <li className={styles.postDetailItem}>
               <CommentIcon />
               <span>{commentsCount}</span>
             </li>
-            <li>
-              <FavoriteBorderIcon />
-              <span>{likesCount}</span>
-            </li>
+            {
+              <li className={styles.postDetailItem}>
+                <FavoriteBorderIcon />
+                <span>{likesCount}</span>
+              </li>
+            }
           </ul>
         </div>
       </div>
       {isEditable && (
-        <div className={styles.editButtons}>
+        <div className={clsx(styles.editButtons, { [styles.Top]: isFullPost })}>
           <Link to={`/posts/edit/${id}`}>
             <IconButton color="info">
               <EditIcon />

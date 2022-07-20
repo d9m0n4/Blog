@@ -1,10 +1,17 @@
+import { IUser } from './../../models/index';
 import { checkAuth, login } from './../actions/auth';
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+interface IAuth {
+  user: IUser | null;
+  error: { message: string | null };
+  loading: boolean;
+}
+
+const initialState: IAuth = {
   user: null,
-  error: { message: null },
-  loadig: false,
+  error: { message: '' },
+  loading: false,
 };
 
 const authSlice = createSlice({
@@ -14,33 +21,33 @@ const authSlice = createSlice({
   extraReducers: {
     [login.pending.type]: (state) => {
       state.error = { message: null };
-      state.loadig = true;
+      state.loading = true;
       state.user = null;
     },
     [login.fulfilled.type]: (state, action) => {
       state.error = { message: null };
-      state.loadig = false;
+      state.loading = false;
       state.user = action.payload;
     },
     [login.rejected.type]: (state, action) => {
       state.error = action.payload;
-      state.loadig = false;
+      state.loading = false;
       state.user = null;
     },
 
     [checkAuth.pending.type]: (state) => {
       state.error = { message: null };
-      state.loadig = true;
+      state.loading = true;
       state.user = null;
     },
     [checkAuth.fulfilled.type]: (state, action) => {
       state.error = { message: null };
-      state.loadig = false;
+      state.loading = false;
       state.user = action.payload;
     },
     [checkAuth.rejected.type]: (state, action) => {
       state.error = action.payload;
-      state.loadig = false;
+      state.loading = false;
       state.user = null;
     },
   },
