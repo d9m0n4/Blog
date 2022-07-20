@@ -99,7 +99,13 @@ export const AddPost = () => {
         sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
         Загрузить превью
       </Button>
-      <input ref={inputRef} type="file" onChange={handleChangeFile} hidden />
+      <input
+        ref={inputRef}
+        type="file"
+        onChange={handleChangeFile}
+        hidden
+        accept=".jpg, .png, .jpeg"
+      />
       {imageUrl && (
         <Button
           variant="contained"

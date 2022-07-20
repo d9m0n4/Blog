@@ -10,6 +10,7 @@ import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import { ICommentsBlock } from '../models';
 import { BASEURL } from '../constants';
+import { UserInfo } from './UserInfo';
 
 export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading }) => {
   console.log(items);
@@ -25,7 +26,11 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading 
                   {isLoading ? (
                     <Skeleton variant="circular" width={40} height={40} />
                   ) : (
-                    <Avatar alt={comment.user?.fullName} src={comment.user?.avatar} />
+                    <UserInfo
+                      avatarUrl={comment.user.avatar}
+                      fullName={comment.user.fullName}
+                      onlyAvatar={true}
+                    />
                   )}
                 </ListItemAvatar>
                 {isLoading ? (

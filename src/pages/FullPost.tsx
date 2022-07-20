@@ -12,6 +12,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { BASEURL } from '../constants';
 import { useAppSelector } from 'hooks/redux';
+import PageProgress from 'components/pageProgress';
 
 export const FullPost = () => {
   const { id } = useParams();
@@ -38,6 +39,7 @@ export const FullPost = () => {
     <>
       {postData && (
         <>
+          <PageProgress />
           <Post
             id={postData.id}
             title={postData.title}

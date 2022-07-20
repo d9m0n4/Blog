@@ -16,6 +16,7 @@ import Loader from 'components/Loader';
 import { BASEURL } from '../constants';
 import { IUser } from 'models';
 import users from 'service/users';
+import usePagePercent from 'hooks/usePagePercent';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +34,6 @@ export const Home = () => {
   }, [dispatch]);
 
   const { items, tags, isLoading, error } = useAppSelector((state) => state.posts);
-
   return (
     <>
       {error && <Alert openState={true} message={'error'} />}

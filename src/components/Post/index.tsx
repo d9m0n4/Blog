@@ -14,6 +14,7 @@ import { UserInfo } from 'components/UserInfo';
 import moment from 'moment';
 import 'moment/locale/ru';
 import { useAppSelector } from 'hooks/redux';
+import PageProgress from 'components/pageProgress';
 
 export const Post: React.FC<any> = ({
   id,
@@ -46,81 +47,83 @@ export const Post: React.FC<any> = ({
   }
 
   return (
-    <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
-      <div className={styles.wrapper}>
-        <div className={styles.indention}>
-          {isFullPost && (
-            <div className={styles.author}>
-              <UserInfo
-                avatarUrl={user.avatarUrl}
-                fullName={user.fullName}
-                rating={user.rating}
-                onlyAvatar={false}
-              />
-              <span className={styles.date}>{toDate(createdAt)}</span>
-            </div>
-          )}
-          <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
-            {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
-          </h2>
+    <>
+      <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
+        <div className={styles.wrapper}>
+          <div className={styles.indention}>
+            {isFullPost && (
+              <div className={styles.author}>
+                <UserInfo
+                  avatarUrl={user.avatarUrl}
+                  fullName={user.fullName}
+                  rating={user.rating}
+                  onlyAvatar={false}
+                />
+                <span className={styles.date}>{toDate(createdAt)}</span>
+              </div>
+            )}
+            <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
+              {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
+            </h2>
 
-          <ul className={styles.tags}>
-            {tags &&
-              tags.map((name: string) => (
-                <li key={name}>
-                  <Link to={`/tag/${name}`}>#{name}</Link>
-                </li>
-              ))}
-          </ul>
-          {children && (
-            <div
-              className={clsx(
-                styles.content,
-                { [styles.last]: isFullPost },
-                { [styles.preview]: !isFullPost },
-              )}>
-              {children}
-            </div>
-          )}
-          <ul className={styles.postDetails}>
-            <li>
-              <EyeIcon />
-              <span>{viewsCount}</span>
-            </li>
-            <li className={styles.postDetailItem}>
-              <CommentIcon />
-              <span>{commentsCount}</span>
-            </li>
-            {
-              <li className={styles.postDetailItem}>
-                <FavoriteBorderIcon />
-                <span>{likesCount}</span>
+            <ul className={styles.tags}>
+              {tags &&
+                tags.map((name: string) => (
+                  <li key={name}>
+                    <Link to={`/tag/${name}`}>#{name}</Link>
+                  </li>
+                ))}
+            </ul>
+            {children && (
+              <div
+                className={clsx(
+                  styles.content,
+                  { [styles.last]: isFullPost },
+                  { [styles.preview]: !isFullPost },
+                )}>
+                {children}
+              </div>
+            )}
+            <ul className={styles.postDetails}>
+              <li>
+                <EyeIcon />
+                <span>{viewsCount}</span>
               </li>
-            }
-          </ul>
+              <li className={styles.postDetailItem}>
+                <CommentIcon />
+                <span>{commentsCount}</span>
+              </li>
+              {
+                <li className={styles.postDetailItem}>
+                  <FavoriteBorderIcon />
+                  <span>{likesCount}</span>
+                </li>
+              }
+            </ul>
+          </div>
         </div>
-      </div>
-      {isEditable && (
-        <div className={clsx(styles.editButtons, { [styles.Top]: isFullPost })}>
-          <Link to={`/posts/edit/${id}`}>
-            <IconButton color="info">
-              <EditIcon />
+        {isEditable && (
+          <div className={clsx(styles.editButtons, { [styles.Top]: isFullPost })}>
+            <Link to={`/posts/edit/${id}`}>
+              <IconButton color="info">
+                <EditIcon />
+              </IconButton>
+            </Link>
+            <IconButton onClick={onClickRemove} color="secondary">
+              <DeleteIcon />
             </IconButton>
-          </Link>
-          <IconButton onClick={onClickRemove} color="secondary">
-            <DeleteIcon />
-          </IconButton>
-        </div>
-      )}
-      {imageUrl && (
-        <div className={clsx(styles.imageWrapper, { [styles.imageHeight]: isFullPost })}>
-          <img
-            className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
-            src={imageUrl}
-            alt={title}
-          />
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+        {imageUrl && (
+          <div className={clsx(styles.imageWrapper, { [styles.imageHeight]: isFullPost })}>
+            <img
+              className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
+              src={imageUrl}
+              alt={title}
+            />
+          </div>
+        )}
+      </div>
+    </>
   );
 };

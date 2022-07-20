@@ -8,6 +8,7 @@ import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import styles from './TopUsers.module.scss';
 import { IUser } from 'models';
+import { UserInfo } from 'components/UserInfo';
 
 interface ITopUsers {
   items: IUser[];
@@ -33,7 +34,7 @@ export const TopUsers: React.FC<ITopUsers> = memo(({ items, isLoading }) => {
               {isLoading ? (
                 <Skeleton variant="circular" width={40} height={40} />
               ) : (
-                <Avatar alt={user.fullName} src={user.avatar} />
+                <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar={true} />
               )}
             </ListItemAvatar>
             {isLoading ? (
