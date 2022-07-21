@@ -14,14 +14,12 @@ import { UserInfo } from 'components/UserInfo';
 export const Header = () => {
   const { user, error, loading } = useAppSelector((state) => state.auth);
 
-  const onClickLogout = () => {};
-
   return (
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
           <Link className={styles.logo} to="/">
-            {`</MY BLOG>`}
+            {`<MY BLOG />`}
           </Link>
           <div className={styles.search}>
             <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">

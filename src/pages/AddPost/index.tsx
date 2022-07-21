@@ -10,6 +10,7 @@ import EasyMDE from 'easymde';
 import posts from 'service/posts';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'hooks/redux';
+import useUploadFile from 'hooks/useUploadFile';
 
 export const AddPost = () => {
   const autosavedValue = localStorage.getItem(`smde_1`) || '';
@@ -19,21 +20,11 @@ export const AddPost = () => {
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
 
-  const [imageUrl, setImageUrl] = useState('');
-  const [image, setImage] = useState<any>();
-
   const { user } = useAppSelector((state) => state.auth);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e?.target?.files;
-    if (file) {
-      const objectUrl = URL.createObjectURL(file[0]);
-      setImageUrl(objectUrl);
-      setImage(file[0]);
-    }
-  };
+  const { image, imageUrl, handleChangeFile } = useUploadFile();
 
   const submit = () => {
     let formData = new FormData();

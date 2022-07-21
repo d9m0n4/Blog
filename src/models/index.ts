@@ -16,6 +16,8 @@ export interface IUserInfo {
   fullName: string;
   rating?: string;
   onlyAvatar: boolean;
+  onClick?: () => void;
+  width?: number;
 }
 
 export interface ISideBlock {
@@ -49,7 +51,7 @@ export interface IUser {
   id: string;
   email: string;
   fullName: string;
-  createdAt: Date;
+  createdAt: string;
   rating: number;
   avatar?: string;
 }
@@ -87,6 +89,10 @@ export interface IUserPostData {
 export interface IErrorResponse {
   errors: [];
   message: string;
+}
+
+export interface IUserContext {
+  user: IUser;
 }
 
 export type Tag = string;

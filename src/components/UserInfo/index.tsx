@@ -2,13 +2,27 @@ import React from 'react';
 import { Avatar } from '@mui/material';
 import { IUserInfo } from '../../models';
 import styles from './UserInfo.module.scss';
-import stringToColor from 'helpers/stringToColor';
-import stringAvatar from 'helpers/stringAvatar';
+import stringToColor from 'utils/stringToColor';
+import stringAvatar from 'utils/stringAvatar';
 
-export const UserInfo: React.FC<IUserInfo> = ({ avatarUrl, fullName, onlyAvatar }) => {
+export const UserInfo: React.FC<IUserInfo> = ({
+  avatarUrl,
+  fullName,
+  onlyAvatar,
+  onClick,
+  width,
+}) => {
   return (
     <div className={styles.root}>
-      <Avatar alt={fullName} src={avatarUrl} sx={{ bgcolor: stringToColor(fullName) }}>
+      <Avatar
+        onClick={onClick}
+        alt={fullName}
+        src={avatarUrl}
+        sx={{
+          bgcolor: stringToColor(fullName),
+          width: width ? width : '40px',
+          height: width ? width : '40px',
+        }}>
         {!avatarUrl && stringAvatar(fullName)}
       </Avatar>
       {!onlyAvatar && (

@@ -11,10 +11,8 @@ import styles from './Post.module.scss';
 import { PostSkeleton } from './Skeleton';
 import { Link } from 'react-router-dom';
 import { UserInfo } from 'components/UserInfo';
-import moment from 'moment';
-import 'moment/locale/ru';
 import { useAppSelector } from 'hooks/redux';
-import PageProgress from 'components/pageProgress';
+import { toDate } from 'utils/toDate';
 
 export const Post: React.FC<any> = ({
   id,
@@ -36,11 +34,6 @@ export const Post: React.FC<any> = ({
   isEditable = currentUser && user.id === currentUser?.id;
 
   const onClickRemove = () => {};
-
-  const toDate = (date: string) => {
-    moment.locale('ru');
-    return moment(date).format('LLL');
-  };
 
   if (isLoading) {
     return <PostSkeleton />;

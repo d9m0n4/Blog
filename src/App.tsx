@@ -13,6 +13,8 @@ import { checkAuth } from 'store/actions/auth';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import Alert from 'components/Alert';
 import Profile from 'pages/Profile';
+import MyPosts from 'pages/Profile/Posts';
+import MyProfile from 'pages/Profile/MyProfile';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -34,7 +36,10 @@ function App() {
           <Routes>
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile />}>
+              <Route index element={<MyProfile />} />
+              <Route path="posts" element={<MyPosts />} />
+            </Route>
             <Route path="posts/:id" element={<FullPost />} />
             <Route path="posts/create" element={<AddPost />} />
             <Route path="registration" element={<Registration />} />

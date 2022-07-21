@@ -1,0 +1,15 @@
+.navLink {
+  width: 100%;
+  padding: 8px 16px 8px 16px;
+  text-decoration: none;
+  color: #3e5060;
+
+  &:hover {
+    color: #1c5998;
+  }
+}
+
+.active {
+  color: #1c5998;
+  border-right: 2px solid #1c5998;
+}

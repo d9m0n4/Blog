@@ -12,7 +12,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { BASEURL } from '../constants';
 import { useAppSelector } from 'hooks/redux';
-import PageProgress from 'components/pageProgress';
+import PageProgress from 'components/PageProgress';
 
 export const FullPost = () => {
   const { id } = useParams();

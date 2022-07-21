@@ -1,0 +1,32 @@
+.date {
+  color: #fe9870;
+}
+
+.rating {
+  margin-left: 8px;
+}
+.userAvatar {
+  position: relative;
+
+  &:hover {
+    transition: all 200ms;
+    .upload {
+      opacity: 1;
+    }
+  }
+  .upload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 100%;
+    opacity: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+}

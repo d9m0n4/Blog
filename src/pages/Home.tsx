@@ -61,8 +61,7 @@ export const Home = () => {
                 commentsCount={item.comments?.length}
                 tags={item.tags}
                 likesCount={item.likes}
-                isLoading={isLoading}
-                isEditable>
+                isLoading={isLoading}>
                 <ReactMarkdown
                   rehypePlugins={[rehypeRaw]}
                   children={item.text.split(/\.|-|:|;/, 1).join()}

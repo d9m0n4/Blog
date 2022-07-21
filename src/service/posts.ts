@@ -14,6 +14,9 @@ class PostService {
   async fetchPostsByTag(tag: string) {
     return await API.get(`/posts/tags/${tag}`);
   }
+  async fetchUserPosts(id: string) {
+    return await API.get(`/posts/user/${id}`);
+  }
   async getTags() {
     return await API.get('/tags');
   }
