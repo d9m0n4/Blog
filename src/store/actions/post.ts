@@ -33,3 +33,15 @@ export const getTags = createAsyncThunk('posts/getTags', async (_, { rejectWithV
     return rejectWithValue(error);
   }
 });
+
+export const searchPosts = createAsyncThunk(
+  'posts/searchPosts',
+  async (query: string, { rejectWithValue }) => {
+    try {
+      const { data } = await PostService.searchPosts(query);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);

@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 
-import styles from './AddComment.module.scss';
-
 import TextField from '@mui/material/TextField';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import { IconButton, ImageList, ImageListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { IUser } from 'models';
 import comments from 'service/comments';
 import { UserInfo } from 'components/UserInfo';
+import { useAppDispatch } from 'hooks/redux';
+
+import styles from './AddComment.module.scss';
+import { postActions } from 'store/slices/post';
 
 interface IAddComment {
   user: IUser;
@@ -46,7 +47,9 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
       const file = files[i];
       formData.append('file', file);
     }
-    comments.createComment(formData).then((data) => console.log(data));
+    comments.createComment(formData);
+    setComment('');
+    setFiles([]);
   };
 
   return (

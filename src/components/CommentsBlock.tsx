@@ -42,11 +42,13 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading 
                   <>
                     <ListItemText primary={comment.user?.fullName} secondary={comment.text} />
                     {comment.files.map((file) => (
-                      <img
-                        style={{ width: '60px', height: '40px', objectFit: 'cover' }}
-                        src={`${BASEURL}${file}`}
-                        alt=""
-                      />
+                      <span key={file} style={{ margin: '2px' }}>
+                        <img
+                          style={{ width: '60px', height: '40px', objectFit: 'cover' }}
+                          src={`${BASEURL}${file}`}
+                          alt=""
+                        />
+                      </span>
                     ))}
                   </>
                 )}

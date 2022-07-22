@@ -23,7 +23,7 @@ function App() {
     if (localStorage.getItem('token')) {
       dispatch(checkAuth());
     }
-  }, []);
+  }, [dispatch]);
 
   const { error } = useAppSelector((state) => state.auth);
 

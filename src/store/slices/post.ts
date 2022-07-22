@@ -1,6 +1,7 @@
+import { IComment } from './../../models/index';
 import { IPost } from '../../models/index';
-import { fetchAllPosts, fetchPostsByTag, getTags } from '../actions/post';
-import { createSlice } from '@reduxjs/toolkit';
+import { fetchAllPosts, fetchPostsByTag, getTags, searchPosts } from '../actions/post';
+import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type SliceState = {
   items: IPost[] | [];
@@ -9,12 +10,21 @@ type SliceState = {
   error: any;
 };
 
+type ActionPayload = {
+  id: string;
+  comment: IComment;
+};
+
 const initialState: SliceState = {
   items: [],
   tags: [],
   isLoading: false,
   error: null,
 };
+
+// const addComment: CaseReducer<SliceState, PayloadAction<ActionPayload>> = (state, action) => {
+
+// };
 
 const postSlice = createSlice({
   name: 'posts',
@@ -66,7 +76,23 @@ const postSlice = createSlice({
       state.error = null;
       state.tags = action.payload;
     },
+    [searchPosts.pending.type]: (state) => {
+      state.isLoading = true;
+      state.error = null;
+      state.items = [];
+    },
+    [searchPosts.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.error;
+      state.items = [];
+    },
+    [searchPosts.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      state.items = action.payload;
+    },
   },
 });
 
 export const postsReducer = postSlice.reducer;
+export const postActions = postSlice.actions;

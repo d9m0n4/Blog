@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import posts from 'service/posts';
 
-const MyPosts = () => {
+const MyPosts = React.memo(() => {
   const { user } = useOutletContext<IUserContext>();
   const [postsData, setPostsData] = useState<IPost[]>();
 
@@ -39,6 +39,6 @@ const MyPosts = () => {
       ))}
     </>
   );
-};
+});
 
 export default MyPosts;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 
 import Container from '@mui/material/Container';
@@ -8,11 +8,22 @@ import { Search } from '@mui/icons-material';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { IconButton, InputBase } from '@mui/material';
-import { useAppSelector } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { UserInfo } from 'components/UserInfo';
+import useDebounce from 'hooks/useDebounce';
+import { searchPosts } from 'store/actions/post';
 
 export const Header = () => {
   const { user, error, loading } = useAppSelector((state) => state.auth);
+  const [searchValue, setSearchValue] = useState('');
+  const debouncedValue = useDebounce(searchValue, 1000);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (debouncedValue.length > 3) {
+      dispatch(searchPosts(debouncedValue));
+    }
+  }, [debouncedValue, dispatch]);
 
   return (
     <div className={styles.root}>
@@ -29,6 +40,8 @@ export const Header = () => {
               sx={{ ml: 1, flex: 1 }}
               placeholder="Поиск... "
               inputProps={{ 'aria-label': 'Поиск... ' }}
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
             />
           </div>
           <div className={styles.buttons}>
