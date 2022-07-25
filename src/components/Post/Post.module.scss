@@ -211,3 +211,10 @@ $blue: #4361ee;
 .last {
   order: 99;
 }
+
+.userLink {
+  color: #31364c;
+  &:hover {
+    color: #1c5998;
+  }
+}

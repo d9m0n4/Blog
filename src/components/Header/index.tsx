@@ -7,21 +7,28 @@ import { Search } from '@mui/icons-material';
 
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
-import { IconButton, InputBase } from '@mui/material';
+import { ClickAwayListener, IconButton, InputBase } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { UserInfo } from 'components/UserInfo';
 import useDebounce from 'hooks/useDebounce';
-import { searchPosts } from 'store/actions/post';
+import { fetchAllPosts, searchPosts } from 'store/actions/post';
 
 export const Header = () => {
-  const { user, error, loading } = useAppSelector((state) => state.auth);
+  const { user, error, loading, isAuth } = useAppSelector((state) => state.auth);
   const [searchValue, setSearchValue] = useState('');
   const debouncedValue = useDebounce(searchValue, 1000);
   const dispatch = useAppDispatch();
 
+  const handleClickAway = () => {
+    setSearchValue('');
+  };
+
   useEffect(() => {
     if (debouncedValue.length > 3) {
       dispatch(searchPosts(debouncedValue));
+    }
+    if (!debouncedValue.length) {
+      dispatch(fetchAllPosts());
     }
   }, [debouncedValue, dispatch]);
 
@@ -32,20 +39,23 @@ export const Header = () => {
           <Link className={styles.logo} to="/">
             {`<MY BLOG />`}
           </Link>
-          <div className={styles.search}>
-            <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-              <Search />
-            </IconButton>
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Поиск... "
-              inputProps={{ 'aria-label': 'Поиск... ' }}
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-          </div>
+
+          <ClickAwayListener onClickAway={handleClickAway}>
+            <div className={styles.search}>
+              <Search sx={{ color: 'gray' }} />
+
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Поиск... "
+                inputProps={{ 'aria-label': 'Поиск... ' }}
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+            </div>
+          </ClickAwayListener>
+
           <div className={styles.buttons}>
-            {user ? (
+            {isAuth ? (
               <>
                 <Link to="/profile">
                   <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar={true} />

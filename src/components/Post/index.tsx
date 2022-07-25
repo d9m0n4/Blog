@@ -46,12 +46,16 @@ export const Post: React.FC<any> = ({
           <div className={styles.indention}>
             {isFullPost && (
               <div className={styles.author}>
-                <UserInfo
-                  avatarUrl={user.avatarUrl}
-                  fullName={user.fullName}
-                  rating={user.rating}
-                  onlyAvatar={false}
-                />
+                <Link
+                  to={isEditable ? `/profile` : `/user/${user.id}/posts`}
+                  className={styles.userLink}>
+                  <UserInfo
+                    avatarUrl={user.avatarUrl}
+                    fullName={user.fullName}
+                    rating={user.rating}
+                    onlyAvatar={false}
+                  />
+                </Link>
                 <span className={styles.date}>{toDate(createdAt)}</span>
               </div>
             )}

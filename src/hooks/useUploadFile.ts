@@ -12,7 +12,11 @@ const useUploadFile = () => {
       setImage(file[0]);
     }
   };
-  return { imageUrl, image, handleChangeFile };
+  const handleRemoveImage = () => {
+    setImageUrl('');
+    setImage(null);
+  };
+  return { imageUrl, image, handleChangeFile, handleRemoveImage };
 };
 
 export default useUploadFile;

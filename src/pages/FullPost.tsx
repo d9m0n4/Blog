@@ -18,7 +18,7 @@ export const FullPost = () => {
   const { id } = useParams();
   const [postData, setPostData] = useState<IPost>();
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, isAuth } = useAppSelector((state) => state.auth);
 
   const fetchPost = async (id: string) => {
     return await posts
@@ -45,6 +45,7 @@ export const FullPost = () => {
             title={postData.title}
             imageUrl={`${BASEURL}/${postData.previewImage}`}
             user={{
+              id: postData.user.id,
               avatarUrl: postData.user.avatar,
               fullName: postData.user.fullName,
               rating: postData.user.rating,
@@ -76,7 +77,7 @@ export const FullPost = () => {
               }}
             />
           </Post>
-          {user && <AddComment user={user} postId={postData.id} />}
+          {isAuth && <AddComment user={user} postId={postData.id} />}
           {postData.comments.length > 0 && (
             <CommentsBlock items={postData.comments} isLoading={false} />
           )}

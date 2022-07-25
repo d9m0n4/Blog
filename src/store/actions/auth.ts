@@ -46,3 +46,13 @@ export const checkAuth = createAsyncThunk('auth/check', async (_, { rejectWithVa
     return rejectWithValue(error);
   }
 });
+
+export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
+  try {
+    await AuthService.logout();
+    localStorage.removeItem('token');
+    return;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});

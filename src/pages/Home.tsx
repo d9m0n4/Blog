@@ -16,7 +16,6 @@ import Loader from 'components/Loader';
 import { BASEURL } from '../constants';
 import { IUser } from 'models';
 import users from 'service/users';
-import usePagePercent from 'hooks/usePagePercent';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -44,30 +43,34 @@ export const Home = () => {
           {isLoading ? (
             <Loader />
           ) : (
-            items.map((item) => (
-              <Post
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                imageUrl={`${BASEURL}/${item.previewImage}`}
-                user={{
-                  id: item.user.id,
-                  avatarUrl: item.user.avatar,
-                  fullName: item.user.fullName,
-                  rating: item.user.rating,
-                }}
-                createdAt={item.createdAt}
-                viewsCount={item.viewsCount}
-                commentsCount={item.comments?.length}
-                tags={item.tags}
-                likesCount={item.likes}
-                isLoading={isLoading}>
-                <ReactMarkdown
-                  rehypePlugins={[rehypeRaw]}
-                  children={item.text.split(/\.|-|:|;/, 1).join()}
-                />
-              </Post>
-            ))
+            <>
+              {items.length
+                ? items.map((item) => (
+                    <Post
+                      key={item.id}
+                      id={item.id}
+                      title={item.title}
+                      imageUrl={`${BASEURL}/${item.previewImage}`}
+                      user={{
+                        id: item.user.id,
+                        avatarUrl: item.user.avatar,
+                        fullName: item.user.fullName,
+                        rating: item.user.rating,
+                      }}
+                      createdAt={item.createdAt}
+                      viewsCount={item.viewsCount}
+                      commentsCount={item.comments?.length}
+                      tags={item.tags}
+                      likesCount={item.likes}
+                      isLoading={isLoading}>
+                      <ReactMarkdown
+                        rehypePlugins={[rehypeRaw]}
+                        children={item.text.split(/\.|-|:|;/, 1).join()}
+                      />
+                    </Post>
+                  ))
+                : 'не найдено'}
+            </>
           )}
         </Grid>
         <Grid xs={4} item>

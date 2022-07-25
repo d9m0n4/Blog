@@ -14,17 +14,17 @@ import Alert from 'components/Alert';
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user, error } = useAppSelector((state) => state.auth);
+  const { error, isAuth } = useAppSelector((state) => state.auth);
 
   const submit = (data: any) => {
     dispatch(login(data));
   };
 
   useEffect(() => {
-    if (user) {
+    if (isAuth) {
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [isAuth, navigate]);
 
   return (
     <>

@@ -24,7 +24,7 @@ export const AddPost = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { image, imageUrl, handleChangeFile } = useUploadFile();
+  const { image, imageUrl, handleChangeFile, handleRemoveImage } = useUploadFile();
 
   const submit = () => {
     let formData = new FormData();
@@ -42,8 +42,6 @@ export const AddPost = () => {
   const setTagNames = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTags(e.target.value);
   };
-
-  const onClickRemoveImage = () => {};
 
   const onChange = (e: string) => {
     settext(e);
@@ -101,7 +99,7 @@ export const AddPost = () => {
         <Button
           variant="contained"
           color="error"
-          onClick={onClickRemoveImage}
+          onClick={handleRemoveImage}
           size="medium"
           sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
           Удалить
