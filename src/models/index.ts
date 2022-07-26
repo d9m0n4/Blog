@@ -65,9 +65,10 @@ export interface AuthResponse {
 export interface IComment {
   id: string;
   text: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   postId: string;
+  post: IPost;
   user: IUser;
   files: string[];
 }
