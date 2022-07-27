@@ -37,7 +37,6 @@ export const Home = () => {
     <>
       {error && <Alert openState={true} message={'error'} />}
       <TagsBlock items={tags} isLoading={isLoading} />
-      <TabsComponent />
       <Grid container spacing={4}>
         <Grid xs={8} item>
           {isLoading ? (

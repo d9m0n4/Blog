@@ -147,6 +147,12 @@ $blue: #4361ee;
         opacity: 1;
         cursor: pointer;
       }
+      &.liked {
+        opacity: 1;
+        svg {
+          fill: #fe9870;
+        }
+      }
     }
   }
 }

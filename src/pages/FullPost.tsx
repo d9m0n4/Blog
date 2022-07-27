@@ -54,6 +54,7 @@ export const FullPost = () => {
             viewsCount={postData.viewsCount}
             commentsCount={postData?.comments?.length}
             tags={postData.tags}
+            likesCount={postData.likes}
             isFullPost
             isEditable>
             <ReactMarkdown

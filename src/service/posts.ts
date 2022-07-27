@@ -23,6 +23,9 @@ class PostService {
   async getTags() {
     return await API.get('/tags');
   }
+  async likePost(id: any) {
+    return await API.post('/posts/like', { id });
+  }
 }
 
 export default new PostService();

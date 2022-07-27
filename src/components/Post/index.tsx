@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { UserInfo } from 'components/UserInfo';
 import { useAppSelector } from 'hooks/redux';
 import { toDate } from 'utils/toDate';
+import posts from 'service/posts';
 
 export const Post: React.FC<any> = ({
   id,
@@ -29,11 +30,25 @@ export const Post: React.FC<any> = ({
   isEditable,
   likesCount,
 }) => {
-  const { user: currentUser } = useAppSelector((state) => state.auth);
+  const { user: currentUser, isAuth } = useAppSelector((state) => state.auth);
+  const [isLiked, setIsLiked] = useState(likesCount.includes(currentUser.id));
+  const [likes, setLikes] = useState<string[]>(likesCount);
 
   isEditable = currentUser && user.id === currentUser?.id;
 
   const onClickRemove = () => {};
+
+  useEffect(() => {
+    setIsLiked(likes.includes(currentUser.id));
+  }, [likes, currentUser]);
+
+  const handleLike = () => {
+    if (isAuth) {
+      return posts.likePost(id).then(({ data }) => {
+        setLikes(data);
+      });
+    }
+  };
 
   if (isLoading) {
     return <PostSkeleton />;
@@ -91,9 +106,11 @@ export const Post: React.FC<any> = ({
                 <span>{commentsCount}</span>
               </li>
               {
-                <li className={styles.postDetailItem}>
+                <li
+                  className={clsx(styles.postDetailItem, { [styles.liked]: isLiked })}
+                  onClick={handleLike}>
                   <FavoriteBorderIcon />
-                  <span>{likesCount}</span>
+                  <span>{likes.length}</span>
                 </li>
               }
             </ul>
@@ -117,6 +134,7 @@ export const Post: React.FC<any> = ({
               className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
               src={imageUrl}
               alt={title}
+              loading="lazy"
             />
           </div>
         )}

@@ -4,6 +4,7 @@ import { UserInfo } from 'components/UserInfo';
 import { NavLink, Outlet, useParams } from 'react-router-dom';
 import styles from './userPage.module.scss';
 import { Box } from '@mui/system';
+import SortIcon from '@mui/icons-material/Sort';
 
 const UserPage = () => {
   const { id } = useParams();
@@ -73,6 +74,9 @@ const UserPage = () => {
             to={`/user/${id}/comments`}>
             <Button>Комментарии</Button>
           </NavLink>
+          {/* <Button  variant="text">
+            <SortIcon />
+          </Button> */}
         </List>
         <Outlet />
       </Grid>
