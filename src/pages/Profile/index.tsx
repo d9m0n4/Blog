@@ -5,7 +5,7 @@ import { Navigate, NavLink, Outlet } from 'react-router-dom';
 
 import styles from './profile.module.scss';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { checkAuth, logout } from 'store/actions/auth';
+import { logout } from 'store/actions/auth';
 
 export default function Profile() {
   const { user, isAuth } = useAppSelector((state) => state.auth);
@@ -17,7 +17,7 @@ export default function Profile() {
 
   return (
     <>
-      {isAuth ? (
+      {isAuth && localStorage.getItem('token') ? (
         <Grid container>
           <Grid xs={3} item sx={{ padding: 2 }}>
             <List component="nav">
@@ -38,6 +38,15 @@ export default function Profile() {
                     [styles.navLink, isActive ? styles.active : null].filter(Boolean).join(' ')
                   }>
                   Мои посты
+                </NavLink>
+              </ListItem>
+              <ListItem>
+                <NavLink
+                  to="comments"
+                  className={({ isActive }) =>
+                    [styles.navLink, isActive ? styles.active : null].filter(Boolean).join(' ')
+                  }>
+                  Мои комментарии
                 </NavLink>
               </ListItem>
               <ListItem>

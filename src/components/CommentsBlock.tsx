@@ -3,7 +3,6 @@ import React, { memo } from 'react';
 import { SideBlock } from './SideBlock';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
@@ -12,12 +11,12 @@ import { ICommentsBlock } from '../models';
 import { BASEURL } from '../constants';
 import { UserInfo } from './UserInfo';
 import { Link } from 'react-router-dom';
+import { Stack, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 
 export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading }) => {
-  console.log(items);
-
   return (
-    <SideBlock title="Последние комментарии">
+    <SideBlock title="Комментарии">
       {items && (
         <List>
           {items.map((comment) => (
@@ -43,16 +42,39 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading 
                   </div>
                 ) : (
                   <>
-                    <ListItemText primary={comment.user?.fullName} secondary={comment.text} />
-                    {comment.files.map((file) => (
-                      <span key={file} style={{ margin: '2px' }}>
-                        <img
-                          style={{ width: '60px', height: '40px', objectFit: 'cover' }}
-                          src={`${BASEURL}${file}`}
-                          alt=""
-                        />
-                      </span>
-                    ))}
+                    <ListItemText
+                      primary={
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            marginBottom: 1,
+                          }}>
+                          <Typography variant="body1">{comment.user?.fullName}</Typography>
+                          <Typography sx={{ color: 'gray' }} variant="body1">
+                            {comment.createdAt}
+                          </Typography>
+                        </Box>
+                      }
+                      secondary={
+                        <Stack>
+                          <Typography sx={{ padding: 1, color: '#333' }} variant="body1">
+                            {comment.text}
+                          </Typography>
+                          <Box sx={{ display: 'flex' }}>
+                            {comment.files.map((file) => (
+                              <div key={file} style={{ margin: '2px' }}>
+                                <img
+                                  style={{ width: '60px', height: '40px', objectFit: 'cover' }}
+                                  src={`${BASEURL}${file}`}
+                                  alt=""
+                                />
+                              </div>
+                            ))}
+                          </Box>
+                        </Stack>
+                      }
+                    />
                   </>
                 )}
               </ListItem>

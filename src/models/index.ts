@@ -54,6 +54,8 @@ export interface IUser {
   createdAt: string;
   rating: number;
   avatar?: string;
+  city?: string;
+  nickName?: string;
 }
 
 export interface AuthResponse {

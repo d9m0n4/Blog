@@ -8,12 +8,29 @@ import { useOutletContext } from 'react-router-dom';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import styles from './profile.module.scss';
 import useUploadFile from 'hooks/useUploadFile';
+import { useAppDispatch } from 'hooks/redux';
+import { updateUserInfo } from 'store/actions/user';
 
 const MyProfile = () => {
   const { user } = useOutletContext<IUserContext>();
   const avatarUpload = React.useRef<HTMLInputElement>(null);
 
+  const dispatch = useAppDispatch();
+
+  const [formData, setFormData] = useState({
+    fullName: user.fullName,
+    nickName: user.nickName,
+    email: user.email,
+    city: user.city,
+  });
+
   const { image, imageUrl, handleChangeFile } = useUploadFile();
+
+  const submitHandler = (e: any) => {
+    e.preventDefault();
+    formD.append('file', image);
+    dispatch(updateUserInfo());
+  };
   return (
     <>
       <Grid container>
@@ -24,12 +41,12 @@ const MyProfile = () => {
               <UserInfo
                 onClick={() => avatarUpload.current?.click()}
                 avatarUrl={user?.avatar ? user.avatar : imageUrl}
-                fullName={user?.fullName!}
+                fullName={user?.fullName}
                 onlyAvatar={true}
                 width={164}
               />
-              <div className={styles.upload}>
-                <CloudUploadIcon onClick={() => avatarUpload.current?.click()} color="primary" />
+              <div onClick={() => avatarUpload.current?.click()} className={styles.upload}>
+                <CloudUploadIcon color="primary" />
               </div>
             </div>
           )}
@@ -47,41 +64,41 @@ const MyProfile = () => {
           </Stack>
         </Grid>
       </Grid>
-      <form action="">
+      <form onSubmit={submitHandler}>
         <Grid container>
           <Grid item>
             <Grid item sx={{ padding: 2 }}>
               <TextField
-                defaultValue={user?.fullName}
-                placeholder={user?.fullName}
                 variant="standard"
                 label="Имя"
+                value={formData.fullName}
+                onChange={(e) => setFormData((state) => ({ ...state, fullName: e.target.value }))}
               />
             </Grid>
             <Grid item sx={{ padding: 2 }}>
               <TextField
-                defaultValue={user?.fullName}
-                placeholder={user?.fullName}
                 variant="standard"
                 label="Никнейм"
+                value={formData.nickName}
+                onChange={(e) => setFormData((state) => ({ ...state, nickName: e.target.value }))}
               />
             </Grid>
           </Grid>
           <Grid item>
             <Grid item sx={{ padding: 2 }}>
               <TextField
-                defaultValue={user?.fullName}
-                placeholder={user?.fullName}
                 variant="standard"
                 label="Электронная почта"
+                value={formData.email}
+                onChange={(e) => setFormData((state) => ({ ...state, email: e.target.value }))}
               />
             </Grid>
             <Grid item sx={{ padding: 2 }}>
               <TextField
-                defaultValue={user?.fullName}
-                placeholder={user?.fullName}
                 variant="standard"
                 label="Город"
+                value={formData.city}
+                onChange={(e) => setFormData((state) => ({ ...state, city: e.target.value }))}
               />
             </Grid>
           </Grid>

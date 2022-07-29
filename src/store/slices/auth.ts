@@ -1,3 +1,4 @@
+import { updateUserInfo } from './../actions/user';
 import { IUser } from './../../models/index';
 import { checkAuth, login, logout } from './../actions/auth';
 import { createSlice } from '@reduxjs/toolkit';
@@ -68,6 +69,23 @@ const authSlice = createSlice({
       state.isAuth = false;
     },
     [logout.rejected.type]: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+      state.user = {} as IUser;
+    },
+
+    [updateUserInfo.pending.type]: (state) => {
+      state.error = { message: null };
+      state.loading = true;
+      state.user = {} as IUser;
+    },
+    [updateUserInfo.fulfilled.type]: (state, action) => {
+      state.error = { message: null };
+      state.loading = false;
+      state.user = action.payload;
+      state.isAuth = true;
+    },
+    [updateUserInfo.rejected.type]: (state, action) => {
       state.error = action.payload;
       state.loading = false;
       state.user = {} as IUser;
