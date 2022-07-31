@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 
 import { Post } from '../components/Post';
-import { CommentsBlock } from '../components/CommentsBlock';
+import { CommentsBlock } from '../components/CommentsBlock/CommentsBlock';
 import { TagsBlock } from 'components/TagsBlock/TagsBlock';
 import { TabsComponent } from 'components/Tabs';
 import { TopUsers } from 'components/TopUsers';

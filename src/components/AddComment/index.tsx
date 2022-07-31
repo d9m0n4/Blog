@@ -4,12 +4,11 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { IconButton, ImageList, ImageListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { IUser } from 'models';
+import { IPost, IUser } from 'models';
 import comments from 'service/comments';
 import { UserInfo } from 'components/UserInfo';
-import { useAppDispatch } from 'hooks/redux';
-
 import styles from './AddComment.module.scss';
+import { useAppDispatch } from 'hooks/redux';
 import { postActions } from 'store/slices/post';
 
 interface IAddComment {
@@ -21,6 +20,8 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
   const [previewFiles, setPreviewFiles] = useState<any>();
   const [files, setFiles] = useState<any>([]);
   const [comment, setComment] = useState('');
+
+  const dispatch = useAppDispatch();
 
   const setFileHandler = (e: any) => {
     const fileList = e.currentTarget.files;
@@ -47,9 +48,12 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
       const file = files[i];
       formData.append('file', file);
     }
-    comments.createComment(formData);
+    comments.createComment(formData).then(({ data }) => {
+      dispatch(postActions.addComment({ id: data.postId, comment: data }));
+    });
     setComment('');
     setFiles([]);
+    setPreviewFiles(null);
   };
 
   return (
@@ -66,6 +70,7 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
             minRows={2}
             multiline
             fullWidth
+            value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
           <div className={styles.formFooter}>

@@ -28,8 +28,13 @@ const MyProfile = () => {
 
   const submitHandler = (e: any) => {
     e.preventDefault();
-    formD.append('file', image);
-    dispatch(updateUserInfo());
+    const formD = new FormData();
+    formD.append('fullName', formData.fullName);
+    formD.append('nickName', formData.nickName!);
+    formD.append('email', formData.email);
+    formD.append('city', formData.city!);
+    formD.append('img', image);
+    dispatch(updateUserInfo(formD));
   };
   return (
     <>

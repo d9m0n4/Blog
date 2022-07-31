@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -31,8 +31,8 @@ export const Post: React.FC<any> = ({
   likesCount,
 }) => {
   const { user: currentUser, isAuth } = useAppSelector((state) => state.auth);
-  const [isLiked, setIsLiked] = useState(likesCount.includes(currentUser.id));
-  const [likes, setLikes] = useState<string[]>(likesCount);
+  const [isLiked, setIsLiked] = useState(likesCount && likesCount.includes(currentUser.id));
+  const [likes, setLikes] = useState<string[]>(likesCount ? likesCount : []);
 
   isEditable = currentUser && user.id === currentUser?.id;
 

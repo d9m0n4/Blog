@@ -17,10 +17,6 @@ export const TagsBlock: React.FC<ITagsblock> = ({ items, isLoading }) => {
     setActiveItem(name);
   };
 
-  useEffect(() => {
-    console.log(activeItem);
-  }, [activeItem]);
-
   return (
     <div className={styles.tags}>
       <Chip

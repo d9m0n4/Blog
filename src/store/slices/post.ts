@@ -16,20 +16,31 @@ type ActionPayload = {
 };
 
 const initialState: SliceState = {
-  items: [],
+  items: [] as IPost[],
   tags: [],
   isLoading: false,
   error: null,
 };
 
-// const addComment: CaseReducer<SliceState, PayloadAction<ActionPayload>> = (state, action) => {
+const addComment: CaseReducer<SliceState, PayloadAction<ActionPayload>> = (state, action) => {
+  state.items = state.items.map((item) => {
+    if (item.id === action.payload.id) {
+      console.log(action.payload.comment);
 
-// };
+      item.comments.unshift(action.payload.comment);
+      return item;
+    } else {
+      return item;
+    }
+  });
+};
 
 const postSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    addComment,
+  },
   extraReducers: {
     [fetchAllPosts.pending.type]: (state) => {
       state.isLoading = true;

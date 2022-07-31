@@ -1,0 +1,30 @@
+.commentsItem {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  width: 100%;
+  .commentsTop {
+    display: flex;
+    justify-content: space-between;
+  }
+  .commentsUserName {
+    margin: 0;
+  }
+  .commentsDate {
+    font-size: 0.8em;
+    color: gray;
+  }
+  .commentsImagesBlock {
+    display: flex;
+  }
+  .commentsImageWrapper {
+    margin: 2px;
+    display: flex;
+  }
+  .commentsImage {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}

@@ -78,6 +78,7 @@ const authSlice = createSlice({
       state.error = { message: null };
       state.loading = true;
       state.user = {} as IUser;
+      state.isAuth = false;
     },
     [updateUserInfo.fulfilled.type]: (state, action) => {
       state.error = { message: null };
@@ -89,6 +90,7 @@ const authSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
       state.user = {} as IUser;
+      state.isAuth = false;
     },
   },
 });

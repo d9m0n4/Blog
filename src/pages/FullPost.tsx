@@ -1,40 +1,21 @@
-import React, { useEffect, useState } from 'react';
-
-import posts from 'service/posts';
-import { Post } from '../components/Post';
-import { AddComment } from '../components/AddComment';
-import { CommentsBlock } from '../components/CommentsBlock';
-import { useParams } from 'react-router-dom';
-import { IPost } from 'models';
+import { IPost, IUser } from 'models';
+import { BASEURL } from '../constants';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { BASEURL } from '../constants';
-import { useAppSelector } from 'hooks/redux';
-import PageProgress from 'components/PageProgress';
+import { Post } from 'components/Post';
+import PageProgress from 'components/pageProgress';
+import { AddComment } from '../components/AddComment';
+import { CommentsBlock } from 'components/CommentsBlock/CommentsBlock';
 
-export const FullPost = () => {
-  const { id } = useParams();
-  const [postData, setPostData] = useState<IPost>();
+interface IFullPost {
+  postData: IPost | undefined;
+  user: IUser;
+  isAuth: boolean;
+}
 
-  const { user, isAuth } = useAppSelector((state) => state.auth);
-
-  const fetchPost = async (id: string) => {
-    return await posts
-      .getPostById(id)
-      .then(({ data }) => {
-        setPostData(data);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  useEffect(() => {
-    if (id) {
-      fetchPost(id);
-    }
-  }, [id]);
-
+export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
   return (
     <>
       {postData && (

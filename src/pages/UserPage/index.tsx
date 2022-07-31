@@ -14,15 +14,13 @@ const UserPage = () => {
         <Stack>
           <UserInfo onlyAvatar={true} fullName="qwe" width={164} />
           <List>
-            <ListItem>
+            <ListItem sx={{ justifyContent: 'space-between' }}>
               <Box>
                 <Typography sx={{ color: 'gray' }} variant="caption">
                   Полное имя
                 </Typography>
                 <Typography variant="body1">Дмитрий</Typography>
               </Box>
-            </ListItem>
-            <ListItem>
               <Box>
                 <Typography sx={{ color: 'gray' }} variant="caption">
                   Никнейм
@@ -30,15 +28,14 @@ const UserPage = () => {
                 <Typography variant="body1">Дмитрий</Typography>
               </Box>
             </ListItem>
-            <ListItem>
+
+            <ListItem sx={{ justifyContent: 'space-between' }}>
               <Box>
                 <Typography sx={{ color: 'gray' }} variant="caption">
                   Электронная почта
                 </Typography>
                 <Typography variant="body1">Дмитрий</Typography>
               </Box>
-            </ListItem>
-            <ListItem>
               <Box>
                 <Typography sx={{ color: 'gray' }} variant="caption">
                   Город
@@ -46,7 +43,8 @@ const UserPage = () => {
                 <Typography variant="body1">Дмитрий</Typography>
               </Box>
             </ListItem>
-            <ListItem>
+
+            <ListItem sx={{ justifyContent: 'space-between' }}>
               <Box>
                 <Typography sx={{ color: 'gray' }} variant="caption">
                   Дата регистрации

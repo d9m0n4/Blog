@@ -14,7 +14,7 @@ export const updateUserInfo = createAsyncThunk(
   'users/updateInfo',
   async (postData: any, { rejectWithValue }) => {
     try {
-      const { data } = await users.updateUserInfo(postData.formData, postData.formD);
+      const { data } = await users.updateUserInfo(postData);
       return data;
     } catch (error) {
       return rejectWithValue(error);

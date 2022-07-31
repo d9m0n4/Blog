@@ -2,7 +2,6 @@ import { Header } from 'components/Header';
 import { Container } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import { Home } from 'pages/Home';
-import { FullPost } from 'pages/FullPost';
 import { AddPost } from 'pages/AddPost';
 import { Registration } from 'pages/Registration';
 import { Login } from 'pages/Login';
@@ -18,6 +17,7 @@ import MyProfile from 'pages/Profile/MyProfile';
 import UserPage from 'pages/UserPage';
 import Posts from 'pages/UserPage/posts';
 import UserComments from 'pages/UserPage/comments';
+import FullPostContainer from 'containers/FullPost';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -42,7 +42,7 @@ function App() {
               <Route index element={<MyProfile />} />
               <Route path="posts" element={<MyPosts />} />
             </Route>
-            <Route path="posts/:id" element={<FullPost />} />
+            <Route path="posts/:id" element={<FullPostContainer />} />
             <Route path="user/:id" element={<UserPage />}>
               <Route path="posts" element={<Posts />} />
               <Route path="comments" element={<UserComments />} />
