@@ -8,11 +8,11 @@ import { useOutletContext } from 'react-router-dom';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import styles from './profile.module.scss';
 import useUploadFile from 'hooks/useUploadFile';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { updateUserInfo } from 'store/actions/user';
 
 const MyProfile = () => {
-  const { user } = useOutletContext<IUserContext>();
+  const { user, isAuth } = useAppSelector((state) => state.auth);
   const avatarUpload = React.useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
@@ -41,7 +41,7 @@ const MyProfile = () => {
       <Grid container>
         <Grid item sx={{ padding: 2 }}>
           <input ref={avatarUpload} onChange={handleChangeFile} type="file" hidden />
-          {user && (
+          {isAuth && (
             <div className={styles.userAvatar}>
               <UserInfo
                 onClick={() => avatarUpload.current?.click()}

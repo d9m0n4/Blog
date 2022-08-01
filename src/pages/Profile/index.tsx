@@ -7,7 +7,7 @@ import styles from './profile.module.scss';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { logout } from 'store/actions/auth';
 
-export default function Profile() {
+export default function MyProfilee() {
   const { user, isAuth } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 

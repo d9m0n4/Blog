@@ -15,7 +15,7 @@ export interface IUserInfo {
   avatarUrl?: string;
   fullName: string;
   rating?: string;
-  onlyAvatar: boolean;
+  onlyAvatar?: boolean;
   onClick?: () => void;
   width?: number;
 }
