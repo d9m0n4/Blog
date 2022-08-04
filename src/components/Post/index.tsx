@@ -61,9 +61,7 @@ export const Post: React.FC<any> = ({
           <div className={styles.indention}>
             {isFullPost && (
               <div className={styles.author}>
-                <Link
-                  to={isEditable ? `/profile` : `/user/${user.id}/posts`}
-                  className={styles.userLink}>
+                <Link to={isEditable ? `/profile` : `/user/${user.id}`} className={styles.userLink}>
                   <UserInfo
                     avatarUrl={user.avatarUrl}
                     fullName={user.fullName}
