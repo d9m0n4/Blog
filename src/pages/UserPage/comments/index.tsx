@@ -2,13 +2,16 @@ import React from 'react';
 import { Divider, Grid, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { UserInfo } from 'components/UserInfo';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { toDate } from 'utils/toDate';
+import { CurrentUserData } from 'models';
 
 const UserComments = () => {
+  const userData = useOutletContext<CurrentUserData>();
+
   return (
     <Grid container direction="column">
-      {/* {commentsData.map((comment) => (
+      {userData.comments.map((comment) => (
         <Grid item key={comment.id}>
           <Paper sx={{ marginBottom: 2, padding: '16px' }}>
             <Link to={`/posts/${comment.postId}`}>
@@ -30,7 +33,7 @@ const UserComments = () => {
             <Typography>{comment.text}</Typography>
           </Paper>
         </Grid>
-      ))} */}
+      ))}
     </Grid>
   );
 };

@@ -14,6 +14,8 @@ import { UserInfo } from 'components/UserInfo';
 import { useAppSelector } from 'hooks/redux';
 import { toDate } from 'utils/toDate';
 import posts from 'service/posts';
+import rehypeRaw from 'rehype-raw';
+import ReactMarkdown from 'react-markdown';
 
 export const Post: React.FC<any> = ({
   id,
@@ -29,6 +31,7 @@ export const Post: React.FC<any> = ({
   isLoading,
   isEditable,
   likesCount,
+  text,
 }) => {
   const { user: currentUser, isAuth } = useAppSelector((state) => state.auth);
   const [isLiked, setIsLiked] = useState(likesCount && likesCount.includes(currentUser.id));
@@ -53,6 +56,10 @@ export const Post: React.FC<any> = ({
   if (isLoading) {
     return <PostSkeleton />;
   }
+
+  const cutText = (text: string) => {
+    return text.substring(0, 90) + '...';
+  };
 
   return (
     <>
@@ -84,14 +91,12 @@ export const Post: React.FC<any> = ({
                   </li>
                 ))}
             </ul>
-            {children && (
-              <div
-                className={clsx(
-                  styles.content,
-                  { [styles.last]: isFullPost },
-                  { [styles.preview]: !isFullPost },
-                )}>
-                {children}
+            {text && (
+              <div className={clsx(styles.content, { [styles.last]: isFullPost })}>
+                <ReactMarkdown
+                  rehypePlugins={[rehypeRaw]}
+                  children={isFullPost ? text : cutText(text)}
+                />
               </div>
             )}
             <ul className={styles.postDetails}>

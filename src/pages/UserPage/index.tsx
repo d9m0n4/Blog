@@ -3,15 +3,13 @@ import { Button, Grid, List } from '@mui/material';
 import { NavLink, Outlet, useParams } from 'react-router-dom';
 import styles from './userPage.module.scss';
 import SortIcon from '@mui/icons-material/Sort';
-import { IUser } from 'models';
+import { CurrentUserData } from 'models';
 
-interface userPage {
-  user: IUser | null;
+interface IUserPage {
+  userData: CurrentUserData | null;
 }
 
-const UserPage: React.FC<userPage> = ({ user }) => {
-  const { id } = useParams();
-
+const UserPage: React.FC<IUserPage> = ({ userData }) => {
   return (
     <Grid container spacing={4} justifyContent="center">
       <Grid item xs={8}>
@@ -21,7 +19,7 @@ const UserPage: React.FC<userPage> = ({ user }) => {
               [styles.navLink, isActive ? styles.active : null].filter(Boolean).join(' ')
             }
             end
-            to={`/user/${id}`}>
+            to={`/user/${userData?.id}`}>
             <Button>Профиль</Button>
           </NavLink>
           <NavLink
@@ -29,21 +27,21 @@ const UserPage: React.FC<userPage> = ({ user }) => {
               [styles.navLink, isActive ? styles.active : null].filter(Boolean).join(' ')
             }
             end
-            to={`/user/${id}/posts`}>
+            to={`/user/${userData?.id}/posts`}>
             <Button>Посты</Button>
           </NavLink>
           <NavLink
             className={({ isActive }) =>
               [styles.navLink, isActive ? styles.active : null].filter(Boolean).join(' ')
             }
-            to={`/user/${id}/comments`}>
+            to={`/user/${userData?.id}/comments`}>
             <Button>Комментарии</Button>
           </NavLink>
           {/* <Button  variant="text">
             <SortIcon />
           </Button> */}
         </List>
-        <Outlet context={user} />
+        <Outlet context={userData} />
       </Grid>
     </Grid>
   );

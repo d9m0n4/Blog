@@ -2,17 +2,20 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import { Post } from 'components/Post';
 import { BASEURL } from '../../../constants';
-import { IPost } from 'models';
+import { CurrentUserData, IPost } from 'models';
+import { useOutletContext } from 'react-router-dom';
 
 const Posts = () => {
+  const userData = useOutletContext<CurrentUserData>();
+
   return (
     <>
-      {/* {postsData?.map((post) => (
+      {userData.posts?.map((post) => (
         <Grid item key={post.id}>
           <Post
             id={post.id}
             user={{
-              id,
+              id: userData.id,
             }}
             title={post.title}
             imageUrl={`${BASEURL}/${post.previewImage}`}
@@ -22,7 +25,7 @@ const Posts = () => {
             likesCount={post.likes}
           />
         </Grid>
-      ))} */}
+      ))}
     </>
   );
 };
