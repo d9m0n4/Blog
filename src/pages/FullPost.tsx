@@ -5,9 +5,9 @@ import rehypeRaw from 'rehype-raw';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Post } from 'components/Post';
-import PageProgress from 'components/PageProgress';
 import { AddComment } from '../components/AddComment';
 import { CommentsBlock } from 'components/CommentsBlock/CommentsBlock';
+import PageProgress from 'components/pageProgress';
 
 interface IFullPost {
   postData: IPost | undefined;

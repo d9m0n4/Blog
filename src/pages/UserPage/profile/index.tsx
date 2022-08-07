@@ -6,11 +6,11 @@ import { UserInfo } from 'components/UserInfo';
 const Profile = () => {
   return (
     <Paper sx={{ padding: 2 }}>
-      <Grid container>
+      <Grid container spacing={4}>
         <Grid item xs={3}>
           <UserInfo onlyAvatar={true} fullName="Дмитрий" width={164} />
         </Grid>
-        <Grid xs={9}>
+        <Grid item xs={9}>
           <Stack>
             <Typography variant="h4">Дмитрий</Typography>
             <Box sx={{ display: 'flex' }}>
