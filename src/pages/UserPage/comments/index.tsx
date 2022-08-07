@@ -1,23 +1,17 @@
+import React from 'react';
 import { Divider, Grid, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { UserInfo } from 'components/UserInfo';
-import { IComment } from 'models';
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import comments from 'service/comments';
+import { Link, useOutletContext } from 'react-router-dom';
 import { toDate } from 'utils/toDate';
+import { CurrentUserData } from 'models';
 
 const UserComments = () => {
-  const { id } = useParams();
-  const [commentsData, setCommentsData] = useState<IComment[]>([]);
-  useEffect(() => {
-    if (id) {
-      comments.getUserComments(id).then(({ data }) => setCommentsData(data));
-    }
-  }, []);
+  const userData = useOutletContext<CurrentUserData>();
+
   return (
     <Grid container direction="column">
-      {commentsData.map((comment) => (
+      {userData.comments.map((comment) => (
         <Grid item key={comment.id}>
           <Paper sx={{ marginBottom: 2, padding: '16px' }}>
             <Link to={`/posts/${comment.postId}`}>

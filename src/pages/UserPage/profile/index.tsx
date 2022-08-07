@@ -2,8 +2,12 @@ import React from 'react';
 import { Grid, List, ListItem, Paper, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { UserInfo } from 'components/UserInfo';
+import { CurrentUserData, IUser, IUserContext } from 'models';
+import { useOutletContext } from 'react-router-dom';
 
 const Profile = () => {
+  const userData = useOutletContext<CurrentUserData>();
+
   return (
     <Paper sx={{ padding: 2 }}>
       <Grid container spacing={4}>

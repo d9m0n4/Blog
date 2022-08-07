@@ -99,3 +99,8 @@ export interface IUserContext {
 }
 
 export type Tag = string;
+
+export interface CurrentUserData extends IUser {
+  posts: IPost[];
+  comments: IComment[];
+}

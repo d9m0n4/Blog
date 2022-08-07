@@ -1,24 +1,24 @@
-import { Header } from 'components/Header';
-import { Container } from '@mui/material';
-import { Route, Routes } from 'react-router-dom';
-import { Home } from 'pages/Home';
-import { AddPost } from 'pages/AddPost';
-import { Registration } from 'pages/Registration';
-import { Login } from 'pages/Login';
-import Footer from 'components/Footer';
-import NotFound from 'pages/NotFound';
 import { useEffect } from 'react';
-import { checkAuth } from 'store/actions/auth';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import Alert from 'components/Alert';
-import MyPosts from 'pages/Profile/Posts';
-import MyProfile from 'pages/Profile/MyProfile';
-import UserPage from 'pages/UserPage';
-import Posts from 'pages/UserPage/posts';
+import { Route, Routes } from 'react-router-dom';
+import { Registration } from 'pages/Registration';
 import UserComments from 'pages/UserPage/comments';
-import FullPostContainer from 'containers/FullPost';
-import Profile from 'pages/UserPage/profile';
+import { AddPost } from 'pages/AddPost';
 import MyProfilee from 'pages/Profile';
+import MyProfile from 'pages/Profile/MyProfile';
+import { Login } from 'pages/Login';
+import NotFound from 'pages/NotFound';
+import { Home } from 'pages/Home';
+import MyPosts from 'pages/Profile/Posts';
+import Profile from 'pages/UserPage/profile';
+import Posts from 'pages/UserPage/posts';
+import { Header } from 'components/Header';
+import Footer from 'components/Footer';
+import Alert from 'components/Alert';
+import FullPostContainer from 'containers/FullPost';
+import ProfileContainer from 'containers/Profile';
+import { checkAuth } from 'store/actions/auth';
+import { Container } from '@mui/material';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -44,7 +44,7 @@ function App() {
               <Route path="posts" element={<MyPosts />} />
             </Route>
             <Route path="posts/:id" element={<FullPostContainer />} />
-            <Route path="user/:id" element={<UserPage />}>
+            <Route path="user/:id" element={<ProfileContainer />}>
               <Route index element={<Profile />} />
               <Route path="posts" element={<Posts />} />
               <Route path="comments" element={<UserComments />} />

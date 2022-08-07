@@ -1,32 +1,21 @@
+import React from 'react';
 import { Grid } from '@mui/material';
 import { Post } from 'components/Post';
 import { BASEURL } from '../../../constants';
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import posts from 'service/posts';
-import { IPost } from 'models';
+import { CurrentUserData, IPost } from 'models';
+import { useOutletContext } from 'react-router-dom';
 
 const Posts = () => {
-  const { id } = useParams();
-  const [postsData, setPostsData] = useState<IPost[]>();
-
-  useEffect(() => {
-    if (id) {
-      posts
-        .fetchUserPosts(id)
-        .then(({ data }) => setPostsData(data))
-        .catch((e) => console.log(e));
-    }
-  }, []);
+  const userData = useOutletContext<CurrentUserData>();
 
   return (
     <>
-      {postsData?.map((post) => (
+      {userData.posts?.map((post) => (
         <Grid item key={post.id}>
           <Post
             id={post.id}
             user={{
-              id,
+              id: userData.id,
             }}
             title={post.title}
             imageUrl={`${BASEURL}/${post.previewImage}`}

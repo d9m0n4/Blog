@@ -61,12 +61,8 @@ export const Home = () => {
                       commentsCount={item.comments?.length}
                       tags={item.tags}
                       likesCount={item.likes}
-                      isLoading={isLoading}>
-                      <ReactMarkdown
-                        rehypePlugins={[rehypeRaw]}
-                        children={item.text.split(/\.|-|:|;/, 1).join()}
-                      />
-                    </Post>
+                      isLoading={isLoading}
+                      text={item.text}></Post>
                   ))
                 : 'не найдено'}
             </>

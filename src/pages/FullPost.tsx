@@ -36,29 +36,11 @@ export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
             commentsCount={postData?.comments?.length}
             tags={postData.tags}
             likesCount={postData.likes}
+            text={postData.text}
             isFullPost
-            isEditable>
-            <ReactMarkdown
-              rehypePlugins={[rehypeRaw]}
-              children={postData.text}
-              components={{
-                code({ node, inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || '');
-                  return !inline && match ? (
-                    <SyntaxHighlighter
-                      language="javascript"
-                      style={dark}
-                      children={postData.text}
-                    />
-                  ) : (
-                    <code className={className} {...props}>
-                      {children}
-                    </code>
-                  );
-                },
-              }}
-            />
-          </Post>
+            isEditable
+          />
+
           {isAuth && <AddComment user={user} postId={postData.id} />}
           {postData.comments.length > 0 && (
             <CommentsBlock items={postData.comments} isLoading={false} />
