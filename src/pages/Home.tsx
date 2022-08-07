@@ -10,8 +10,6 @@ import { TopUsers } from 'components/TopUsers';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { fetchAllPosts, getTags } from 'store/actions/post';
 import Alert from 'components/Alert';
-import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
 import Loader from 'components/Loader';
 import { BASEURL } from '../constants';
 import { IUser } from 'models';
@@ -33,6 +31,11 @@ export const Home = () => {
   }, [dispatch]);
 
   const { items, tags, isLoading, error } = useAppSelector((state) => state.posts);
+  useEffect(() => {
+    const comments = items.map((item) => {
+      console.log(item.comments);
+    });
+  }, []);
   return (
     <>
       {error && <Alert openState={true} message={'error'} />}
@@ -71,10 +74,7 @@ export const Home = () => {
         <Grid xs={4} item>
           <Grid sx={{ position: 'sticky', top: '80px' }}>
             <TopUsers items={popUsers} isLoading={isLoading} />
-            {/* <CommentsBlock
-              items={}
-              isLoading={isLoading}
-            /> */}
+            {/* <CommentsBlock items={} isLoading={isLoading} /> */}
           </Grid>
         </Grid>
       </Grid>

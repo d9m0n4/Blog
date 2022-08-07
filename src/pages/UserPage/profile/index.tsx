@@ -4,69 +4,92 @@ import { Box } from '@mui/system';
 import { UserInfo } from 'components/UserInfo';
 import { CurrentUserData, IUser, IUserContext } from 'models';
 import { useOutletContext } from 'react-router-dom';
+import Loader from 'components/Loader';
 
 const Profile = () => {
   const userData = useOutletContext<CurrentUserData>();
+  console.log(userData);
 
   return (
-    <Paper sx={{ padding: 2 }}>
-      <Grid container spacing={4}>
-        <Grid item xs={3}>
-          <UserInfo onlyAvatar={true} fullName="Дмитрий" width={164} />
-        </Grid>
-        <Grid item xs={9}>
-          <Stack>
-            <Typography variant="h4">Дмитрий</Typography>
-            <Box sx={{ display: 'flex' }}>
-              <List sx={{ marginRight: 6 }}>
-                <ListItem sx={{ padding: 0, marginBottom: 1 }}>
-                  <Box>
-                    <Typography variant="subtitle1" sx={{ color: 'gray' }}>
-                      Никнейм
-                    </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                      D9m0n
-                    </Typography>
-                  </Box>
-                </ListItem>
-                <ListItem sx={{ padding: 0, marginBottom: 1 }}>
-                  <Box>
-                    <Typography variant="subtitle1" sx={{ color: 'gray' }}>
-                      Город
-                    </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                      Яранск
-                    </Typography>
-                  </Box>
-                </ListItem>
-              </List>
-              <List sx={{ marginRight: 6 }}>
-                <ListItem sx={{ padding: 0, marginBottom: 1 }}>
-                  <Box>
-                    <Typography variant="subtitle1" sx={{ color: 'gray' }}>
-                      Электронная почта
-                    </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                      ched08@yandex.ru
-                    </Typography>
-                  </Box>
-                </ListItem>
-                <ListItem sx={{ padding: 0, marginBottom: 1 }}>
-                  <Box>
-                    <Typography variant="subtitle1" sx={{ color: 'gray' }}>
-                      Дата регистрации
-                    </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                      13.07.2022
-                    </Typography>
-                  </Box>
-                </ListItem>
-              </List>
-            </Box>
-          </Stack>
-        </Grid>
-      </Grid>
-    </Paper>
+    <>
+      {userData ? (
+        <Paper sx={{ padding: 2 }}>
+          <Grid container direction="column">
+            <Grid item justifyContent="center" display="flex">
+              <UserInfo
+                onlyAvatar={true}
+                fullName={userData.fullName}
+                avatarUrl={userData.avatar}
+                width={164}
+              />
+            </Grid>
+            <Grid item justifyContent="center" display="flex">
+              <Stack sx={{ marginTop: 2 }}>
+                <Typography sx={{ textAlign: 'center' }} variant="h4">
+                  {userData.fullName}
+                </Typography>
+                <Box textAlign="center" marginTop={2}>
+                  <Typography variant="subtitle1" sx={{ color: 'gray', whiteSpace: 'nowrap' }}>
+                    Дата регистрации
+                  </Typography>
+                  <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                    {userData.createdAt}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <List
+                    sx={{
+                      padding: 2,
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                    }}>
+                    <ListItem>
+                      <Box sx={{ textAlign: 'center' }}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ color: 'gray', whiteSpace: 'nowrap' }}>
+                          Никнейм
+                        </Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                          {userData.nickName}
+                        </Typography>
+                      </Box>
+                    </ListItem>
+                    <ListItem>
+                      <Box sx={{ textAlign: 'center' }}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ color: 'gray', whiteSpace: 'nowrap' }}>
+                          Электронная почта
+                        </Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                          {userData.email}
+                        </Typography>
+                      </Box>
+                    </ListItem>
+                    <ListItem>
+                      <Box sx={{ textAlign: 'center' }}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ color: 'gray', whiteSpace: 'nowrap' }}>
+                          Город
+                        </Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                          {userData.city}
+                        </Typography>
+                      </Box>
+                    </ListItem>
+                  </List>
+                </Box>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Paper>
+      ) : (
+        <Loader />
+      )}
+    </>
   );
 };
 
