@@ -16,6 +16,7 @@ import ProfileContainer from 'containers/Profile';
 import { checkAuth } from 'store/actions/auth';
 import { Container } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { PostsByTag } from 'pages/PostsByTag';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -43,6 +44,7 @@ function App() {
               <Route path="comments" element={<UserComments />} />
             </Route>
             <Route path="posts/create" element={<AddPost />} />
+            <Route path="/tag/:tag" element={<PostsByTag />} />
             <Route path="registration" element={<Registration />} />
             <Route path="login" element={<Login />} />
           </Routes>

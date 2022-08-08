@@ -35,6 +35,11 @@
   margin-left: 8px;
   display: flex;
   align-items: center;
+  .searchInput {
+    outline: none;
+    margin-left: 4px;
+    flex: 1;
+  }
 }
 
 .buttons {

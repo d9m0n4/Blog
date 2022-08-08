@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Grid, List } from '@mui/material';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import styles from './userPage.module.scss';
 import SortIcon from '@mui/icons-material/Sort';
 import { CurrentUserData } from 'models';

@@ -2,13 +2,12 @@ import React from 'react';
 import { Grid, List, ListItem, Paper, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { UserInfo } from 'components/UserInfo';
-import { CurrentUserData, IUser, IUserContext } from 'models';
+import { CurrentUserData } from 'models';
 import { useOutletContext } from 'react-router-dom';
 import Loader from 'components/Loader';
 
 const Profile = () => {
   const userData = useOutletContext<CurrentUserData>();
-  console.log(userData);
 
   return (
     <>

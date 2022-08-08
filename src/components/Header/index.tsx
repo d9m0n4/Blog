@@ -16,6 +16,7 @@ import { fetchAllPosts, searchPosts } from 'store/actions/post';
 export const Header = () => {
   const { user, error, loading, isAuth } = useAppSelector((state) => state.auth);
   const [searchValue, setSearchValue] = useState('');
+  const [focusedInput, setFocusedInput] = useState(false);
   const debouncedValue = useDebounce(searchValue, 1000);
   const dispatch = useAppDispatch();
 
@@ -23,11 +24,13 @@ export const Header = () => {
     setSearchValue('');
   };
 
+  const onFocus = () => setFocusedInput(true);
+
   useEffect(() => {
     if (debouncedValue.length > 3) {
       dispatch(searchPosts(debouncedValue));
     }
-    if (!debouncedValue.length) {
+    if (!debouncedValue.length && focusedInput) {
       dispatch(fetchAllPosts());
     }
   }, [debouncedValue, dispatch]);
@@ -45,7 +48,8 @@ export const Header = () => {
               <Search sx={{ color: 'gray' }} />
 
               <InputBase
-                sx={{ ml: 1, flex: 1 }}
+                onFocus={onFocus}
+                className={styles.searchInput}
                 placeholder="Поиск... "
                 inputProps={{ 'aria-label': 'Поиск... ' }}
                 value={searchValue}

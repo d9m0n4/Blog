@@ -26,10 +26,8 @@ export const Post: React.FC<any> = ({
   viewsCount,
   commentsCount,
   tags,
-  children,
   isFullPost,
   isLoading,
-  isEditable,
   likesCount,
   text,
 }) => {
@@ -37,12 +35,13 @@ export const Post: React.FC<any> = ({
   const [isLiked, setIsLiked] = useState(likesCount && likesCount.includes(currentUser.id));
   const [likes, setLikes] = useState<string[]>(likesCount ? likesCount : []);
 
-  isEditable = currentUser && user.id === currentUser?.id;
+  let isEditable = currentUser && user.id === currentUser?.id;
 
   const onClickRemove = () => {};
 
   useEffect(() => {
     setIsLiked(likes.includes(currentUser.id));
+    console.log(isEditable);
   }, [likes, currentUser]);
 
   const handleLike = () => {
@@ -83,7 +82,7 @@ export const Post: React.FC<any> = ({
               {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
             </h2>
 
-            <ul className={styles.tags}>
+            <ul className={clsx(styles.tags, { [styles.padding]: isFullPost })}>
               {tags &&
                 tags.map((name: string) => (
                   <li key={name}>
@@ -105,8 +104,10 @@ export const Post: React.FC<any> = ({
                 <span>{viewsCount}</span>
               </li>
               <li className={styles.postDetailItem}>
-                <CommentIcon />
-                <span>{commentsCount}</span>
+                <Link to={`/posts/${id}/#comments`}>
+                  <CommentIcon />
+                  <span>{commentsCount}</span>
+                </Link>
               </li>
               {
                 <li
