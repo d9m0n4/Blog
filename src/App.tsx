@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Registration } from 'pages/Registration';
 import UserComments from 'pages/UserPage/comments';
@@ -17,19 +17,32 @@ import { checkAuth } from 'store/actions/auth';
 import { Container } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { PostsByTag } from 'pages/PostsByTag';
+import ScrollTop from 'components/ScrollTop';
+import usePagePercent from 'hooks/usePagePercent';
 
 function App() {
+  const [scrollBtnVisible, setScrollBtnVisible] = React.useState(false);
   const dispatch = useAppDispatch();
   const { error } = useAppSelector((state) => state.auth);
+  const percent = usePagePercent();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(checkAuth());
     }
   }, [dispatch]);
 
+  React.useEffect(() => {
+    if (percent > 30) {
+      setScrollBtnVisible(true);
+    } else {
+      setScrollBtnVisible(false);
+    }
+  }, [percent]);
+
   return (
     <>
+      {scrollBtnVisible && <ScrollTop />}
       {error.message && <Alert openState message={error.message} />}
       <Header />
       <div className="Main_content">
