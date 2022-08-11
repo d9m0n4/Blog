@@ -32,13 +32,19 @@ export const PostsByTag = () => {
   return (
     <>
       {error && <Alert openState={true} message="error" />}
-      <Typography variant="h4">{`Статьи по тегу #${tag}`}</Typography>
+      <Typography className={styles.title} variant="h4">{`Статьи по тегу #${tag}`}</Typography>
       {isLoading ? (
         <Loader />
       ) : (
-        <Grid container spacing={4} sx={{ marginTop: '32px', marginLeft: 0 }}>
+        <Grid container spacing={3} sx={{ marginTop: '24px', marginLeft: 0, width: '100%' }}>
           {items.map((item) => (
-            <Grid item xs={6} key={item.id}>
+            <Grid
+              className={styles.postWrapper}
+              lg={6}
+              md={9}
+              xl={6}
+              key={item.id}
+              sx={{ display: 'flex', padding: 2 }}>
               <Post
                 className={styles.root}
                 id={item.id}

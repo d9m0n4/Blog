@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
 import Grid from '@mui/material/Grid';
-
 import { Post } from '../components/Post';
-import { CommentsBlock } from '../components/CommentsBlock/CommentsBlock';
 import { TagsBlock } from 'components/TagsBlock/TagsBlock';
-import { TabsComponent } from 'components/Tabs';
 import { TopUsers } from 'components/TopUsers';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { fetchAllPosts, getTags } from 'store/actions/post';
 import Alert from 'components/Alert';
 import Loader from 'components/Loader';
 import { BASEURL } from '../constants';
-import { IComment, IUser } from 'models';
+import { IUser } from 'models';
 import users from 'service/users';
-import ScrollTop from 'components/ScrollTop';
 
 export const Home = () => {
   const dispatch = useAppDispatch();

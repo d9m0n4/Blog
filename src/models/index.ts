@@ -45,13 +45,13 @@ export interface IPost {
   viewsCount: number;
   comments: IComment[];
   previewImage: string;
-  createdAt: string;
+  createdAt: Date;
 }
 export interface IUser {
   id: string;
   email: string;
   fullName: string;
-  createdAt: string;
+  createdAt: Date;
   rating: number;
   avatar?: string;
   city?: string;
@@ -67,8 +67,8 @@ export interface AuthResponse {
 export interface IComment {
   id: string;
   text: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   postId: string;
   post: IPost;
   user: IUser;

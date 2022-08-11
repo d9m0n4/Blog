@@ -10,6 +10,8 @@ const useUploadFile = () => {
       const objectUrl = URL.createObjectURL(file[0]);
       setImageUrl(objectUrl);
       setImage(file[0]);
+    } else {
+      return;
     }
   };
   const handleRemoveImage = () => {

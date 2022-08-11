@@ -7,7 +7,7 @@ import PageProgress from 'components/PageProgress';
 
 interface IFullPost {
   postData: IPost | undefined;
-  user: IUser;
+  user: IUser | null;
   isAuth: boolean;
 }
 
@@ -37,7 +37,7 @@ export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
             isEditable
           />
 
-          {isAuth && <AddComment user={user} postId={postData.id} />}
+          {isAuth && user && <AddComment user={user} postId={postData.id} />}
           {postData.comments.length > 0 && (
             <CommentsBlock items={postData.comments} isLoading={false} />
           )}

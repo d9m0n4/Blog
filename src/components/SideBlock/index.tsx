@@ -6,7 +6,7 @@ import { ISideBlock } from '../../models';
 
 export const SideBlock: React.FC<ISideBlock> = ({ title, children }) => {
   return (
-    <Paper classes={{ root: styles.root }}>
+    <Paper classes={{ root: styles.root }} sx={{ borderRadius: 2, boxShadow: 'none' }}>
       <Typography variant="h6" classes={{ root: styles.title }}>
         {title}
       </Typography>

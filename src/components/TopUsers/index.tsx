@@ -22,6 +22,7 @@ export const TopUsers: React.FC<ITopUsers> = memo(({ items, isLoading }) => {
         {items.map((user) => (
           <ListItem
             key={user.id}
+            sx={{ paddingLeft: 3 }}
             alignItems="center"
             secondaryAction={
               isLoading ? (

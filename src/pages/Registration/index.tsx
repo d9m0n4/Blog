@@ -38,6 +38,7 @@ export const Registration = () => {
             className={styles.field}
             label="Пароль"
             name="password"
+            type="password"
             fullWidth
           />
 

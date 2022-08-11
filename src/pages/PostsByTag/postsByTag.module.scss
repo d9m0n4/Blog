@@ -1,8 +1,10 @@
-.postWrapper {
-  width: 50%;
-  padding: 0 8px;
+.title {
+  padding: 0 16px;
+  color: #31364c;
 }
 
-.root {
-  display: flex;
+.postWrapper {
+  > div {
+    margin: 0;
+  }
 }

@@ -9,7 +9,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import styles from './Post.module.scss';
 import { PostSkeleton } from './Skeleton';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { UserInfo } from 'components/UserInfo';
 import { useAppSelector } from 'hooks/redux';
 import { toDate } from 'utils/toDate';
@@ -32,7 +32,9 @@ export const Post: React.FC<any> = ({
   text,
 }) => {
   const { user: currentUser, isAuth } = useAppSelector((state) => state.auth);
-  const [isLiked, setIsLiked] = useState(likesCount && likesCount.includes(currentUser.id));
+  const [isLiked, setIsLiked] = useState(
+    likesCount && currentUser && likesCount.includes(currentUser.id),
+  );
   const [likes, setLikes] = useState<string[]>(likesCount ? likesCount : []);
 
   let isEditable = currentUser && user.id === currentUser?.id;
@@ -40,8 +42,7 @@ export const Post: React.FC<any> = ({
   const onClickRemove = () => {};
 
   useEffect(() => {
-    setIsLiked(likes.includes(currentUser.id));
-    console.log(isEditable);
+    setIsLiked(currentUser && likes.includes(currentUser.id));
   }, [likes, currentUser]);
 
   const handleLike = () => {
@@ -63,23 +64,25 @@ export const Post: React.FC<any> = ({
   return (
     <>
       <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
-        <div className={styles.wrapper}>
+        <div className={styles.info}>
           <div className={styles.indention}>
             {isFullPost && (
               <div className={styles.author}>
-                <Link to={isEditable ? `/profile` : `/user/${user.id}`} className={styles.userLink}>
+                <NavLink
+                  to={isEditable ? `/profile` : `/user/${user.id}`}
+                  className={styles.userLink}>
                   <UserInfo
                     avatarUrl={user.avatarUrl}
                     fullName={user.fullName}
                     rating={user.rating}
                     onlyAvatar={false}
                   />
-                </Link>
+                </NavLink>
                 <span className={styles.date}>{toDate(createdAt)}</span>
               </div>
             )}
             <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
-              {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
+              {isFullPost ? title : <NavLink to={`/posts/${id}`}>{title}</NavLink>}
             </h2>
 
             <ul className={clsx(styles.tags, { [styles.padding]: isFullPost })}>

@@ -18,7 +18,7 @@ export const UserInfo: React.FC<IUserInfo> = ({
       <Avatar
         onClick={onClick}
         alt={fullName}
-        src={avatarUrl ? `${BASEURL}${avatarUrl}` : ''}
+        src={avatarUrl ? `${avatarUrl}` : ''}
         sx={{
           bgcolor: stringToColor(fullName),
           width: width ? width : '40px',

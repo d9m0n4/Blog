@@ -44,7 +44,9 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading 
                   <div className={styles.commentsItem}>
                     <div className={styles.commentsTop}>
                       <p className={styles.commentsUserName}> {comment.user?.fullName}</p>
-                      <span className={styles.commentsDate}>{toDate(comment.createdAt)}</span>
+                      <span className={styles.commentsDate}>
+                        {toDate(comment.createdAt, { hour: 'numeric', minute: 'numeric' })}
+                      </span>
                     </div>
                     <div>
                       <p>{comment.text}</p>

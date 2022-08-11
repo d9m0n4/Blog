@@ -31,9 +31,9 @@ const UserComments = () => {
                     marginBottom: 2,
                   }}>
                   <UserInfo onlyAvatar={false} fullName={comment.user.fullName} /> <Divider light />
-                  <span>{toDate(comment.createdAt)}</span>
+                  <span>{toDate(comment.createdAt, { hour: 'numeric', minute: 'numeric' })}</span>
                 </Box>
-                <Typography>{comment.text}</Typography>
+                <Typography sx={{ marginLeft: 6 }}>{comment.text}</Typography>
               </Paper>
             </Grid>
           ))}

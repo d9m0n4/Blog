@@ -8,9 +8,7 @@ import posts from 'service/posts';
 const FullPostContainer = () => {
   const { id } = useParams();
   const { items } = useAppSelector((state) => state.posts);
-  const [postData, setPostData] = React.useState<IPost | undefined>(
-    items.find((item) => item.id === id),
-  );
+  const [postData, setPostData] = React.useState<IPost | undefined>();
 
   const { user, isAuth } = useAppSelector((state) => state.auth);
 
@@ -33,7 +31,7 @@ const FullPostContainer = () => {
     if (id) {
       fetchPost(id);
     }
-  }, [id]);
+  }, []);
 
   return <FullPost postData={postData} user={user} isAuth={isAuth} />;
 };
