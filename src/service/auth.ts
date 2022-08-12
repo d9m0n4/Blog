@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { BASEURL } from '../constants';
 import { IUserPostData, AuthResponse } from '../models/index';
 import API from './axios';
 
@@ -9,7 +11,10 @@ class AuthService {
     return await API.post('/auth/registration', postData);
   }
   async logout() {
-    await API.post('/auth/logout');
+    return await API.post('/auth/logout');
+  }
+  async refreshToken() {
+    return await axios.get(`${BASEURL}api/auth/refresh`, { withCredentials: true });
   }
 }
 

@@ -28,7 +28,7 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading 
                   ) : (
                     <Link to={`/user/${comment.user.id}/posts`}>
                       <UserInfo
-                        avatarUrl={comment.user.avatar}
+                        avatarUrl={comment.user.avatar ? `${BASEURL}${comment.user.avatar}` : ''}
                         fullName={comment.user.fullName}
                         onlyAvatar={true}
                       />

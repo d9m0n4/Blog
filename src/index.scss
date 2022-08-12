@@ -4,8 +4,6 @@ body {
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  width: 100vw;
 }
 
 body::-webkit-scrollbar {
@@ -16,6 +14,7 @@ body::-webkit-scrollbar-thumb {
   border: 3px solid #fff;
   -webkit-border-radius: 6px;
   border-radius: 6px;
+
   background-color: #3e5060;
 }
 
@@ -28,8 +27,7 @@ code {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  overflow-x: hidden;
+
   font-family: 'Inter', sans-serif;
 }
 

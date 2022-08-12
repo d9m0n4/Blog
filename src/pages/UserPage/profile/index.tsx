@@ -14,6 +14,7 @@ import styles from './profile.module.scss';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { updateUserInfo } from 'store/actions/user';
 import { BASEURL } from '../../../constants';
+import { Edit } from '@mui/icons-material';
 
 const Profile = () => {
   const userData = useOutletContext<CurrentUserData>();
@@ -21,6 +22,8 @@ const Profile = () => {
   const avatarUpload = React.useRef<HTMLInputElement>(null);
   const { user, isAuth } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+
+  const [isEditable, setIsEditable] = React.useState(false);
 
   const [formData, setFormData] = React.useState({
     fullName: userData.fullName,
@@ -44,12 +47,19 @@ const Profile = () => {
   return (
     <>
       {userData ? (
-        <Paper sx={{ padding: 2 }}>
+        <Paper sx={{ padding: 2, position: 'relative' }}>
+          {!isEditable && user && (
+            <Box className={styles.editProfile}>
+              <Button onClick={() => setIsEditable(true)} sx={{ minWidth: 'auto' }} variant="text">
+                <Edit />
+              </Button>
+            </Box>
+          )}
           <Grid container direction="column">
             <form onSubmit={submitHandler}>
-              <Grid item justifyContent="center" display="flex">
+              <Grid item justifyContent="center" display="flex" paddingTop={2}>
                 <input ref={avatarUpload} onChange={handleChangeFile} type="file" hidden />
-                {user ? (
+                {user && isEditable ? (
                   <div className={styles.userAvatar} onClick={() => avatarUpload.current?.click()}>
                     <UserInfo
                       onClick={() => avatarUpload.current?.click()}
@@ -72,7 +82,6 @@ const Profile = () => {
                   <>
                     {userData.fullName && (
                       <UserInfo
-                        onClick={() => avatarUpload.current?.click()}
                         avatarUrl={userData?.avatar ? `${BASEURL}${userData.avatar}` : imageUrl}
                         fullName={userData?.fullName!}
                         onlyAvatar={true}
@@ -85,7 +94,7 @@ const Profile = () => {
               <Grid item justifyContent="center" display="flex">
                 <Stack sx={{ marginTop: 2 }}>
                   <Typography sx={{ textAlign: 'center' }} variant="h4">
-                    {isAuth ? (
+                    {isAuth && isEditable ? (
                       <TextField
                         defaultValue={user?.fullName}
                         placeholder={user?.fullName}
@@ -117,7 +126,7 @@ const Profile = () => {
                           alignItems: 'flex-start',
                         }}>
                         <ListItem>
-                          {isAuth && user ? (
+                          {isEditable && user ? (
                             <TextField
                               defaultValue={user.nickName}
                               placeholder={user.nickName}
@@ -141,7 +150,7 @@ const Profile = () => {
                           )}
                         </ListItem>
                         <ListItem>
-                          {isAuth && user ? (
+                          {isEditable && user ? (
                             <TextField
                               defaultValue={user.email}
                               placeholder={user.email}
@@ -165,7 +174,7 @@ const Profile = () => {
                           )}
                         </ListItem>
                         <ListItem>
-                          {isAuth && user ? (
+                          {isEditable && user ? (
                             <TextField
                               defaultValue={user.city}
                               placeholder={user.city}
@@ -193,9 +202,29 @@ const Profile = () => {
                   }
                 </Stack>
               </Grid>
-              {isAuth && (
-                <Grid item>
-                  <Button type="submit">Сохранить</Button>
+              {isAuth && isEditable && (
+                <Grid
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    paddingLeft: 2,
+                    paddingRight: 2,
+                  }}
+                  item>
+                  <Box sx={{ padding: 2 }}>
+                    <Button
+                      onClick={() => setIsEditable(false)}
+                      color="error"
+                      variant="outlined"
+                      sx={{ borderRadius: 8 }}>
+                      Отмена
+                    </Button>
+                  </Box>
+                  <Box sx={{ padding: 2 }}>
+                    <Button variant="outlined" sx={{ borderRadius: 8 }} type="submit">
+                      Сохранить
+                    </Button>
+                  </Box>
                 </Grid>
               )}
             </form>

@@ -36,7 +36,7 @@ export const registration = createAsyncThunk(
 
 export const checkAuth = createAsyncThunk('auth/check', async (_, { rejectWithValue }) => {
   try {
-    const { data } = await axios.get(`${BASEURL}api/auth/refresh`, { withCredentials: true });
+    const { data } = await AuthService.refreshToken();
     localStorage.setItem('token', data.accessToken);
     return data.userData;
   } catch (error) {
@@ -49,9 +49,8 @@ export const checkAuth = createAsyncThunk('auth/check', async (_, { rejectWithVa
 
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    await AuthService.logout();
-    localStorage.removeItem('token');
-    return;
+    window.localStorage.removeItem('token');
+    return await AuthService.logout();
   } catch (error) {
     return rejectWithValue(error);
   }
