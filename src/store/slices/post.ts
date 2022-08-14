@@ -25,8 +25,6 @@ const initialState: SliceState = {
 const addComment: CaseReducer<SliceState, PayloadAction<ActionPayload>> = (state, action) => {
   state.items = state.items.map((item) => {
     if (item.id === action.payload.id) {
-      console.log(action.payload.comment);
-
       item.comments.unshift(action.payload.comment);
       return item;
     } else {

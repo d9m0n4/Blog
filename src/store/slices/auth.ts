@@ -90,7 +90,6 @@ const authSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
       state.user = null;
-      state.isAuth = false;
     },
   },
 });

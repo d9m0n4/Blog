@@ -43,6 +43,7 @@ const Profile = () => {
     formD.append('city', formData.city!);
     formD.append('img', image);
     dispatch(updateUserInfo(formD));
+    setIsEditable(false);
   };
   return (
     <>

@@ -6,6 +6,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { toDate } from 'utils/toDate';
 import { CurrentUserData } from 'models';
 import Loader from 'components/Loader';
+import { BASEURL } from '../../../constants';
 
 const UserComments = () => {
   const userData = useOutletContext<CurrentUserData>();
@@ -17,7 +18,7 @@ const UserComments = () => {
           {userData.comments.map((comment) => (
             <Grid item key={comment.id}>
               <Paper sx={{ marginBottom: 2, padding: '16px' }}>
-                <Link to={`/posts/${comment.postId}`}>
+                <Link to={`/posts/${comment.postId}/#comments`}>
                   <Typography sx={{ color: '#3e5060' }} variant="h5">
                     {comment.post.title}
                   </Typography>
@@ -30,7 +31,12 @@ const UserComments = () => {
                     marginTop: 2,
                     marginBottom: 2,
                   }}>
-                  <UserInfo onlyAvatar={false} fullName={comment.user.fullName} /> <Divider light />
+                  <UserInfo
+                    onlyAvatar={false}
+                    fullName={comment.user.fullName}
+                    avatarUrl={`${BASEURL}${comment.user.avatar}`}
+                  />{' '}
+                  <Divider />
                   <span>{toDate(comment.createdAt, { hour: 'numeric', minute: 'numeric' })}</span>
                 </Box>
                 <Typography sx={{ marginLeft: 6 }}>{comment.text}</Typography>

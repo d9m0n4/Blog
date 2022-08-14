@@ -16,6 +16,8 @@ import { toDate } from 'utils/toDate';
 import posts from 'service/posts';
 import rehypeRaw from 'rehype-raw';
 import ReactMarkdown from 'react-markdown';
+import { BASEURL } from '../../constants';
+import { Comp } from 'components/ReactMarkDown';
 
 export const Post: React.FC<any> = ({
   id,
@@ -68,11 +70,9 @@ export const Post: React.FC<any> = ({
           <div className={styles.indention}>
             {isFullPost && (
               <div className={styles.author}>
-                <NavLink
-                  to={isEditable ? `/profile` : `/user/${user.id}`}
-                  className={styles.userLink}>
+                <NavLink to={`/user/${user.id}`} className={styles.userLink}>
                   <UserInfo
-                    avatarUrl={user.avatarUrl}
+                    avatarUrl={user.avatarUrl ? `${BASEURL}${user.avatarUrl}` : ''}
                     fullName={user.fullName}
                     rating={user.rating}
                     onlyAvatar={false}
@@ -95,10 +95,7 @@ export const Post: React.FC<any> = ({
             </ul>
             {text && (
               <div className={clsx(styles.content, { [styles.last]: isFullPost })}>
-                <ReactMarkdown
-                  rehypePlugins={[rehypeRaw]}
-                  children={isFullPost ? text : cutText(text)}
-                />
+                <Comp text={isFullPost ? text : cutText(text)} />
               </div>
             )}
             <ul className={styles.postDetails}>

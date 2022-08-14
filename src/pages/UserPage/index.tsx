@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Grid, Link, List } from '@mui/material';
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './userPage.module.scss';
-import SortIcon from '@mui/icons-material/Sort';
 import { CurrentUserData } from 'models';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { logout } from 'store/actions/auth';
@@ -57,7 +56,7 @@ const UserPage: React.FC<IUserPage> = ({ userData }) => {
                   sx={{ textDecoration: 'none', marginLeft: 'auto' }}
                   className={styles.navLink}
                   onClick={handleLogout}>
-                  <Button>Выход</Button>
+                  <Button color="error">Выход</Button>
                 </Link>
               )}
             </List>

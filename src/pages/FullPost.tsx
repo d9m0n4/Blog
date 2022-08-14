@@ -1,3 +1,4 @@
+import React from 'react';
 import { IPost, IUser } from 'models';
 import { BASEURL } from '../constants';
 import { Post } from 'components/Post';

@@ -1,26 +1,32 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import SimpleMDE from 'react-simplemde-editor';
-
 import 'easymde/dist/easymde.min.css';
+
 import styles from './AddPost.module.scss';
-import EasyMDE from 'easymde';
 import posts from 'service/posts';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'hooks/redux';
 import useUploadFile from 'hooks/useUploadFile';
+import ReactMarkdown, { Components } from 'react-markdown';
+import ReactDOMServer from 'react-dom/server';
+import SimpleMdeReact from 'react-simplemde-editor';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import { Comp } from 'components/ReactMarkDown';
 
 export const AddPost = () => {
   const autosavedValue = localStorage.getItem(`smde_1`) || '';
 
   const navigate = useNavigate();
-  const [text, settext] = useState(autosavedValue);
+  const [text, settext] = useState('');
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
 
   const { user } = useAppSelector((state) => state.auth);
+
+  const [imgs, setImg] = useState<string[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -33,6 +39,10 @@ export const AddPost = () => {
     formData.append('text', text);
     formData.append('tags', tags);
     formData.append('userId', user?.id!);
+    for (let img = 0; img < imgs.length; img++) {
+      const element = imgs[img];
+      formData.append('textimg', element);
+    }
 
     posts.createPost(formData).then(({ data }) => {
       navigate(`/posts/${data.id}`);
@@ -51,6 +61,7 @@ export const AddPost = () => {
     try {
       const objectURL = URL.createObjectURL(image);
       onSuccess(objectURL);
+      setImg((prev) => [...prev, image]);
     } catch (error) {
       return onError(error);
     }
@@ -59,10 +70,13 @@ export const AddPost = () => {
   const options = useMemo(
     () =>
       ({
+        previewRender(text: any) {
+          return ReactDOMServer.renderToString(<Comp text={text} />);
+        },
         spellChecker: false,
         showIcons: ['strikethrough', 'table', 'code', 'upload-image'],
         shortcuts: { toggleFullScreen: null, toggleSideBySide: null },
-        hideIcons: ['quote', 'side-by-side', 'fullscreen'],
+        hideIcons: ['quote', 'fullscreen'],
         previewImagesInEditor: true,
         uploadImage: true,
         autofocus: true,
@@ -125,7 +139,7 @@ export const AddPost = () => {
         onChange={setTagNames}
         fullWidth
       />
-      <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
+      <SimpleMdeReact value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button onClick={submit} size="medium" sx={{ borderRadius: '16px' }} variant="contained">
           Опубликовать

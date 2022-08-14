@@ -7,7 +7,6 @@ import { TopUsers } from 'components/TopUsers';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { fetchAllPosts, getTags } from 'store/actions/post';
 import Alert from 'components/Alert';
-import Loader from 'components/Loader';
 import { BASEURL } from '../constants';
 import { IUser } from 'models';
 import users from 'service/users';
