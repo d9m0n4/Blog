@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -9,18 +9,16 @@ import posts from 'service/posts';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'hooks/redux';
 import useUploadFile from 'hooks/useUploadFile';
-import ReactMarkdown, { Components } from 'react-markdown';
 import ReactDOMServer from 'react-dom/server';
 import SimpleMdeReact from 'react-simplemde-editor';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
+
 import { Comp } from 'components/ReactMarkDown';
 
 export const AddPost = () => {
   const autosavedValue = localStorage.getItem(`smde_1`) || '';
 
   const navigate = useNavigate();
-  const [text, settext] = useState('');
+  const [text, settext] = useState(autosavedValue);
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
 
@@ -62,9 +60,14 @@ export const AddPost = () => {
       const objectURL = URL.createObjectURL(image);
       onSuccess(objectURL);
       setImg((prev) => [...prev, image]);
+      prevHandler(objectURL);
     } catch (error) {
       return onError(error);
     }
+  };
+
+  const prevHandler = (r: any) => {
+    console.log(r);
   };
 
   const options = useMemo(
@@ -76,10 +79,10 @@ export const AddPost = () => {
         spellChecker: false,
         showIcons: ['strikethrough', 'table', 'code', 'upload-image'],
         shortcuts: { toggleFullScreen: null, toggleSideBySide: null },
-        hideIcons: ['quote', 'fullscreen'],
-        previewImagesInEditor: true,
+        hideIcons: ['quote'],
         uploadImage: true,
         autofocus: true,
+        imagesPreviewHandler: prevHandler,
         imageUploadFunction: uploadImage,
         maxHeight: '400px',
         placeholder: 'Введите текст...',
@@ -139,7 +142,13 @@ export const AddPost = () => {
         onChange={setTagNames}
         fullWidth
       />
-      <SimpleMdeReact value={text} onChange={onChange} options={options} />
+
+      <SimpleMdeReact
+        className={styles.editor}
+        value={text}
+        onChange={onChange}
+        options={options}
+      />
       <div className={styles.buttons}>
         <Button onClick={submit} size="medium" sx={{ borderRadius: '16px' }} variant="contained">
           Опубликовать
