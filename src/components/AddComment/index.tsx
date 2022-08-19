@@ -61,11 +61,7 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
     <>
       <div className={styles.root}>
         <div className={styles.avatar}>
-          <UserInfo
-            avatarUrl={user.avatar ? `${BASEURL}${user.avatar}` : ''}
-            fullName={user.fullName}
-            onlyAvatar={true}
-          />
+          <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar={true} />
         </div>
         <div className={styles.form}>
           <TextField

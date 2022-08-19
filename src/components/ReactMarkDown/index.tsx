@@ -5,6 +5,16 @@ import atomDark from 'react-syntax-highlighter/dist/cjs/styles/prism/material-da
 
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 
 interface IMkd {
   text: string;
@@ -16,23 +26,25 @@ export const Comp: React.FC<IMkd> = React.memo(({ text }) => {
     p: ({ node, children }) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const nodeFirstChild: any = node.children[0];
-      if (nodeFirstChild.tagName === 'a') {
+      if (nodeFirstChild.tagName === 'img') {
         const image = nodeFirstChild.properties;
+        console.log(image);
 
         return (
-          <div className="post-detail__image">
-            <img src={image.href} alt={image.alt} width={600} height={300} />
+          <div className="post__image">
+            <img className="img" src={image.src} alt={image.alt} />
           </div>
         );
       }
 
-      return <p>{children}</p>;
+      return <Typography>{children}</Typography>;
     },
     code: (code: any) => {
       const { className, children } = code;
-      const language = className ? (className as string).replace('language-', '') : 'js';
-      return (
+      const language = className ? (className as string).replace('language-', '') : null;
+      return language ? (
         <SyntaxHighlighter
+          customStyle={{ maxWidth: '1152px', margin: '0 auto' }}
           wrapLongLines
           wrapLines
           language={language}
@@ -40,7 +52,56 @@ export const Comp: React.FC<IMkd> = React.memo(({ text }) => {
           showLineNumbers>
           {children}
         </SyntaxHighlighter>
+      ) : (
+        <code className="inline__code">{children}</code>
       );
+    },
+    pre: ({ node, children }) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const nodeFirstChild: any = node.children[0];
+      console.log(node);
+
+      if (nodeFirstChild.tagName === 'code' && nodeFirstChild.tagName !== 'pre') {
+        console.log(nodeFirstChild);
+      }
+      return <pre>{children}</pre>;
+    },
+    table: (props) => {
+      return (
+        <TableContainer component={Paper}>
+          <Table size="small" aria-label="a dense table">
+            {props.children}
+          </Table>
+        </TableContainer>
+      );
+    },
+
+    th: (props) => {
+      return (
+        <TableCell>
+          <Typography sx={{ fontWeight: '600' }}>{props.children}</Typography>
+        </TableCell>
+      );
+    },
+
+    td: (props) => {
+      return (
+        <TableCell>
+          <Typography>{props.children}</Typography>
+        </TableCell>
+      );
+    },
+
+    tr: (props) => {
+      return <TableRow>{props.children}</TableRow>;
+    },
+
+    tbody: (props) => {
+      return <TableBody>{props.children}</TableBody>;
+    },
+
+    thead: (props) => {
+      return <TableHead>{props.children}</TableHead>;
     },
   };
 

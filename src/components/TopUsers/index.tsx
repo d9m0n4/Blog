@@ -2,14 +2,12 @@ import React, { memo } from 'react';
 import { SideBlock } from 'components/SideBlock';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import styles from './TopUsers.module.scss';
 import { IUser } from 'models';
 import { UserInfo } from 'components/UserInfo';
-import { BASEURL } from '../../constants';
 
 interface ITopUsers {
   items: IUser[];
@@ -36,11 +34,7 @@ export const TopUsers: React.FC<ITopUsers> = memo(({ items, isLoading }) => {
               {isLoading ? (
                 <Skeleton variant="circular" width={40} height={40} />
               ) : (
-                <UserInfo
-                  avatarUrl={user.avatar ? `${BASEURL}${user.avatar}` : ''}
-                  fullName={user.fullName}
-                  onlyAvatar={true}
-                />
+                <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar={true} />
               )}
             </ListItemAvatar>
             {isLoading ? (

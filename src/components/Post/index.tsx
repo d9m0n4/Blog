@@ -71,7 +71,7 @@ export const Post: React.FC<any> = React.memo(
                 <div className={styles.author}>
                   <NavLink to={`/user/${user.id}`} className={styles.userLink}>
                     <UserInfo
-                      avatarUrl={user.avatarUrl ? `${BASEURL}${user.avatarUrl}` : ''}
+                      avatarUrl={user.avatarUrl}
                       fullName={user.fullName}
                       rating={user.rating}
                       onlyAvatar={false}

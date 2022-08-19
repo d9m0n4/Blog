@@ -4,7 +4,6 @@ import { IUserInfo } from '../../models';
 import styles from './UserInfo.module.scss';
 import stringToColor from 'utils/stringToColor';
 import stringAvatar from 'utils/stringAvatar';
-import { BASEURL } from '../../constants';
 
 export const UserInfo: React.FC<IUserInfo> = ({
   avatarUrl,
@@ -18,7 +17,7 @@ export const UserInfo: React.FC<IUserInfo> = ({
       <Avatar
         onClick={onClick}
         alt={fullName}
-        src={avatarUrl ? `${avatarUrl}` : ''}
+        src={avatarUrl}
         sx={{
           bgcolor: stringToColor(fullName),
           width: width ? width : '40px',

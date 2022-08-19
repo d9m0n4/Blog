@@ -26,6 +26,9 @@ class PostService {
   async likePost(id: any) {
     return await API.post('/posts/like', { id });
   }
+  async uploadImage(file: FormData) {
+    return await API.post('/upload', file);
+  }
 }
 
 export default new PostService();

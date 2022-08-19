@@ -70,11 +70,7 @@ export const Header = () => {
             {isAuth && user ? (
               <>
                 <Link to={`/user/${user.id}`}>
-                  <UserInfo
-                    avatarUrl={`${BASEURL}${user.avatar}`}
-                    fullName={user.fullName}
-                    onlyAvatar={true}
-                  />
+                  <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar={true} />
                 </Link>
                 <Link to="/posts/create">
                   <Button variant="contained" sx={{ borderRadius: 16 }}>

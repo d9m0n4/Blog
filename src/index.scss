@@ -39,3 +39,21 @@ code {
 a {
   text-decoration: none;
 }
+
+.post__image {
+  margin: 8px 0;
+  display: flex;
+  justify-content: center;
+  .img {
+    max-width: 1152px;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.inline__code {
+  display: inline-block;
+  background-color: lightgray;
+  border-radius: 16px;
+  padding: 8px;
+}

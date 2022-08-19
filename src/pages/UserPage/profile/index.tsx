@@ -64,13 +64,7 @@ const Profile = () => {
                   <div className={styles.userAvatar} onClick={() => avatarUpload.current?.click()}>
                     <UserInfo
                       onClick={() => avatarUpload.current?.click()}
-                      avatarUrl={
-                        imageUrl
-                          ? imageUrl
-                          : user.avatar
-                          ? `${BASEURL}${user.avatar}`
-                          : `${BASEURL}${userData.avatar}`
-                      }
+                      avatarUrl={imageUrl ? imageUrl : user.avatar ? user.avatar : userData.avatar}
                       fullName={user?.fullName!}
                       onlyAvatar={true}
                       width={164}
@@ -83,7 +77,7 @@ const Profile = () => {
                   <>
                     {userData.fullName && (
                       <UserInfo
-                        avatarUrl={userData?.avatar ? `${BASEURL}${userData.avatar}` : imageUrl}
+                        avatarUrl={userData?.avatar ? userData.avatar : imageUrl}
                         fullName={userData?.fullName!}
                         onlyAvatar={true}
                         width={164}

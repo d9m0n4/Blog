@@ -57,17 +57,14 @@ export const AddPost = () => {
 
   const uploadImage = async (image: any, onSuccess: any, onError: any) => {
     try {
-      const objectURL = URL.createObjectURL(image);
-      onSuccess(objectURL);
+      const formData = new FormData();
+      formData.append('img', image);
+      const { data } = await posts.uploadImage(formData);
+      onSuccess(data.url);
       setImg((prev) => [...prev, image]);
-      prevHandler(objectURL);
     } catch (error) {
       return onError(error);
     }
-  };
-
-  const prevHandler = (r: any) => {
-    console.log(r);
   };
 
   const options = useMemo(
@@ -82,7 +79,6 @@ export const AddPost = () => {
         hideIcons: ['quote'],
         uploadImage: true,
         autofocus: true,
-        imagesPreviewHandler: prevHandler,
         imageUploadFunction: uploadImage,
         maxHeight: '400px',
         placeholder: 'Введите текст...',
