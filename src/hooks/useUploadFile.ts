@@ -18,7 +18,7 @@ const useUploadFile = () => {
     setImageUrl('');
     setImage(null);
   };
-  return { imageUrl, image, handleChangeFile, handleRemoveImage };
+  return { imageUrl, image, handleChangeFile, handleRemoveImage, setImage, setImageUrl };
 };
 
 export default useUploadFile;

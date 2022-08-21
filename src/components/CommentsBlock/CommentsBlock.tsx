@@ -7,7 +7,6 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 import { ICommentsBlock } from '../../models';
-import { BASEURL } from '../../constants';
 import { UserInfo } from '../UserInfo';
 import { Link } from 'react-router-dom';
 import { toDate } from 'utils/toDate';
@@ -53,11 +52,7 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading 
                       <div className={styles.commentsImagesBlock}>
                         {comment.files.map((file) => (
                           <div key={file} className={styles.commentsImageWrapper}>
-                            <img
-                              className={styles.commentsImage}
-                              src={`${BASEURL}${file}`}
-                              alt=""
-                            />
+                            <img className={styles.commentsImage} src={file} alt="" />
                           </div>
                         ))}
                       </div>

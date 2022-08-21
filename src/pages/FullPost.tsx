@@ -21,7 +21,7 @@ export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
           <Post
             id={postData.id}
             title={postData.title}
-            imageUrl={`${BASEURL}/${postData.previewImage}`}
+            imageUrl={postData.previewImage}
             user={{
               id: postData.user.id,
               avatarUrl: postData.user.avatar,
@@ -38,7 +38,9 @@ export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
             isEditable
           />
 
-          {isAuth && user && <AddComment user={user} postId={postData.id} />}
+          {isAuth && user && (
+            <AddComment user={user} postId={postData.id} currentComments={postData.comments} />
+          )}
           {postData.comments.length > 0 && (
             <CommentsBlock items={postData.comments} isLoading={false} />
           )}

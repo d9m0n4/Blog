@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid } from '@mui/material';
 import { Post } from 'components/Post';
-import { BASEURL } from '../../../constants';
 import { CurrentUserData } from 'models';
 import { useOutletContext } from 'react-router-dom';
 import Loader from 'components/Loader';
@@ -20,7 +19,7 @@ const Posts = () => {
                 id: userData.id,
               }}
               title={post.title}
-              imageUrl={`${BASEURL}/${post.previewImage}`}
+              imageUrl={post.previewImage}
               viewsCount={post.viewsCount}
               commentsCount={post.comments?.length}
               tags={post.tags}

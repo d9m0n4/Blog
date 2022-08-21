@@ -68,9 +68,9 @@ export interface IComment {
   id: string;
   text: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
   postId: string;
-  post: IPost;
+  post?: IPost;
   user: IUser;
   files: string[];
 }

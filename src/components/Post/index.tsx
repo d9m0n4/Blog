@@ -14,8 +14,8 @@ import { UserInfo } from 'components/UserInfo';
 import { useAppSelector } from 'hooks/redux';
 import { toDate } from 'utils/toDate';
 import posts from 'service/posts';
-import { BASEURL } from '../../constants';
 import { Comp } from 'components/ReactMarkDown';
+import AlertDialog from 'components/Dialog';
 
 export const Post: React.FC<any> = React.memo(
   ({
@@ -37,10 +37,13 @@ export const Post: React.FC<any> = React.memo(
       likesCount && currentUser && likesCount.includes(currentUser.id),
     );
     const [likes, setLikes] = useState<string[]>(likesCount ? likesCount : []);
+    const [openModal, setOpenModal] = useState<boolean>(false);
 
     let isEditable = currentUser && user.id === currentUser?.id;
 
-    const onClickRemove = () => {};
+    const onClickRemove = () => {
+      setOpenModal(true);
+    };
 
     useEffect(() => {
       setIsLiked(currentUser && likes.includes(currentUser.id));
@@ -64,6 +67,7 @@ export const Post: React.FC<any> = React.memo(
 
     return (
       <>
+        <AlertDialog openState={openModal} />
         <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
           <div className={styles.info}>
             <div className={styles.indention}>

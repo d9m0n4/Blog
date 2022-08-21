@@ -29,6 +29,11 @@ class PostService {
   async uploadImage(file: FormData) {
     return await API.post('/upload', file);
   }
+  async updatePost(post: FormData, id: string) {
+    console.log(post);
+
+    return await API.post(`/posts/edit/${id}`, post);
+  }
 }
 
 export default new PostService();

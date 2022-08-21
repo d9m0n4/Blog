@@ -53,16 +53,15 @@ export const Comp: React.FC<IMkd> = React.memo(({ text }) => {
           {children}
         </SyntaxHighlighter>
       ) : (
-        <code className="inline__code">{children}</code>
+        <>{children}</>
       );
     },
     pre: ({ node, children }) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const nodeFirstChild: any = node.children[0];
-      console.log(node);
 
-      if (nodeFirstChild.tagName === 'code' && nodeFirstChild.tagName !== 'pre') {
-        console.log(nodeFirstChild);
+      if (nodeFirstChild.tagName === 'code' && !nodeFirstChild.properties.className) {
+        return <code className="inline__code">{children}</code>;
       }
       return <pre>{children}</pre>;
     },

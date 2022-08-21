@@ -4,20 +4,21 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { IconButton, ImageList, ImageListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { IPost, IUser } from 'models';
+import { IComment, IUser } from 'models';
 import comments from 'service/comments';
 import { UserInfo } from 'components/UserInfo';
 import styles from './AddComment.module.scss';
 import { useAppDispatch } from 'hooks/redux';
 import { postActions } from 'store/slices/post';
-import { BASEURL } from '../../constants';
+import { toDate } from 'utils/toDate';
 
 interface IAddComment {
   user: IUser;
   postId: string;
+  currentComments: IComment[];
 }
 
-export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
+export const AddComment: React.FC<IAddComment> = ({ user, postId, currentComments }) => {
   const [previewFiles, setPreviewFiles] = useState<any>();
   const [files, setFiles] = useState<any>([]);
   const [comment, setComment] = useState('');
@@ -49,6 +50,7 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
       const file = files[i];
       formData.append('file', file);
     }
+
     comments.createComment(formData).then(({ data }) => {
       dispatch(postActions.addComment({ id: data.postId, comment: data }));
     });

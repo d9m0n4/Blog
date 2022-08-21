@@ -10,6 +10,7 @@ import Alert from 'components/Alert';
 import { BASEURL } from '../constants';
 import { IUser } from 'models';
 import users from 'service/users';
+import { PostSkeleton } from 'components/Post/Skeleton';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -34,28 +35,34 @@ export const Home = () => {
       <TagsBlock items={tags} isLoading={isLoading} />
       <Grid container spacing={3}>
         <Grid xs={8} item>
-          {items.length
-            ? items.map((item) => (
-                <Post
-                  key={item.id}
-                  id={item.id}
-                  title={item.title}
-                  imageUrl={`${BASEURL}/${item.previewImage}`}
-                  user={{
-                    id: item.user.id,
-                    avatarUrl: item.user.avatar,
-                    fullName: item.user.fullName,
-                    rating: item.user.rating,
-                  }}
-                  createdAt={item.createdAt}
-                  viewsCount={item.viewsCount}
-                  commentsCount={item.comments?.length}
-                  tags={item.tags}
-                  likesCount={item.likes}
-                  isLoading={isLoading}
-                  text={item.text}></Post>
-              ))
-            : 'не найдено'}
+          {items.length ? (
+            items.map((item) => (
+              <Post
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                imageUrl={item.previewImage}
+                user={{
+                  id: item.user.id,
+                  avatarUrl: item.user.avatar,
+                  fullName: item.user.fullName,
+                  rating: item.user.rating,
+                }}
+                createdAt={item.createdAt}
+                viewsCount={item.viewsCount}
+                commentsCount={item.comments?.length}
+                tags={item.tags}
+                likesCount={item.likes}
+                isLoading={isLoading}
+                text={item.text}></Post>
+            ))
+          ) : (
+            <>
+              <PostSkeleton />
+              <PostSkeleton />
+              <PostSkeleton />
+            </>
+          )}
         </Grid>
         <Grid xs={4} item>
           <Grid item sx={{ position: 'sticky', top: '80px' }}>

@@ -31,7 +31,7 @@ const FullPostContainer = () => {
     if (id) {
       fetchPost(id);
     }
-  }, []);
+  }, [id]);
 
   return <FullPost postData={postData} user={user} isAuth={isAuth} />;
 };

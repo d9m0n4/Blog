@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Registration } from 'pages/Registration';
 import UserComments from 'pages/UserPage/comments';
-import { AddPost } from 'pages/AddPost';
 import { Login } from 'pages/Login';
 import NotFound from 'pages/NotFound';
 import { Home } from 'pages/Home';
@@ -19,6 +18,9 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { PostsByTag } from 'pages/PostsByTag';
 import ScrollTop from 'components/ScrollTop';
 import usePagePercent from 'hooks/usePagePercent';
+import { fetchAllPosts } from 'store/actions/post';
+import EditPost from 'pages/EditPost';
+import AddPost from 'containers/AddPost';
 
 function App() {
   const [scrollBtnVisible, setScrollBtnVisible] = React.useState(false);
@@ -29,6 +31,7 @@ function App() {
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(checkAuth());
+      dispatch(fetchAllPosts());
     }
   }, [dispatch]);
 
@@ -57,6 +60,7 @@ function App() {
               <Route path="comments" element={<UserComments />} />
             </Route>
             <Route path="posts/create" element={<AddPost />} />
+            <Route path="posts/edit/:id" element={<EditPost />} />
             <Route path="/tag/:tag" element={<PostsByTag />} />
             <Route path="registration" element={<Registration />} />
             <Route path="login" element={<Login />} />
