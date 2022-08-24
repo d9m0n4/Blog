@@ -32,8 +32,11 @@ export const Home = () => {
   return (
     <>
       {error && <Alert openState={true} message={'error'} />}
-      <TagsBlock items={tags} isLoading={isLoading} />
+
       <Grid container spacing={3}>
+        <Grid xs={8} item>
+          <TagsBlock items={tags} isLoading={isLoading} />
+        </Grid>
         <Grid xs={8} item>
           {items.length ? (
             items.map((item) => (
