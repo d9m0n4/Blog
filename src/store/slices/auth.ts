@@ -60,7 +60,6 @@ const authSlice = createSlice({
       state.error = { message: null };
       state.loading = true;
       state.isAuth = false;
-      state.user = null;
     },
     [logout.fulfilled.type]: (state) => {
       state.error = { message: null };
@@ -77,8 +76,6 @@ const authSlice = createSlice({
     [updateUserInfo.pending.type]: (state) => {
       state.error = { message: null };
       state.loading = true;
-      state.user = null;
-      state.isAuth = false;
     },
     [updateUserInfo.fulfilled.type]: (state, action) => {
       state.error = { message: null };

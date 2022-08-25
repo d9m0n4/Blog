@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import Grid from '@mui/material/Grid';
-import { Post } from '../components/Post';
-import { TagsBlock } from 'components/TagsBlock/TagsBlock';
-import { TopUsers } from 'components/TopUsers';
+import { Post } from '../components/Layout/Post';
+import { TagsBlock } from 'components/Layout/TagsBlock/TagsBlock';
+import { TopUsers } from 'components/Layout/TopUsers';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { fetchAllPosts, getTags } from 'store/actions/post';
-import Alert from 'components/Alert';
-import { BASEURL } from '../constants';
+import Alert from 'components/Shared/Alert';
 import { IUser } from 'models';
 import users from 'service/users';
-import { PostSkeleton } from 'components/Post/Skeleton';
+import { PostSkeleton } from 'components/Layout/Post/Skeleton';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -29,17 +28,19 @@ export const Home = () => {
 
   const { items, tags, isLoading, error } = useAppSelector((state) => state.posts);
 
+  const i = React.useMemo(() => items, [items]);
+  const t = React.useMemo(() => tags, [tags]);
+
   return (
     <>
       {error && <Alert openState={true} message={'error'} />}
 
       <Grid container spacing={3}>
         <Grid xs={8} item>
-          <TagsBlock items={tags} isLoading={isLoading} />
-        </Grid>
-        <Grid xs={8} item>
-          {items.length ? (
-            items.map((item) => (
+          <TagsBlock items={t} isLoading={isLoading} />
+
+          {i.length ? (
+            i.map((item) => (
               <Post
                 key={item.id}
                 id={item.id}
@@ -67,9 +68,9 @@ export const Home = () => {
             </>
           )}
         </Grid>
-        <Grid xs={4} item>
-          <Grid item sx={{ position: 'sticky', top: '80px' }}>
-            <TopUsers items={popUsers} isLoading={isLoading} />
+        <Grid xs={4} item sx={{ marginTop: 7 }}>
+          <Grid item sx={{ position: 'sticky', top: '90px' }}>
+            <TopUsers items={popUsers} />
           </Grid>
         </Grid>
       </Grid>

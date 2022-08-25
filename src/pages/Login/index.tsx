@@ -5,11 +5,11 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
 import styles from './Login.module.scss';
-import BasicForm from 'components/BasicForm';
+import BasicForm from 'components/Shared/BasicForm';
 import { login } from 'store/actions/auth';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { useNavigate } from 'react-router-dom';
-import Alert from 'components/Alert';
+import Alert from 'components/Shared/Alert';
 
 export const Login = () => {
   const navigate = useNavigate();

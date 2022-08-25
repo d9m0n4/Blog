@@ -1,17 +1,18 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import 'easymde/dist/easymde.min.css';
-
-import styles from './AddPost.module.scss';
-import posts from 'service/posts';
 
 import ReactDOMServer from 'react-dom/server';
 import SimpleMdeReact from 'react-simplemde-editor';
 
-import { Comp } from 'components/ReactMarkDown';
-import AlertDialog from 'components/Dialog';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+
+import posts from 'service/posts';
+
+import { Markdown } from 'components/Shared/ReactMarkDown';
+
+import styles from './AddPost.module.scss';
+import 'easymde/dist/easymde.min.css';
 
 interface ICreatePost {
   title: string;
@@ -40,7 +41,6 @@ export const CreatePost: React.FC<ICreatePost> = ({
   inputRef,
   setTitle,
   setTagNames,
-  openDialog,
 }) => {
   const uploadImage = async (image: any, onSuccess: any, onError: any) => {
     try {
@@ -56,8 +56,8 @@ export const CreatePost: React.FC<ICreatePost> = ({
   const options = React.useMemo(
     () =>
       ({
-        previewRender(text: any) {
-          return ReactDOMServer.renderToString(<Comp text={text} />);
+        previewRender(text: string) {
+          return ReactDOMServer.renderToString(<Markdown text={text} />);
         },
         spellChecker: false,
         showIcons: ['strikethrough', 'table', 'code', 'upload-image'],

@@ -1,10 +1,9 @@
 import React from 'react';
 import { IPost, IUser } from 'models';
-import { BASEURL } from '../constants';
-import { Post } from 'components/Post';
-import { AddComment } from '../components/AddComment';
-import { CommentsBlock } from 'components/CommentsBlock/CommentsBlock';
-import PageProgress from 'components/PageProgress';
+import { Post } from 'components/Layout/Post';
+import { AddComment } from '../components/Layout/AddComment';
+import { CommentsBlock } from 'components/Layout/CommentsBlock/CommentsBlock';
+import PageProgress from 'components/UI/PageProgress';
 
 interface IFullPost {
   postData: IPost | undefined;

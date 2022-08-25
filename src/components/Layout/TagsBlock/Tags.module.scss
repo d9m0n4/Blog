@@ -1,0 +1,49 @@
+.tagsWrapper {
+  display: flex;
+  justify-content: space-between;
+  &.opened {
+    transition: 1s all ease;
+    .tags {
+      transition: 1s all ease;
+      overflow: auto;
+      height: auto;
+    }
+    .showTags {
+      button {
+        svg {
+          transform: rotate(45deg);
+          transition: transform 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+      }
+    }
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  height: 2rem;
+  overflow: hidden;
+  transition: 1s all ease;
+  margin-bottom: 24px;
+
+  .link {
+    text-decoration: none;
+    color: black;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    &:hover {
+      background-color: #fe9870;
+      color: aliceblue;
+    }
+  }
+  .activeLink {
+    background-color: #fe9870;
+    overflow: hidden;
+    border-radius: 16px;
+    color: aliceblue;
+  }
+}
+.IconRoot {
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
+}

@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
 import styles from './Login.module.scss';
-import BasicForm from 'components/BasicForm';
+import BasicForm from 'components/Shared/BasicForm';
 import { useAppDispatch } from 'hooks/redux';
 import { registration } from 'store/actions/auth';
 import AuthService from '../../service/auth';

@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 
 import Grid from '@mui/material/Grid';
 
-import Alert from 'components/Alert';
-import { Post } from 'components/Post';
+import Alert from 'components/Shared/Alert';
+import { Post } from 'components/Layout/Post';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { fetchPostsByTag } from 'store/actions/post';
 import { useParams } from 'react-router-dom';
 
 import styles from './postsByTag.module.scss';
 import { Typography } from '@mui/material';
-import Loader from 'components/Loader';
+import Loader from 'components/UI/Loader';
 
 export const PostsByTag = () => {
   const dispatch = useAppDispatch();

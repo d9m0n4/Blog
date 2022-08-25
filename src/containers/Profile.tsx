@@ -1,6 +1,6 @@
 import React from 'react';
-import UserPage from 'pages/UserPage';
-import { CurrentUserData, IUser } from 'models';
+import UserPage from 'pages/Profile';
+import { CurrentUserData } from 'models';
 import users from 'service/users';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from 'hooks/redux';
