@@ -1,20 +1,25 @@
 import React from 'react';
-import { Button, Grid, List, ListItem, Paper, Stack, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import { UserInfo } from 'components/Shared/UserAvatar';
-import { CurrentUserData } from 'models';
-import { useOutletContext } from 'react-router-dom';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
+import { useOutletContext } from 'react-router-dom';
+
+import { Button, Grid, List, ListItem, Paper, Stack, TextField, Typography } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Edit } from '@mui/icons-material';
+import { Box } from '@mui/system';
+
+import { UserInfo } from 'components/Shared/UserAvatar';
 import Loader from 'components/UI/Loader';
+
+import { CurrentUserData } from 'models';
+
 import { toDate } from 'utils/toDate';
+
 import useUploadFile from 'hooks/useUploadFile';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+
+import { updateUserInfo } from 'store/actions/user';
 
 import styles from './profile.module.scss';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { updateUserInfo } from 'store/actions/user';
-import { BASEURL } from '../../../constants';
-import { Edit } from '@mui/icons-material';
 
 const Profile = () => {
   const userData = useOutletContext<CurrentUserData>();
@@ -30,6 +35,7 @@ const Profile = () => {
     nickName: userData.nickName,
     email: userData.email,
     city: userData.city,
+    avatar: userData.avatar,
   });
 
   const { image, imageUrl, handleChangeFile } = useUploadFile();
@@ -41,6 +47,7 @@ const Profile = () => {
     formD.append('nickName', formData.nickName!);
     formD.append('email', formData.email);
     formD.append('city', formData.city!);
+    formD.append('avatar', formData.avatar!);
     formD.append('img', image);
     dispatch(updateUserInfo(formD));
     setIsEditable(false);
@@ -59,14 +66,20 @@ const Profile = () => {
           <Grid container direction="column">
             <form onSubmit={submitHandler}>
               <Grid item justifyContent="center" display="flex" paddingTop={2}>
-                <input ref={avatarUpload} onChange={handleChangeFile} type="file" hidden />
+                <input
+                  ref={avatarUpload}
+                  onChange={handleChangeFile}
+                  type="file"
+                  hidden
+                  accept=".jpg, .jpeg, .png"
+                />
                 {user && isEditable ? (
                   <div className={styles.userAvatar} onClick={() => avatarUpload.current?.click()}>
                     <UserInfo
                       onClick={() => avatarUpload.current?.click()}
                       avatarUrl={imageUrl ? imageUrl : user.avatar ? user.avatar : userData.avatar}
                       fullName={user?.fullName!}
-                      onlyAvatar={true}
+                      onlyAvatar
                       width={164}
                     />
                     <div className={styles.upload}>
@@ -79,7 +92,7 @@ const Profile = () => {
                       <UserInfo
                         avatarUrl={userData?.avatar ? userData.avatar : imageUrl}
                         fullName={userData?.fullName!}
-                        onlyAvatar={true}
+                        onlyAvatar
                         width={164}
                       />
                     )}

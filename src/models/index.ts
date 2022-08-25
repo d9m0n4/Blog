@@ -32,7 +32,7 @@ export interface ITagsblock {
 
 export interface ICommentsBlock {
   items: IComment[];
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export interface IPost {

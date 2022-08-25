@@ -11,7 +11,7 @@ import { IUser } from 'models';
 import users from 'service/users';
 import { PostSkeleton } from 'components/Layout/Post/Skeleton';
 
-export const Home = () => {
+const Home = () => {
   const dispatch = useAppDispatch();
   const [popUsers, setPopUsers] = useState<IUser[]>([]);
 
@@ -77,3 +77,5 @@ export const Home = () => {
     </>
   );
 };
+
+export default Home;

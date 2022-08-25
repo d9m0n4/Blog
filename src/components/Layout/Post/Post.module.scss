@@ -30,7 +30,7 @@ $blue: #4361ee;
 .imageWrapper {
   height: 300px;
   &.imageHeight {
-    height: 600px;
+    height: 450px;
   }
 }
 
@@ -156,7 +156,10 @@ $blue: #4361ee;
     font-size: 14px;
     margin-right: 20px;
     opacity: 0.5;
-
+    a {
+      display: flex;
+      color: currentColor;
+    }
     svg {
       font-size: 18px;
       margin-right: 5px;

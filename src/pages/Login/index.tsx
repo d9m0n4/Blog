@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { useNavigate } from 'react-router-dom';
 import Alert from 'components/Shared/Alert';
 
-export const Login = () => {
+const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { error, isAuth } = useAppSelector((state) => state.auth);
@@ -51,3 +51,5 @@ export const Login = () => {
     </>
   );
 };
+
+export default Login;

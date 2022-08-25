@@ -15,7 +15,7 @@ import useDebounce from 'hooks/useDebounce';
 import posts from '../../../service/posts';
 import { IPost } from 'models';
 
-export const Header = () => {
+const Header = () => {
   const { user, isAuth } = useAppSelector((state) => state.auth);
   const [searchValue, setSearchValue] = useState('');
   const [searchResult, setSearchResult] = useState<IPost[] | null>(null);
@@ -51,7 +51,7 @@ export const Header = () => {
             {isAuth && user ? (
               <>
                 <Link to={`/user/${user.id}`}>
-                  <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar={true} />
+                  <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar />
                 </Link>
                 <Link to="/posts/create">
                   <Button variant="contained" sx={{ borderRadius: 16 }}>
@@ -114,3 +114,5 @@ export const Header = () => {
     </div>
   );
 };
+
+export default Header;

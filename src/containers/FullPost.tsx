@@ -2,7 +2,7 @@ import { useAppSelector } from 'hooks/redux';
 import { IPost } from 'models';
 import { FullPost } from 'pages/FullPost';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import posts from 'service/posts';
 
 const FullPostContainer = () => {

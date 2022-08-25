@@ -42,7 +42,6 @@ const authSlice = createSlice({
     [checkAuth.pending.type]: (state) => {
       state.error = { message: null };
       state.loading = true;
-      state.user = null;
     },
     [checkAuth.fulfilled.type]: (state, action) => {
       state.error = { message: null };

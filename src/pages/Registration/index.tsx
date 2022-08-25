@@ -10,7 +10,7 @@ import { useAppDispatch } from 'hooks/redux';
 import { registration } from 'store/actions/auth';
 import AuthService from '../../service/auth';
 
-export const Registration = () => {
+const Registration = () => {
   const submit = async (data: any) => {
     await AuthService.registration(data)
       .then((data) => console.log(data))
@@ -50,3 +50,5 @@ export const Registration = () => {
     </>
   );
 };
+
+export default Registration;

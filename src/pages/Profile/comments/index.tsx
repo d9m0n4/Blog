@@ -30,11 +30,7 @@ const UserComments = () => {
                     marginTop: 2,
                     marginBottom: 2,
                   }}>
-                  <UserInfo
-                    onlyAvatar={false}
-                    fullName={comment.user.fullName}
-                    avatarUrl={comment.user.avatar}
-                  />{' '}
+                  <UserInfo fullName={comment.user.fullName} avatarUrl={comment.user.avatar} />{' '}
                   <Typography variant="caption" sx={{ color: 'gray' }}>
                     {toDate(comment.createdAt, { hour: 'numeric', minute: 'numeric' })}
                   </Typography>

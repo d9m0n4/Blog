@@ -12,7 +12,7 @@ import styles from './postsByTag.module.scss';
 import { Typography } from '@mui/material';
 import Loader from 'components/UI/Loader';
 
-export const PostsByTag = () => {
+const PostsByTag = () => {
   const dispatch = useAppDispatch();
   const { tag } = useParams();
 
@@ -66,3 +66,5 @@ export const PostsByTag = () => {
     </>
   );
 };
+
+export default PostsByTag;

@@ -41,6 +41,7 @@ export const checkAuth = createAsyncThunk('auth/check', async (_, { rejectWithVa
     return data.userData;
   } catch (error) {
     if (error instanceof AxiosError) {
+      window.localStorage.removeItem('token');
       return rejectWithValue(error.response?.data);
     }
     return rejectWithValue(error);

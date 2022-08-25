@@ -1,32 +1,39 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { Registration } from 'pages/Registration';
+
+import { Route, Routes, useLocation } from 'react-router-dom';
+
+import Registration from 'pages/Registration';
+import PostsByTag from 'pages/PostsByTag';
 import UserComments from 'pages/Profile/comments';
-import { Login } from 'pages/Login';
+import Login from 'pages/Login';
 import NotFound from 'pages/NotFound';
-import { Home } from 'pages/Home';
+import Home from 'pages/Home';
+import EditPost from 'pages/EditPost';
 import Profile from 'pages/Profile/profile';
 import Posts from 'pages/Profile/posts';
-import { Header } from 'components/Layout/Header';
+
+import Header from 'components/Layout/Header';
+import ScrollTop from 'components/UI/ScrollTop';
 import Footer from 'components/Layout/Footer';
 import Alert from 'components/Shared/Alert';
 import FullPostContainer from 'containers/FullPost';
 import ProfileContainer from 'containers/Profile';
-import { checkAuth } from 'store/actions/auth';
-import { Container } from '@mui/material';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { PostsByTag } from 'pages/PostsByTag';
-import ScrollTop from 'components/UI/ScrollTop';
-import usePagePercent from 'hooks/usePagePercent';
-import { fetchAllPosts } from 'store/actions/post';
-import EditPost from 'pages/EditPost';
 import AddPost from 'containers/AddPost';
+
+import { Container } from '@mui/material';
+
+import { fetchAllPosts } from 'store/actions/post';
+import { checkAuth } from 'store/actions/auth';
+
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import usePagePercent from 'hooks/usePagePercent';
 
 function App() {
   const [scrollBtnVisible, setScrollBtnVisible] = React.useState(false);
   const dispatch = useAppDispatch();
   const { error } = useAppSelector((state) => state.auth);
   const percent = usePagePercent();
+  const { hash, pathname, key } = useLocation();
 
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -42,6 +49,20 @@ function App() {
       setScrollBtnVisible(false);
     }
   }, [percent]);
+
+  React.useEffect(() => {
+    if (hash === '') {
+      window.scrollTo(0, 0);
+    } else {
+      setTimeout(() => {
+        const id = hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView();
+        }
+      }, 0);
+    }
+  }, [hash, pathname, key]);
 
   return (
     <>

@@ -14,7 +14,6 @@ import posts from 'service/posts';
 
 import { UserInfo } from 'components/Shared/UserAvatar';
 import { Markdown } from 'components/Shared/ReactMarkDown';
-import AlertDialog from 'components/Shared/Dialog';
 
 import clsx from 'clsx';
 
@@ -30,7 +29,6 @@ export const Post: React.FC<any> = ({
   commentsCount,
   tags,
   isFullPost,
-  isLoading,
   likesCount,
   text,
   setOpenModal,
@@ -66,6 +64,8 @@ export const Post: React.FC<any> = ({
     setOpenModal(true);
   };
 
+  console.log(commentsCount);
+
   return (
     <>
       <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
@@ -78,7 +78,6 @@ export const Post: React.FC<any> = ({
                     avatarUrl={user.avatarUrl}
                     fullName={user.fullName}
                     rating={user.rating}
-                    onlyAvatar={false}
                   />
                 </NavLink>
                 <span className={styles.date}>{toDate(createdAt)}</span>
@@ -108,20 +107,32 @@ export const Post: React.FC<any> = ({
                 <EyeIcon />
                 <span>{viewsCount}</span>
               </li>
-              <li className={styles.postDetailItem}>
-                <Link to={`/posts/${id}/#comments`}>
+              {commentsCount > 0 ? (
+                <li className={styles.postDetailItem}>
+                  <Link to={{ pathname: `/posts/${id}`, hash: `#comments` }}>
+                    <CommentIcon />
+                    <span>{commentsCount}</span>
+                  </Link>
+                </li>
+              ) : (
+                <li>
                   <CommentIcon />
                   <span>{commentsCount}</span>
-                </Link>
-              </li>
-              {
+                </li>
+              )}
+              {currentUser ? (
                 <li
                   className={clsx(styles.postDetailItem, { [styles.liked]: isLiked })}
                   onClick={handleLike}>
                   <FavoriteBorderIcon />
                   <span>{likes.length}</span>
                 </li>
-              }
+              ) : (
+                <li>
+                  <FavoriteBorderIcon />
+                  <span>{likes.length}</span>
+                </li>
+              )}
             </ul>
           </div>
         </div>

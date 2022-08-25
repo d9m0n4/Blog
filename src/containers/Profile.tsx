@@ -14,7 +14,7 @@ const ProfileContainer = () => {
     if (id) {
       users.getUserById(id).then(({ data }) => setUserData(data));
     }
-  }, [user]);
+  }, [user, id]);
 
   return <UserPage userData={userData} />;
 };

@@ -40,9 +40,7 @@ export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
           {isAuth && user && (
             <AddComment user={user} postId={postData.id} currentComments={postData.comments} />
           )}
-          {postData.comments.length > 0 && (
-            <CommentsBlock items={postData.comments} isLoading={false} />
-          )}
+          {postData.comments.length > 0 && <CommentsBlock items={postData.comments} />}
         </>
       )}
     </>
