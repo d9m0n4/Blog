@@ -10,6 +10,8 @@ import Alert from 'components/Shared/Alert';
 import { IUser } from 'models';
 import users from 'service/users';
 import { PostSkeleton } from 'components/Layout/Post/Skeleton';
+import { Typography } from '@mui/material';
+import Loader from 'components/UI/Loader';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +41,9 @@ const Home = () => {
         <Grid xs={8} item>
           <TagsBlock items={t} isLoading={isLoading} />
 
-          {i.length ? (
+          {isLoading ? (
+            <PostSkeleton />
+          ) : i.length > 0 ? (
             i.map((item) => (
               <Post
                 key={item.id}
@@ -58,14 +62,11 @@ const Home = () => {
                 tags={item.tags}
                 likesCount={item.likes}
                 isLoading={isLoading}
-                text={item.text}></Post>
+                text={item.text}
+              />
             ))
           ) : (
-            <>
-              <PostSkeleton />
-              <PostSkeleton />
-              <PostSkeleton />
-            </>
+            <Typography>Посты не найдены</Typography>
           )}
         </Grid>
         <Grid xs={4} item sx={{ marginTop: 7 }}>

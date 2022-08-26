@@ -16,6 +16,8 @@ const AddPost = () => {
   const [title, setTitle] = React.useState('');
   const [tags, setTags] = React.useState('');
 
+  const [loading, setLoading] = React.useState(false);
+
   const { user } = useAppSelector((state) => state.auth);
 
   const { image, imageUrl, handleChangeFile, handleRemoveImage } = useUploadFile();
@@ -31,7 +33,8 @@ const AddPost = () => {
     setTitle(e.target.value);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    setLoading(true);
     let formData = new FormData();
     formData.append('img', image);
     formData.append('title', title);
@@ -39,9 +42,15 @@ const AddPost = () => {
     formData.append('tags', tags);
     formData.append('userId', user?.id!);
 
-    posts.createPost(formData).then(({ data }) => {
-      navigate(`/posts/${data.id}`);
-    });
+    await posts.createPost(formData).then(
+      ({ data }) => {
+        navigate(`/posts/${data.id}`);
+        setLoading(false);
+      },
+      (f) => {
+        console.log(f);
+      },
+    );
   };
 
   return (
@@ -57,6 +66,7 @@ const AddPost = () => {
       onChangeEditor={onChangeText}
       setTagNames={setTagNames}
       setTitle={onChangeTitle}
+      loading={loading}
     />
   );
 };

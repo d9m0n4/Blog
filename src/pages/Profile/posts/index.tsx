@@ -1,16 +1,15 @@
 import React from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Post } from 'components/Layout/Post';
 import { CurrentUserData } from 'models';
 import { useOutletContext } from 'react-router-dom';
-import Loader from 'components/UI/Loader';
 
 const Posts = () => {
   const userData = useOutletContext<CurrentUserData>();
 
   return (
     <>
-      {userData ? (
+      {userData.posts.length > 0 ? (
         userData.posts?.map((post) => (
           <Grid item key={post.id}>
             <Post
@@ -28,7 +27,7 @@ const Posts = () => {
           </Grid>
         ))
       ) : (
-        <Loader />
+        <Typography>Здесь пока ни чего нет...</Typography>
       )}
     </>
   );

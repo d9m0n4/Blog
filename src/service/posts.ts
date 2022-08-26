@@ -32,6 +32,9 @@ class PostService {
   async updatePost(post: FormData, id: string) {
     return await API.post(`/posts/edit/${id}`, post);
   }
+  async deletePost(id: string) {
+    return await API.post('/posts/delete', { id });
+  }
 }
 
 export default new PostService();

@@ -11,26 +11,28 @@ import React from 'react';
 interface IAlertDialog {
   open: boolean;
   handleClose: () => void;
+  title: string;
+  body: string;
+  handleSuccess: () => void;
 }
 
-const AlertDialog: React.FC<IAlertDialog> = ({ open, handleClose }) => {
+const AlertDialog: React.FC<IAlertDialog> = ({ open, handleClose, handleSuccess, title, body }) => {
   return (
     <Dialog
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description">
-      <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Let Google help apps determine location. This means sending anonymous location data to
-          Google, even when no apps are running.
-        </DialogContentText>
+        <DialogContentText id="alert-dialog-description">{body}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Disagree</Button>
-        <Button onClick={handleClose} autoFocus>
-          Agree
+        <Button color="error" onClick={handleClose}>
+          Отмена
+        </Button>
+        <Button color="primary" onClick={handleSuccess} autoFocus>
+          Да
         </Button>
       </DialogActions>
     </Dialog>

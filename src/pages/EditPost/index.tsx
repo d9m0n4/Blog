@@ -9,6 +9,8 @@ const EditPost = () => {
   const [post, setPost] = React.useState<any>();
   const [open, setOpen] = React.useState(false);
 
+  const [loading, setLoading] = React.useState(false);
+
   const navigate = useNavigate();
 
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -45,12 +47,14 @@ const EditPost = () => {
   };
 
   const onSubmit = () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append('img', image);
     for (const i in post) {
       formData.append(i, post[i]);
     }
     posts.updatePost(formData, post.id).then(({ data }) => {
+      setLoading(false);
       navigate(`/posts/${data.id}`);
     });
   };
@@ -83,6 +87,7 @@ const EditPost = () => {
           setTagNames={setTagNames}
           setTitle={onChangeTitle}
           openDialog={open}
+          loading={loading}
         />
       )}
     </div>

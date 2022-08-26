@@ -20,7 +20,7 @@ import FullPostContainer from 'containers/FullPost';
 import ProfileContainer from 'containers/Profile';
 import AddPost from 'containers/AddPost';
 
-import { Container } from '@mui/material';
+import { Container, Grid, Pagination } from '@mui/material';
 
 import { fetchAllPosts } from 'store/actions/post';
 import { checkAuth } from 'store/actions/auth';
@@ -69,7 +69,7 @@ function App() {
       {scrollBtnVisible && <ScrollTop />}
       {error.message && <Alert openState message={error.message} />}
       <Header />
-      <div className="Main_content">
+      <div className="main__content">
         <Container maxWidth="lg">
           <Routes>
             <Route path="*" element={<NotFound />} />
@@ -86,6 +86,15 @@ function App() {
             <Route path="registration" element={<Registration />} />
             <Route path="login" element={<Login />} />
           </Routes>
+        </Container>
+      </div>
+      <div className="page__pagination">
+        <Container>
+          <Grid container>
+            <Grid item xs={8} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Pagination />
+            </Grid>
+          </Grid>
         </Container>
       </div>
       <Footer />

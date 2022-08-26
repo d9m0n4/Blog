@@ -13,6 +13,8 @@ import { Markdown } from 'components/Shared/ReactMarkDown';
 
 import styles from './AddPost.module.scss';
 import 'easymde/dist/easymde.min.css';
+import Loader from 'components/UI/Loader';
+import { Backdrop } from '@mui/material';
 
 interface ICreatePost {
   title: string;
@@ -27,6 +29,7 @@ interface ICreatePost {
   setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setTagNames: (e: React.ChangeEvent<HTMLInputElement>) => void;
   openDialog?: boolean;
+  loading: boolean;
 }
 
 export const CreatePost: React.FC<ICreatePost> = ({
@@ -41,6 +44,7 @@ export const CreatePost: React.FC<ICreatePost> = ({
   inputRef,
   setTitle,
   setTagNames,
+  loading,
 }) => {
   const uploadImage = async (image: any, onSuccess: any, onError: any) => {
     try {
@@ -80,6 +84,10 @@ export const CreatePost: React.FC<ICreatePost> = ({
 
   return (
     <>
+      <Backdrop sx={{ zIndex: 99 }} open={loading}>
+        <Loader />
+      </Backdrop>
+
       <Paper style={{ padding: 30 }}>
         <Button
           onClick={() => inputRef.current?.click()}

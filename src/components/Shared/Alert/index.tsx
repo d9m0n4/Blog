@@ -14,7 +14,7 @@ interface IAlert {
 
 export default function Alert({ openState, message }: IAlert) {
   const [state, setState] = React.useState<State>({
-    open: openState || false,
+    open: false,
     vertical: 'top',
     horizontal: 'right',
   });
@@ -24,6 +24,10 @@ export default function Alert({ openState, message }: IAlert) {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
+
+  React.useEffect(() => {
+    setState({ ...state, open: openState });
+  }, [openState]);
 
   return (
     <Snackbar

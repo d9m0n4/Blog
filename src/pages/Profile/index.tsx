@@ -5,6 +5,7 @@ import styles from './userPage.module.scss';
 import { CurrentUserData } from 'models';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { logout } from 'store/actions/auth';
+import Loader from 'components/UI/Loader';
 
 interface IUserPage {
   userData: CurrentUserData | null;
@@ -20,7 +21,7 @@ const UserPage: React.FC<IUserPage> = ({ userData }) => {
   };
   return (
     <>
-      {userData && (
+      {userData ? (
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={8}>
             <List className={styles.navList} sx={{ marginBottom: 2, display: 'flex' }}>
@@ -60,6 +61,8 @@ const UserPage: React.FC<IUserPage> = ({ userData }) => {
             <Outlet context={userData} />
           </Grid>
         </Grid>
+      ) : (
+        <Loader />
       )}
     </>
   );

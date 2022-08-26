@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 
-import { useAppSelector } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { toDate } from 'utils/toDate';
 import posts from 'service/posts';
 
@@ -18,6 +18,8 @@ import { Markdown } from 'components/Shared/ReactMarkDown';
 import clsx from 'clsx';
 
 import styles from './Post.module.scss';
+import AlertDialog from 'components/Shared/Dialog';
+import { fetchAllPosts } from 'store/actions/post';
 
 export const Post: React.FC<any> = ({
   id,
@@ -31,7 +33,6 @@ export const Post: React.FC<any> = ({
   isFullPost,
   likesCount,
   text,
-  setOpenModal,
 }) => {
   const { user: currentUser, isAuth } = useAppSelector((state) => state.auth);
   const [isLiked, setIsLiked] = useState(
@@ -42,6 +43,12 @@ export const Post: React.FC<any> = ({
   let isEditable = currentUser && user.id === currentUser?.id;
 
   const postContentRef = React.useRef<HTMLDivElement>(null);
+
+  const [isOpenModal, setIsOpenModal] = React.useState(false);
+
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLiked(currentUser && likes.includes(currentUser.id));
@@ -61,13 +68,31 @@ export const Post: React.FC<any> = ({
 
   const onClickRemove = () => {
     console.log('remove item');
-    setOpenModal(true);
+    setIsOpenModal(true);
   };
 
-  console.log(commentsCount);
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
+  };
 
+  const deletePost = async () => {
+    await posts
+      .deletePost(id)
+      .then(() => dispatch(fetchAllPosts()))
+      .catch((err) => console.log(err));
+    setIsOpenModal(false);
+    navigate('/');
+  };
   return (
     <>
+      <AlertDialog
+        open={isOpenModal}
+        handleClose={handleCloseModal}
+        handleSuccess={deletePost}
+        title="Удалить пост"
+        body={`Вы действительно хотите удалить пост: ${title}`}
+      />
+
       <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
         <div className={styles.info}>
           <div className={styles.indention}>

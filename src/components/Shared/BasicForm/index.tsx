@@ -10,6 +10,7 @@ interface IForm {
 const BasicForm: React.FC<IForm> = ({ onSubmit, children }) => {
   const {
     handleSubmit,
+    reset,
     register,
     formState: { errors },
   } = useForm<IUserPostData>({
@@ -34,8 +35,13 @@ const BasicForm: React.FC<IForm> = ({ onSubmit, children }) => {
     },
   };
 
+  const submiForm = async (data: any) => {
+    await onSubmit(data);
+    reset();
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(submiForm)}>
       {Array.isArray(children)
         ? children.map((child) => {
             return child.props.name

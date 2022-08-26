@@ -12,7 +12,7 @@ const UserComments = () => {
 
   return (
     <>
-      {userData ? (
+      {userData.comments.length > 0 ? (
         <Grid container direction="column">
           {userData.comments.map((comment) => (
             <Grid item key={comment.id}>
@@ -41,7 +41,7 @@ const UserComments = () => {
           ))}
         </Grid>
       ) : (
-        <Loader />
+        <Typography>Здесь пока ни чего нет...</Typography>
       )}
     </>
   );
