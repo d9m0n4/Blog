@@ -20,10 +20,10 @@ export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
           <Post
             id={postData.id}
             title={postData.title}
-            imageUrl={postData.previewImage}
+            image={postData.previewImage}
             user={{
               id: postData.user.id,
-              avatarUrl: postData.user.avatar,
+              avatar: postData.user.avatar?.thumb,
               fullName: postData.user.fullName,
               rating: postData.user.rating,
             }}

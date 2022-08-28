@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { updateUserInfo } from 'store/actions/user';
 
 import styles from './profile.module.scss';
+import users from 'service/users';
 
 const Profile = () => {
   const userData = useOutletContext<CurrentUserData>();
@@ -40,16 +41,18 @@ const Profile = () => {
 
   const { image, imageUrl, handleChangeFile } = useUploadFile();
 
-  const submitHandler = (e: any) => {
+  const submitHandler = async (e: any) => {
     e.preventDefault();
     const formD = new FormData();
     formD.append('fullName', formData.fullName);
-    formD.append('nickName', formData.nickName!);
+    formD.append('nickName', formData.nickName || '');
     formD.append('email', formData.email);
-    formD.append('city', formData.city!);
-    formD.append('avatar', formData.avatar!);
+    formD.append('city', formData.city || '');
+    formD.append('avatar', formData.avatar?.thumb || '');
     formD.append('img', image);
-    dispatch(updateUserInfo(formD));
+    await users.updateUserInfo(formD).then(() => {
+      users.getUserById(user!.id);
+    });
     setIsEditable(false);
   };
   return (
@@ -77,7 +80,13 @@ const Profile = () => {
                   <div className={styles.userAvatar} onClick={() => avatarUpload.current?.click()}>
                     <UserInfo
                       onClick={() => avatarUpload.current?.click()}
-                      avatarUrl={imageUrl ? imageUrl : user.avatar ? user.avatar : userData.avatar}
+                      avatarUrl={
+                        imageUrl
+                          ? imageUrl
+                          : user.avatar?.thumb
+                          ? user.avatar.thumb
+                          : userData.avatar?.thumb
+                      }
                       fullName={user?.fullName!}
                       onlyAvatar
                       width={164}
@@ -90,7 +99,7 @@ const Profile = () => {
                   <>
                     {userData.fullName && (
                       <UserInfo
-                        avatarUrl={userData?.avatar ? userData.avatar : imageUrl}
+                        avatarUrl={userData?.avatar?.thumb ? userData.avatar.thumb : imageUrl}
                         fullName={userData?.fullName!}
                         onlyAvatar
                         width={164}

@@ -20,25 +20,30 @@ import FullPostContainer from 'containers/FullPost';
 import ProfileContainer from 'containers/Profile';
 import AddPost from 'containers/AddPost';
 
-import { Container, Grid, Pagination } from '@mui/material';
+import { Container } from '@mui/material';
 
 import { fetchAllPosts } from 'store/actions/post';
 import { checkAuth } from 'store/actions/auth';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import usePagePercent from 'hooks/usePagePercent';
+import { DEFAULT_PAGE, PAGE_LIMIT } from './constants';
 
 function App() {
   const [scrollBtnVisible, setScrollBtnVisible] = React.useState(false);
+
   const dispatch = useAppDispatch();
+
   const { error } = useAppSelector((state) => state.auth);
+
   const percent = usePagePercent();
+
   const { hash, pathname, key } = useLocation();
 
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(checkAuth());
-      dispatch(fetchAllPosts());
+      dispatch(fetchAllPosts({ page: DEFAULT_PAGE, limit: PAGE_LIMIT }));
     }
   }, [dispatch]);
 
@@ -86,15 +91,6 @@ function App() {
             <Route path="registration" element={<Registration />} />
             <Route path="login" element={<Login />} />
           </Routes>
-        </Container>
-      </div>
-      <div className="page__pagination">
-        <Container>
-          <Grid container>
-            <Grid item xs={8} sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Pagination />
-            </Grid>
-          </Grid>
         </Container>
       </div>
       <Footer />

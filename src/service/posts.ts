@@ -1,9 +1,9 @@
-import { IPost } from '../models/index';
+import { IPosts, IPost, postsQuery } from './../models/index';
 import API from './axios';
 
 class PostService {
-  async getAll() {
-    return await API.get<IPost>('/posts');
+  async getAll({ page, limit }: postsQuery) {
+    return await API.get<IPosts>(`/posts?page=${page}&limit=${limit}`);
   }
   async getPostById(id: string) {
     return await API.get<IPost>(`/posts/${id}`);
@@ -18,7 +18,7 @@ class PostService {
     return await API.get(`/posts/user/${id}`);
   }
   async searchPosts(query: string) {
-    return await API.get(`/posts?query=${query}`);
+    return await API.get(`/posts?search=${query}`);
   }
   async getTags() {
     return await API.get('/tags');

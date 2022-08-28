@@ -35,6 +35,16 @@ export interface ICommentsBlock {
   isLoading?: boolean;
 }
 
+export interface IFile {
+  id: string;
+  url: string;
+  thumb: string;
+  public_id: string;
+  format: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface IPost {
   id: string;
   title: string;
@@ -44,16 +54,22 @@ export interface IPost {
   likes: number;
   viewsCount: number;
   comments: IComment[];
-  previewImage: string;
+  previewImage: IFile;
   createdAt: Date;
 }
+
+export interface IPosts {
+  posts: IPost[];
+  count: number;
+}
+
 export interface IUser {
   id: string;
   email: string;
   fullName: string;
   createdAt: Date;
   rating: number;
-  avatar?: string;
+  avatar?: IFile;
   city?: string;
   nickName?: string;
 }
@@ -72,7 +88,7 @@ export interface IComment {
   postId: string;
   post?: IPost;
   user: IUser;
-  files: string[];
+  assets: IFile[];
 }
 
 export interface IPostData {
@@ -104,3 +120,8 @@ export interface CurrentUserData extends IUser {
   posts: IPost[];
   comments: IComment[];
 }
+
+export type postsQuery = {
+  page: number;
+  limit: number;
+};

@@ -18,7 +18,7 @@ const Posts = () => {
                 id: userData.id,
               }}
               title={post.title}
-              imageUrl={post.previewImage}
+              image={post.previewImage}
               viewsCount={post.viewsCount}
               commentsCount={post.comments?.length}
               tags={post.tags}

@@ -32,9 +32,13 @@ const Header = () => {
 
   useEffect(() => {
     if (debouncedValue.length > 3) {
-      posts.searchPosts(debouncedValue).then(({ data }) => setSearchResult(data));
+      posts.searchPosts(debouncedValue).then(({ data }) => setSearchResult(data.posts));
     }
   }, [debouncedValue, dispatch]);
+
+  useEffect(() => {
+    console.log(user?.avatar);
+  }, [user?.avatar]);
 
   return (
     <div className={styles.root}>
@@ -48,10 +52,10 @@ const Header = () => {
             <Button variant="text" sx={{ borderRadius: 16 }} onClick={() => setOpen(true)}>
               <Search />
             </Button>
-            {isAuth && user ? (
+            {user ? (
               <>
                 <Link to={`/user/${user.id}`}>
-                  <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar />
+                  <UserInfo avatarUrl={user.avatar?.thumb} fullName={user.fullName} onlyAvatar />
                 </Link>
                 <Link to="/posts/create">
                   <Button variant="contained" sx={{ borderRadius: 16 }}>
@@ -98,7 +102,7 @@ const Header = () => {
                 <Paper sx={{ marginBottom: 2, boxShadow: 'none' }}>
                   {searchResult.length > 0 ? (
                     searchResult.map((post) => (
-                      <Link className={styles.result} to={`/posts/${post.id}`}>
+                      <Link key={post.id} className={styles.result} to={`/posts/${post.id}`}>
                         {post.title}
                       </Link>
                     ))

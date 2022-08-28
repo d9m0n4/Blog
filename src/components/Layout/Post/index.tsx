@@ -20,12 +20,13 @@ import clsx from 'clsx';
 import styles from './Post.module.scss';
 import AlertDialog from 'components/Shared/Dialog';
 import { fetchAllPosts } from 'store/actions/post';
+import { PAGE_LIMIT, DEFAULT_PAGE } from '../../../constants';
 
 export const Post: React.FC<any> = ({
   id,
   title,
   createdAt,
-  imageUrl,
+  image,
   user,
   viewsCount,
   commentsCount,
@@ -78,11 +79,12 @@ export const Post: React.FC<any> = ({
   const deletePost = async () => {
     await posts
       .deletePost(id)
-      .then(() => dispatch(fetchAllPosts()))
+      .then(() => dispatch(fetchAllPosts({ page: DEFAULT_PAGE, limit: PAGE_LIMIT })))
       .catch((err) => console.log(err));
     setIsOpenModal(false);
     navigate('/');
   };
+
   return (
     <>
       <AlertDialog
@@ -99,11 +101,7 @@ export const Post: React.FC<any> = ({
             {isFullPost && (
               <div className={styles.author}>
                 <NavLink to={`/user/${user.id}`} className={styles.userLink}>
-                  <UserInfo
-                    avatarUrl={user.avatarUrl}
-                    fullName={user.fullName}
-                    rating={user.rating}
-                  />
+                  <UserInfo avatarUrl={user.avatar} fullName={user.fullName} rating={user.rating} />
                 </NavLink>
                 <span className={styles.date}>{toDate(createdAt)}</span>
               </div>
@@ -173,11 +171,11 @@ export const Post: React.FC<any> = ({
             </IconButton>
           </div>
         )}
-        {imageUrl && (
+        {image && (
           <div className={clsx(styles.imageWrapper, { [styles.imageHeight]: isFullPost })}>
             <img
               className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
-              src={imageUrl}
+              src={isFullPost ? image.url : image.thumb}
               alt={title}
               loading="lazy"
             />

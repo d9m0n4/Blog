@@ -34,7 +34,7 @@ export const TopUsers: React.FC<ITopUsers> = memo(({ items, isLoading }) => {
               {isLoading ? (
                 <Skeleton variant="circular" width={40} height={40} />
               ) : (
-                <UserInfo avatarUrl={user.avatar} fullName={user.fullName} onlyAvatar />
+                <UserInfo avatarUrl={user.avatar?.thumb} fullName={user.fullName} onlyAvatar />
               )}
             </ListItemAvatar>
             {isLoading ? (

@@ -1,15 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { postsQuery } from 'models';
 import PostService from 'service/posts';
 
-export const fetchAllPosts = createAsyncThunk('posts/getAll', async (_, { rejectWithValue }) => {
-  try {
-    const { data } = await PostService.getAll();
+export const fetchAllPosts = createAsyncThunk(
+  'posts/getAll',
+  async (query: postsQuery, { rejectWithValue }) => {
+    try {
+      const { data } = await PostService.getAll({ page: query.page, limit: query.limit });
 
-    return data;
-  } catch (error) {
-    return rejectWithValue(error);
-  }
-});
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
 
 export const fetchPostsByTag = createAsyncThunk(
   'posts/getByTag',

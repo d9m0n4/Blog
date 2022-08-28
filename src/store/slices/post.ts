@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE } from './../../constants/index';
 import { IComment } from './../../models/index';
 import { IPost } from '../../models/index';
 import { fetchAllPosts, fetchPostsByTag, getTags, searchPosts } from '../actions/post';
@@ -5,6 +6,8 @@ import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type SliceState = {
   items: IPost[] | [];
+  currentPage: number;
+  count: number;
   tags: any;
   isLoading: boolean;
   error: any;
@@ -17,6 +20,8 @@ type ActionPayload = {
 
 const initialState: SliceState = {
   items: [] as IPost[],
+  currentPage: DEFAULT_PAGE,
+  count: 0,
   tags: [],
   isLoading: false,
   error: null,
@@ -33,11 +38,16 @@ const addComment: CaseReducer<SliceState, PayloadAction<ActionPayload>> = (state
   });
 };
 
+const setCurrentPage: CaseReducer<SliceState, PayloadAction<number>> = (state, action) => {
+  state.currentPage = action.payload;
+};
+
 const postSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
     addComment,
+    setCurrentPage,
   },
   extraReducers: {
     [fetchAllPosts.pending.type]: (state) => {
@@ -53,7 +63,8 @@ const postSlice = createSlice({
     [fetchAllPosts.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       state.error = null;
-      state.items = action.payload;
+      state.items = action.payload.posts;
+      state.count = action.payload.count;
     },
     [fetchPostsByTag.pending.type]: (state) => {
       state.isLoading = true;
@@ -69,6 +80,7 @@ const postSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.items = action.payload;
+      state.count = 0;
     },
     [getTags.pending.type]: (state) => {
       state.isLoading = true;
@@ -98,7 +110,7 @@ const postSlice = createSlice({
     [searchPosts.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       state.error = null;
-      state.items = action.payload;
+      state.items = action.payload.posts;
     },
   },
 });

@@ -10,15 +10,22 @@ import Alert from 'components/Shared/Alert';
 import { IUser } from 'models';
 import users from 'service/users';
 import { PostSkeleton } from 'components/Layout/Post/Skeleton';
-import { Typography } from '@mui/material';
-import Loader from 'components/UI/Loader';
+import { Box, Pagination, Typography } from '@mui/material';
+import { DEFAULT_PAGE, PAGE_LIMIT } from '../constants';
+import { postActions } from 'store/slices/post';
 
 const Home = () => {
   const dispatch = useAppDispatch();
   const [popUsers, setPopUsers] = useState<IUser[]>([]);
 
+  const { items, count, currentPage, tags, isLoading, error } = useAppSelector(
+    (state) => state.posts,
+  );
+
+  let pagesCount = Math.ceil(count / PAGE_LIMIT);
+
   useEffect(() => {
-    dispatch(fetchAllPosts());
+    dispatch(fetchAllPosts({ page: DEFAULT_PAGE, limit: PAGE_LIMIT }));
     dispatch(getTags());
     users
       .getUsers()
@@ -28,10 +35,13 @@ const Home = () => {
       .catch((error) => console.log(error));
   }, [dispatch]);
 
-  const { items, tags, isLoading, error } = useAppSelector((state) => state.posts);
-
   const i = React.useMemo(() => items, [items]);
   const t = React.useMemo(() => tags, [tags]);
+
+  const handleChangePage = (event: React.ChangeEvent<unknown>, page: number) => {
+    dispatch(postActions.setCurrentPage(page));
+    dispatch(fetchAllPosts({ page: page, limit: PAGE_LIMIT }));
+  };
 
   return (
     <>
@@ -39,34 +49,49 @@ const Home = () => {
 
       <Grid container spacing={3}>
         <Grid xs={8} item>
-          <TagsBlock items={t} isLoading={isLoading} />
+          <Box sx={{ marginBottom: 3 }}>
+            <TagsBlock items={t} isLoading={isLoading} />
+          </Box>
 
-          {isLoading ? (
-            <PostSkeleton />
-          ) : i.length > 0 ? (
-            i.map((item) => (
-              <Post
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                imageUrl={item.previewImage}
-                user={{
-                  id: item.user.id,
-                  avatarUrl: item.user.avatar,
-                  fullName: item.user.fullName,
-                  rating: item.user.rating,
-                }}
-                createdAt={item.createdAt}
-                viewsCount={item.viewsCount}
-                commentsCount={item.comments?.length}
-                tags={item.tags}
-                likesCount={item.likes}
-                isLoading={isLoading}
-                text={item.text}
+          <Box sx={{ marginBottom: 3 }}>
+            {isLoading ? (
+              <PostSkeleton />
+            ) : i.length > 0 ? (
+              i.map((item) => (
+                <Post
+                  key={item.id}
+                  id={item.id}
+                  title={item.title}
+                  image={item.previewImage}
+                  user={{
+                    id: item.user.id,
+                    avatarUrl: item.user.avatar,
+                    fullName: item.user.fullName,
+                    rating: item.user.rating,
+                  }}
+                  createdAt={item.createdAt}
+                  viewsCount={item.viewsCount}
+                  commentsCount={item.comments?.length}
+                  tags={item.tags}
+                  likesCount={item.likes}
+                  isLoading={isLoading}
+                  text={item.text}
+                />
+              ))
+            ) : (
+              <Typography>Посты не найдены</Typography>
+            )}
+          </Box>
+          {count > PAGE_LIMIT && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}>
+              <Pagination
+                page={currentPage}
+                defaultPage={DEFAULT_PAGE}
+                onChange={handleChangePage}
+                sx={{ paddingTop: 2 }}
+                count={pagesCount}
               />
-            ))
-          ) : (
-            <Typography>Посты не найдены</Typography>
+            </Box>
           )}
         </Grid>
         <Grid xs={4} item sx={{ marginTop: 7 }}>

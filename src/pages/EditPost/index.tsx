@@ -23,7 +23,7 @@ const EditPost = () => {
     if (id) {
       posts.getPostById(id).then(({ data }) => {
         setPost(data);
-        setImageUrl(data.previewImage);
+        setImageUrl(data.previewImage.thumb);
       });
     }
   }, []);

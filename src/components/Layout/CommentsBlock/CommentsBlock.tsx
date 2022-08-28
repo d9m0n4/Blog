@@ -29,7 +29,7 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading 
                       ) : (
                         <Link to={`/user/${comment.user.id}/`}>
                           <UserInfo
-                            avatarUrl={comment.user.avatar}
+                            avatarUrl={comment.user.avatar?.thumb}
                             fullName={comment.user.fullName}
                             onlyAvatar
                           />
@@ -51,13 +51,15 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items, isLoading 
                         </div>
                         <div>
                           <p>{comment.text}</p>
-                          <div className={styles.commentsImagesBlock}>
-                            {comment.files.map((file) => (
-                              <div key={file} className={styles.commentsImageWrapper}>
-                                <img className={styles.commentsImage} src={file} alt="" />
-                              </div>
-                            ))}
-                          </div>
+                          {comment.assets && (
+                            <div className={styles.commentsImagesBlock}>
+                              {comment.assets.map((file) => (
+                                <div key={file.id} className={styles.commentsImageWrapper}>
+                                  <img className={styles.commentsImage} src={file.thumb} alt="" />
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
