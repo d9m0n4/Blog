@@ -15,6 +15,8 @@ import styles from './AddPost.module.scss';
 import 'easymde/dist/easymde.min.css';
 import Loader from 'components/UI/Loader';
 import { Backdrop } from '@mui/material';
+import Alert from 'components/Shared/Alert';
+import { Box } from '@mui/system';
 
 interface ICreatePost {
   title: string;
@@ -25,11 +27,12 @@ interface ICreatePost {
   handleRemoveImage: () => void;
   handleChangeFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeEditor: (e: string) => void;
-  onSubmit: () => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setTagNames: (e: React.ChangeEvent<HTMLInputElement>) => void;
   openDialog?: boolean;
   loading: boolean;
+  error?: string | null;
 }
 
 export const CreatePost: React.FC<ICreatePost> = ({
@@ -45,6 +48,7 @@ export const CreatePost: React.FC<ICreatePost> = ({
   setTitle,
   setTagNames,
   loading,
+  error,
 }) => {
   const uploadImage = async (image: any, onSuccess: any, onError: any) => {
     try {
@@ -84,76 +88,82 @@ export const CreatePost: React.FC<ICreatePost> = ({
 
   return (
     <>
+      {error && <Alert openState message={error} />}
       <Backdrop sx={{ zIndex: 99 }} open={loading}>
         <Loader />
       </Backdrop>
 
       <Paper style={{ padding: 30 }}>
-        <Button
-          onClick={() => inputRef.current?.click()}
-          variant="outlined"
-          size="medium"
-          sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
-          Загрузить превью
-        </Button>
-        <input
-          ref={inputRef}
-          type="file"
-          onChange={handleChangeFile}
-          hidden
-          accept=".jpg, .png, .jpeg"
-        />
-        {imageUrl && (
+        <Box component="form" onSubmit={onSubmit}>
           <Button
-            variant="contained"
-            color="error"
-            onClick={handleRemoveImage}
+            onClick={() => inputRef.current?.click()}
+            variant="outlined"
             size="medium"
             sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
-            Удалить
+            Загрузить превью
           </Button>
-        )}
-        <div className={styles.previewImage}>
-          {imageUrl && <img className={styles.image} src={`${imageUrl}`} alt="Uploaded" />}
-        </div>
-
-        <TextField
-          classes={{ root: styles.title }}
-          variant="standard"
-          placeholder="Заголовок статьи..."
-          value={title}
-          onChange={setTitle}
-          fullWidth
-        />
-        <TextField
-          classes={{ root: styles.tags }}
-          variant="standard"
-          placeholder="Тэги"
-          value={tags}
-          onChange={setTagNames}
-          fullWidth
-        />
-
-        <SimpleMdeReact
-          className={styles.editor}
-          value={text}
-          onChange={onChangeEditor}
-          options={options}
-        />
-        <div className={styles.buttons}>
-          <Button
-            onClick={onSubmit}
-            size="medium"
-            sx={{ borderRadius: '16px' }}
-            variant="contained">
-            Опубликовать
-          </Button>
-          <a href="/">
-            <Button size="medium" sx={{ borderRadius: '16px' }}>
-              Отмена
+          <input
+            ref={inputRef}
+            type="file"
+            onChange={handleChangeFile}
+            hidden
+            accept=".jpg, .png, .jpeg"
+          />
+          {imageUrl && (
+            <Button
+              variant="contained"
+              color="error"
+              onClick={handleRemoveImage}
+              size="medium"
+              sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
+              Удалить
             </Button>
-          </a>
-        </div>
+          )}
+          <div className={styles.previewImage}>
+            {imageUrl && <img className={styles.image} src={`${imageUrl}`} alt="Uploaded" />}
+          </div>
+
+          <TextField
+            classes={{ root: styles.title }}
+            variant="standard"
+            placeholder="Заголовок статьи..."
+            value={title}
+            onChange={setTitle}
+            fullWidth
+            required
+          />
+          <TextField
+            classes={{ root: styles.tags }}
+            variant="standard"
+            placeholder="Тэги"
+            value={tags}
+            onChange={setTagNames}
+            fullWidth
+            required
+          />
+
+          <SimpleMdeReact
+            className={styles.editor}
+            value={text}
+            onChange={onChangeEditor}
+            options={options}
+          />
+          <div className={styles.buttons}>
+            <Button
+              disabled={!title || !text || !tags}
+              type="submit"
+              size="medium"
+              sx={{ borderRadius: '16px' }}
+              variant="contained">
+              Опубликовать
+            </Button>
+            <a href="/">
+              <Button size="medium" sx={{ borderRadius: '16px' }}>
+                Отмена
+              </Button>
+            </a>
+          </div>
+        </Box>
       </Paper>
     </>
   );

@@ -10,7 +10,7 @@ type SliceState = {
   count: number;
   tags: any;
   isLoading: boolean;
-  error: any;
+  error: string | null;
 };
 
 type ActionPayload = {
@@ -42,12 +42,17 @@ const setCurrentPage: CaseReducer<SliceState, PayloadAction<number>> = (state, a
   state.currentPage = action.payload;
 };
 
+const setError: CaseReducer<SliceState, PayloadAction<any>> = (state, action) => {
+  state.error = action.payload;
+};
+
 const postSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
     addComment,
     setCurrentPage,
+    setError,
   },
   extraReducers: {
     [fetchAllPosts.pending.type]: (state) => {

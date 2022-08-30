@@ -3,22 +3,17 @@ import { Button, Grid, Link, List } from '@mui/material';
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './userPage.module.scss';
 import { CurrentUserData } from 'models';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { logout } from 'store/actions/auth';
+import { useAppSelector } from 'hooks/redux';
 import Loader from 'components/UI/Loader';
 
 interface IUserPage {
   userData: CurrentUserData | null;
+  handleLogout: () => void;
 }
 
-const UserPage: React.FC<IUserPage> = ({ userData }) => {
-  const dispatch = useAppDispatch();
-
+const UserPage: React.FC<IUserPage> = ({ userData, handleLogout }) => {
   const { isAuth } = useAppSelector((state) => state.auth);
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
   return (
     <>
       {userData ? (

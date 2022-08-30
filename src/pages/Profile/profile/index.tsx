@@ -20,7 +20,6 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { updateUserInfo } from 'store/actions/user';
 
 import styles from './profile.module.scss';
-import users from 'service/users';
 
 const Profile = () => {
   const userData = useOutletContext<CurrentUserData>();
@@ -31,6 +30,8 @@ const Profile = () => {
 
   const [isEditable, setIsEditable] = React.useState(false);
 
+  const { image, imageUrl, handleChangeFile } = useUploadFile();
+
   const [formData, setFormData] = React.useState({
     fullName: userData.fullName,
     nickName: userData.nickName,
@@ -39,9 +40,7 @@ const Profile = () => {
     avatar: userData.avatar,
   });
 
-  const { image, imageUrl, handleChangeFile } = useUploadFile();
-
-  const submitHandler = async (e: any) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formD = new FormData();
     formD.append('fullName', formData.fullName);
@@ -50,9 +49,7 @@ const Profile = () => {
     formD.append('city', formData.city || '');
     formD.append('avatar', formData.avatar?.thumb || '');
     formD.append('img', image);
-    await users.updateUserInfo(formD).then(() => {
-      users.getUserById(user!.id);
-    });
+    dispatch(updateUserInfo(formD));
     setIsEditable(false);
   };
   return (

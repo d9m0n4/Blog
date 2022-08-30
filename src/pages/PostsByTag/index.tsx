@@ -46,7 +46,7 @@ const PostsByTag = () => {
                 id={item.id}
                 title={item.title}
                 text={item.text}
-                imageUrl={item.previewImage}
+                image={item.previewImage}
                 user={{
                   id: item.user.id,
                   fullName: item.user.fullName,

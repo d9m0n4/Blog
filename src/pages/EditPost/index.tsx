@@ -1,5 +1,4 @@
 import useUploadFile from 'hooks/useUploadFile';
-import { IPost } from 'models';
 import { CreatePost } from 'pages/CreatePost';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -46,7 +45,8 @@ const EditPost = () => {
     event.returnValue = '';
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
     const formData = new FormData();
     formData.append('img', image);

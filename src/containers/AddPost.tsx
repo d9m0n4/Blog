@@ -1,14 +1,17 @@
-import { useAppSelector } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import useUploadFile from 'hooks/useUploadFile';
 import { CreatePost } from 'pages/CreatePost';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import posts from 'service/posts';
+import { postActions } from 'store/slices/post';
 
 const AddPost = () => {
   const autosavedValue = localStorage.getItem(`smde_1`) || '';
 
   const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -19,6 +22,7 @@ const AddPost = () => {
   const [loading, setLoading] = React.useState(false);
 
   const { user } = useAppSelector((state) => state.auth);
+  const { error } = useAppSelector((state) => state.posts);
 
   const { image, imageUrl, handleChangeFile, handleRemoveImage } = useUploadFile();
 
@@ -33,7 +37,9 @@ const AddPost = () => {
     setTitle(e.target.value);
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(postActions.setError(null));
     setLoading(true);
     let formData = new FormData();
     formData.append('img', image);
@@ -42,15 +48,17 @@ const AddPost = () => {
     formData.append('tags', tags);
     formData.append('userId', user?.id!);
 
-    await posts.createPost(formData).then(
-      ({ data }) => {
+    await posts
+      .createPost(formData)
+      .then(({ data }) => {
         navigate(`/posts/${data.id}`);
+      })
+      .catch(({ response }) => {
+        dispatch(postActions.setError(response.data.message));
+      })
+      .finally(() => {
         setLoading(false);
-      },
-      (f) => {
-        console.log(f);
-      },
-    );
+      });
   };
 
   return (
@@ -67,6 +75,7 @@ const AddPost = () => {
       setTagNames={setTagNames}
       setTitle={onChangeTitle}
       loading={loading}
+      error={error}
     />
   );
 };

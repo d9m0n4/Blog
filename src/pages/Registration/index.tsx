@@ -10,15 +10,18 @@ import BasicForm from 'components/Shared/BasicForm';
 import AuthService from '../../service/auth';
 import styles from './Login.module.scss';
 import Alert from 'components/Shared/Alert';
+import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
   const [modalData, setModalData] = React.useState<string | null>(null);
+  const navigate = useNavigate();
 
   const submit = async (data: any) => {
     setModalData(null);
     await AuthService.registration(data)
       .then(({ data }) => {
         setModalData(`Пользователь ${data.userData.fullName} успешно зарегистрирован!`);
+        navigate('/login');
       })
       .catch(({ response }) => setModalData(response.data.message));
   };
