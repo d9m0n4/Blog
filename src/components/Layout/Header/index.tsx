@@ -36,10 +36,6 @@ const Header = () => {
     }
   }, [debouncedValue, dispatch]);
 
-  useEffect(() => {
-    console.log(user?.avatar);
-  }, [user?.avatar]);
-
   return (
     <div className={styles.root}>
       <Container maxWidth="lg">

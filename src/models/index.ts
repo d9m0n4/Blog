@@ -88,7 +88,7 @@ export interface IComment {
   postId: string;
   post?: IPost;
   user: IUser;
-  assets: IFile[];
+  files: IFile[];
 }
 
 export interface IPostData {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { IPost, IUser } from 'models';
 import { Post } from 'components/Layout/Post';
 import { AddComment } from '../components/Layout/AddComment';
@@ -9,9 +9,19 @@ interface IFullPost {
   postData: IPost | undefined;
   user: IUser | null;
   isAuth: boolean;
+  isLoading: boolean;
+  setPostData: Dispatch<SetStateAction<IPost | undefined>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
+export const FullPost: React.FC<IFullPost> = ({
+  postData,
+  user,
+  isAuth,
+  setPostData,
+  isLoading,
+  setIsLoading,
+}) => {
   return (
     <>
       {postData && (
@@ -38,9 +48,17 @@ export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
           />
 
           {isAuth && user && (
-            <AddComment user={user} postId={postData.id} currentComments={postData.comments} />
+            <AddComment
+              user={user}
+              postId={postData.id}
+              currentComments={postData.comments}
+              setPostData={setPostData}
+              setIsLoading={setIsLoading}
+            />
           )}
-          {postData.comments.length > 0 && <CommentsBlock items={postData.comments} />}
+          {postData.comments.length > 0 && (
+            <CommentsBlock items={postData.comments} isLoading={isLoading} />
+          )}
         </>
       )}
     </>

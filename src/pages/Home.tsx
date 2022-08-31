@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
+import { Box, Pagination, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { Post } from '../components/Layout/Post';
+
+import { PostSkeleton } from 'components/Layout/Post/Skeleton';
 import { TagsBlock } from 'components/Layout/TagsBlock/TagsBlock';
 import { TopUsers } from 'components/Layout/TopUsers';
+import { Post } from '../components/Layout/Post';
+import Alert from 'components/Shared/Alert';
+
+import { DEFAULT_PAGE, PAGE_LIMIT } from '../constants';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { fetchAllPosts, getTags } from 'store/actions/post';
-import Alert from 'components/Shared/Alert';
-import { IUser } from 'models';
-import users from 'service/users';
-import { PostSkeleton } from 'components/Layout/Post/Skeleton';
-import { Box, Pagination, Typography } from '@mui/material';
-import { DEFAULT_PAGE, PAGE_LIMIT } from '../constants';
 import { postActions } from 'store/slices/post';
+import users from 'service/users';
+import { IUser } from 'models';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -35,13 +37,13 @@ const Home = () => {
       .catch((error) => console.log(error));
   }, [dispatch]);
 
-  const i = React.useMemo(() => items, [items]);
-  const t = React.useMemo(() => tags, [tags]);
-
-  const handleChangePage = (event: React.ChangeEvent<unknown>, page: number) => {
-    dispatch(postActions.setCurrentPage(page));
-    dispatch(fetchAllPosts({ page: page, limit: PAGE_LIMIT }));
-  };
+  const handleChangePage = React.useCallback(
+    (_event: React.ChangeEvent<unknown>, page: number) => {
+      dispatch(postActions.setCurrentPage(page));
+      dispatch(fetchAllPosts({ page: page, limit: PAGE_LIMIT }));
+    },
+    [dispatch],
+  );
 
   return (
     <>
@@ -50,14 +52,14 @@ const Home = () => {
       <Grid container spacing={3}>
         <Grid xs={8} item>
           <Box sx={{ marginBottom: 3 }}>
-            <TagsBlock items={t} isLoading={isLoading} />
+            <TagsBlock items={tags} isLoading={isLoading} />
           </Box>
 
           <Box sx={{ marginBottom: 3 }}>
             {isLoading ? (
               <PostSkeleton />
-            ) : i.length > 0 ? (
-              i.map((item) => (
+            ) : items.length > 0 ? (
+              items.map((item) => (
                 <Post
                   key={item.id}
                   id={item.id}

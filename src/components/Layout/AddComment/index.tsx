@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { IconButton, ImageList, ImageListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { IComment, IUser } from 'models';
+import { IComment, IPost, IUser } from 'models';
 import comments from 'service/comments';
 import { UserInfo } from 'components/Shared/UserAvatar';
 import styles from './AddComment.module.scss';
-import { useAppDispatch } from 'hooks/redux';
-import { postActions } from 'store/slices/post';
-import { toDate } from 'utils/toDate';
 
 interface IAddComment {
   user: IUser;
   postId: string;
   currentComments: IComment[];
+  setPostData: Dispatch<SetStateAction<IPost | undefined>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export const AddComment: React.FC<IAddComment> = ({ user, postId, currentComments }) => {
+export const AddComment: React.FC<IAddComment> = ({
+  user,
+  postId,
+  currentComments,
+  setPostData,
+  setIsLoading,
+}) => {
   const [previewFiles, setPreviewFiles] = useState<any>();
   const [files, setFiles] = useState<any>([]);
   const [comment, setComment] = useState('');
-
-  const dispatch = useAppDispatch();
 
   const setFileHandler = (e: any) => {
     const fileList = e.currentTarget.files;
@@ -42,6 +45,7 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId, currentComment
   };
 
   const submit = () => {
+    setIsLoading(true);
     let formData = new FormData();
     formData.append('comment', comment);
     formData.append('userId', user.id);
@@ -52,7 +56,8 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId, currentComment
     }
 
     comments.createComment(formData).then(({ data }) => {
-      dispatch(postActions.addComment({ id: data.postId, comment: data }));
+      setPostData((prev: any) => ({ ...prev, comments: [data, ...prev.comments] }));
+      setIsLoading(false);
     });
     setComment('');
     setFiles([]);

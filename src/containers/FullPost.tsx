@@ -2,13 +2,14 @@ import { useAppSelector } from 'hooks/redux';
 import { IPost } from 'models';
 import { FullPost } from 'pages/FullPost';
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import posts from 'service/posts';
 
 const FullPostContainer = () => {
   const { id } = useParams();
   const { items } = useAppSelector((state) => state.posts);
   const [postData, setPostData] = React.useState<IPost | undefined>();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const { user, isAuth } = useAppSelector((state) => state.auth);
 
@@ -33,7 +34,16 @@ const FullPostContainer = () => {
     }
   }, [id]);
 
-  return <FullPost postData={postData} user={user} isAuth={isAuth} />;
+  return (
+    <FullPost
+      postData={postData}
+      user={user}
+      isAuth={isAuth}
+      setPostData={setPostData}
+      isLoading={isLoading}
+      setIsLoading={setIsLoading}
+    />
+  );
 };
 
 export default FullPostContainer;

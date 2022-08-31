@@ -21,8 +21,6 @@ const EditPost = () => {
   React.useEffect(() => {
     if (id) {
       posts.getPostById(id).then(({ data }) => {
-        console.log(data);
-
         setPost(data);
         setImageUrl(data.previewImage.thumb);
       });
