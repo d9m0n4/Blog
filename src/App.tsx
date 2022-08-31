@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import Registration from 'pages/Registration';
 import PostsByTag from 'pages/PostsByTag';
@@ -34,7 +34,7 @@ function App() {
 
   const dispatch = useAppDispatch();
 
-  const { error } = useAppSelector((state) => state.auth);
+  const { error, isAuth } = useAppSelector((state) => state.auth);
 
   const percent = usePagePercent();
 
@@ -85,11 +85,14 @@ function App() {
               <Route path="posts" element={<Posts />} />
               <Route path="comments" element={<UserComments />} />
             </Route>
-            <Route path="posts/create" element={<AddPost />} />
-            <Route path="posts/edit/:id" element={<EditPost />} />
+            <Route path="posts/create" element={isAuth ? <AddPost /> : <Navigate to="/login" />} />
+            <Route
+              path="posts/edit/:id"
+              element={isAuth ? <EditPost /> : <Navigate to="/login" />}
+            />
             <Route path="/tag/:tag" element={<PostsByTag />} />
-            <Route path="registration" element={<Registration />} />
-            <Route path="login" element={<Login />} />
+            <Route path="registration" element={isAuth ? <Navigate to="/" /> : <Registration />} />
+            <Route path="login" element={isAuth ? <Navigate to="/" /> : <Login />} />
           </Routes>
         </Container>
       </div>

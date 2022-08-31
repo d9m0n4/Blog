@@ -31,7 +31,7 @@ const Registration = () => {
       <Alert openState={!!modalData} message={modalData} />
       <Paper classes={{ root: styles.root }}>
         <Typography classes={{ root: styles.title }} variant="h5">
-          Создание аккаунта
+          Регистрация
         </Typography>
 
         <BasicForm onSubmit={submit}>

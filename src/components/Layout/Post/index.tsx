@@ -177,7 +177,6 @@ export const Post: React.FC<any> = ({
               className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
               src={isFullPost ? image.url : image.thumb}
               alt={title}
-              loading="lazy"
             />
           </div>
         )}
