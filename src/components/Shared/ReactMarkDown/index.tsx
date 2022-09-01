@@ -56,7 +56,6 @@ export const Markdown: React.FC<IMkd> = React.memo(({ text }) => {
       return language ? (
         <SyntaxHighlighter
           customStyle={{ maxWidth: '1152px', margin: '0 auto' }}
-          wrapLongLines
           wrapLines
           language={language}
           style={atomDark}

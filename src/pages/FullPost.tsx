@@ -1,27 +1,18 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { IPost, IUser } from 'models';
 import { Post } from 'components/Layout/Post';
 import { AddComment } from '../components/Layout/AddComment';
 import { CommentsBlock } from 'components/Layout/CommentsBlock/CommentsBlock';
 import PageProgress from 'components/UI/PageProgress';
+import { useLocation } from 'react-router-dom';
 
 interface IFullPost {
-  postData: IPost | undefined;
+  postData: IPost | null;
   user: IUser | null;
   isAuth: boolean;
-  isLoading: boolean;
-  setPostData: Dispatch<SetStateAction<IPost | undefined>>;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export const FullPost: React.FC<IFullPost> = ({
-  postData,
-  user,
-  isAuth,
-  setPostData,
-  isLoading,
-  setIsLoading,
-}) => {
+export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
   return (
     <>
       {postData && (
@@ -47,18 +38,9 @@ export const FullPost: React.FC<IFullPost> = ({
             isEditable
           />
 
-          {isAuth && user && (
-            <AddComment
-              user={user}
-              postId={postData.id}
-              currentComments={postData.comments}
-              setPostData={setPostData}
-              setIsLoading={setIsLoading}
-            />
-          )}
-          {postData.comments.length > 0 && (
-            <CommentsBlock items={postData.comments} isLoading={isLoading} />
-          )}
+          {isAuth && user && <AddComment user={user} postId={postData.id} />}
+
+          {postData.comments.length > 0 && <CommentsBlock items={postData.comments} />}
         </>
       )}
     </>

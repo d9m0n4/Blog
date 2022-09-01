@@ -36,6 +36,7 @@ export const Post: React.FC<any> = ({
   text,
 }) => {
   const { user: currentUser, isAuth } = useAppSelector((state) => state.auth);
+
   const [isLiked, setIsLiked] = useState(
     likesCount && currentUser && likesCount.includes(currentUser.id),
   );

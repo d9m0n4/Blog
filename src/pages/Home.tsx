@@ -15,6 +15,7 @@ import { fetchAllPosts, getTags } from 'store/actions/post';
 import { postActions } from 'store/slices/post';
 import users from 'service/users';
 import { IUser } from 'models';
+import PopularPosts from 'components/Layout/PopularPosts';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -99,6 +100,7 @@ const Home = () => {
         <Grid xs={4} item sx={{ marginTop: 7 }}>
           <Grid item sx={{ position: 'sticky', top: '90px' }}>
             <TopUsers items={popUsers} />
+            <PopularPosts />
           </Grid>
         </Grid>
       </Grid>

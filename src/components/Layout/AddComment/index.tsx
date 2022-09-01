@@ -1,32 +1,27 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React from 'react';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { IconButton, ImageList, ImageListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { IComment, IPost, IUser } from 'models';
+import { IUser } from 'models';
 import comments from 'service/comments';
 import { UserInfo } from 'components/Shared/UserAvatar';
 import styles from './AddComment.module.scss';
+import { useAppDispatch } from 'hooks/redux';
+import { postActions } from '../../../store/slices/post';
 
 interface IAddComment {
   user: IUser;
   postId: string;
-  currentComments: IComment[];
-  setPostData: Dispatch<SetStateAction<IPost | undefined>>;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export const AddComment: React.FC<IAddComment> = ({
-  user,
-  postId,
-  currentComments,
-  setPostData,
-  setIsLoading,
-}) => {
-  const [previewFiles, setPreviewFiles] = useState<any>();
-  const [files, setFiles] = useState<any>([]);
-  const [comment, setComment] = useState('');
+export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
+  const [previewFiles, setPreviewFiles] = React.useState<any>();
+  const [files, setFiles] = React.useState<any>([]);
+  const [comment, setComment] = React.useState('');
+
+  const dispatch = useAppDispatch();
 
   const setFileHandler = (e: any) => {
     const fileList = e.currentTarget.files;
@@ -45,7 +40,7 @@ export const AddComment: React.FC<IAddComment> = ({
   };
 
   const submit = () => {
-    setIsLoading(true);
+    dispatch(postActions.setLoading(true));
     let formData = new FormData();
     formData.append('comment', comment);
     formData.append('userId', user.id);
@@ -56,8 +51,8 @@ export const AddComment: React.FC<IAddComment> = ({
     }
 
     comments.createComment(formData).then(({ data }) => {
-      setPostData((prev: any) => ({ ...prev, comments: [data, ...prev.comments] }));
-      setIsLoading(false);
+      dispatch(postActions.addComment(data));
+      dispatch(postActions.setLoading(false));
     });
     setComment('');
     setFiles([]);

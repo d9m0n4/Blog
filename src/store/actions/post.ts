@@ -49,3 +49,15 @@ export const searchPosts = createAsyncThunk(
     }
   },
 );
+
+export const getPostById = createAsyncThunk(
+  'posts/getPostById',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const { data } = await PostService.getPostById(id);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);

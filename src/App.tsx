@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 
 import Registration from 'pages/Registration';
 import PostsByTag from 'pages/PostsByTag';
@@ -38,8 +38,6 @@ function App() {
 
   const percent = usePagePercent();
 
-  const { hash, pathname, key } = useLocation();
-
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(checkAuth());
@@ -54,20 +52,6 @@ function App() {
       setScrollBtnVisible(false);
     }
   }, [percent]);
-
-  React.useEffect(() => {
-    if (hash === '') {
-      window.scrollTo(0, 0);
-    } else {
-      setTimeout(() => {
-        const id = hash.replace('#', '');
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView();
-        }
-      }, 0);
-    }
-  }, [hash, pathname, key]);
 
   return (
     <>
