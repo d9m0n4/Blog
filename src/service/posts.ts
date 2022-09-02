@@ -35,6 +35,9 @@ class PostService {
   async deletePost(id: string) {
     return await API.post('/posts/delete', { id });
   }
+  async getPopularPosts() {
+    return await API.get('/posts/popular');
+  }
 }
 
 export default new PostService();

@@ -51,7 +51,7 @@ export interface IPost {
   tags?: string[] | null;
   text: string;
   user: IUser;
-  likes: number | [];
+  likes: string[];
   viewsCount: number;
   comments: IComment[];
   previewImage: IFile;

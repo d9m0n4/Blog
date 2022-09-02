@@ -10,7 +10,7 @@ import styles from './SideBlock.module.scss';
 export const SideBlock: React.FC<ISideBlock> = ({ title, children }) => {
   return (
     <Paper classes={{ root: styles.root }} sx={{ borderRadius: 2, boxShadow: 'none' }}>
-      <Typography variant="h6" classes={{ root: styles.title }}>
+      <Typography sx={{ marginBottom: 1 }} variant="h6" classes={{ root: styles.title }}>
         {title}
       </Typography>
       {children}

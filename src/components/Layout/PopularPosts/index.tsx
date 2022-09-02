@@ -1,35 +1,45 @@
-import { List, ListItem, ListItemText } from '@mui/material';
-import { SideBlock } from 'components/Shared/SideBlock';
 import React from 'react';
+
 import { NavLink } from 'react-router-dom';
+
+import { Box, List, ListItem, Typography } from '@mui/material';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
+import { SideBlock } from 'components/Shared/SideBlock';
 import { useAppSelector } from 'hooks/redux';
+
+import styles from './popularPosts.module.scss';
+import posts from 'service/posts';
 
 const PopularPosts = () => {
   const { items } = useAppSelector((state) => state.posts);
+
+  React.useEffect(() => {
+    posts.getPopularPosts();
+  }, []);
+
   return (
-    <SideBlock title="Обсуждаемые статьи">
+    <SideBlock title="Популярные статьи">
       <List>
-        {items.map((post) => (
-          <ListItem key={post.id}>
-            <ListItemText
-              primary={<NavLink to={'/'}>{post.title}</NavLink>}
-              secondary={
-                <List sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <ListItem sx={{ justifyContent: 'flex-end', padding: 0, flex: 0, marginLeft: 1 }}>
-                    <FavoriteBorderIcon fontSize="small" />
-                    <span>{post.likes}</span>
-                  </ListItem>
-                  <ListItem sx={{ justifyContent: 'flex-end', padding: 0, flex: 0, marginLeft: 1 }}>
+        {items &&
+          items.map((post) => (
+            <ListItem color="CaptionText" key={post.id} sx={{ paddingLeft: 3, display: 'block' }}>
+              <NavLink className={styles.postLink} to={`/posts/${post.id}`}>
+                <Typography variant="body1">{post.title}</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 1 }}>
+                  <Typography
+                    className={styles.postDetail}
+                    variant="caption"
+                    sx={{ display: 'flex', alignItems: 'center', marginRight: 1 }}>
                     <CommentIcon fontSize="small" />
-                    <span>{post.viewsCount}</span>
-                  </ListItem>
-                </List>
-              }
-            />
-          </ListItem>
-        ))}
+                    <Typography sx={{ marginLeft: '4px', color: '#fe9870' }} variant="caption">
+                      {post.comments.length}
+                    </Typography>
+                  </Typography>
+                </Box>
+              </NavLink>
+            </ListItem>
+          ))}
       </List>
     </SideBlock>
   );
