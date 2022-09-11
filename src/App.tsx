@@ -1,33 +1,34 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 
-import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
-
-import Registration from 'pages/Registration';
-import PostsByTag from 'pages/PostsByTag';
-import UserComments from 'pages/Profile/comments';
-import Login from 'pages/Login';
-import NotFound from 'pages/NotFound';
-import Home from 'pages/Home';
-import EditPost from 'pages/EditPost';
-import Profile from 'pages/Profile/profile';
-import Posts from 'pages/Profile/posts';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import Header from 'components/Layout/Header';
 import ScrollTop from 'components/UI/ScrollTop';
 import Footer from 'components/Layout/Footer';
 import Alert from 'components/Shared/Alert';
-import FullPostContainer from 'containers/FullPost';
-import ProfileContainer from 'containers/Profile';
-import AddPost from 'containers/AddPost';
+import Loader from 'components/UI/Loader';
 
 import { Container } from '@mui/material';
 
-import { fetchAllPosts } from 'store/actions/post';
 import { checkAuth } from 'store/actions/auth';
 
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import usePagePercent from 'hooks/usePagePercent';
-import { DEFAULT_PAGE, PAGE_LIMIT } from './constants';
+
+const AddPost = lazy(() => import('./containers/AddPost'));
+const EditPost = lazy(() => import('./containers/EditPost'));
+const FullPostContainer = lazy(() => import('containers/FullPost'));
+const ProfileContainer = lazy(() => import('containers/Profile'));
+
+const Registration = lazy(() => import('pages/Registration'));
+const Login = lazy(() => import('pages/Login'));
+
+const Home = lazy(() => import('pages/Home'));
+const Posts = lazy(() => import('pages/Profile/posts'));
+const PostsByTag = lazy(() => import('pages/PostsByTag'));
+const Profile = lazy(() => import('pages/Profile/profile'));
+const UserComments = lazy(() => import('pages/Profile/comments'));
+const NotFound = lazy(() => import('pages/NotFound'));
 
 function App() {
   const [scrollBtnVisible, setScrollBtnVisible] = React.useState(false);
@@ -41,7 +42,6 @@ function App() {
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(checkAuth());
-      dispatch(fetchAllPosts({ page: DEFAULT_PAGE, limit: PAGE_LIMIT }));
     }
   }, [dispatch]);
 
@@ -60,24 +60,32 @@ function App() {
       <Header />
       <div className="main__content">
         <Container maxWidth="lg">
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-            <Route path="/" element={<Home />} />
-            <Route path="posts/:id" element={<FullPostContainer />} />
-            <Route path="user/:id" element={<ProfileContainer />}>
-              <Route index element={<Profile />} />
-              <Route path="posts" element={<Posts />} />
-              <Route path="comments" element={<UserComments />} />
-            </Route>
-            <Route path="posts/create" element={isAuth ? <AddPost /> : <Navigate to="/login" />} />
-            <Route
-              path="posts/edit/:id"
-              element={isAuth ? <EditPost /> : <Navigate to="/login" />}
-            />
-            <Route path="/tag/:tag" element={<PostsByTag />} />
-            <Route path="registration" element={isAuth ? <Navigate to="/" /> : <Registration />} />
-            <Route path="login" element={isAuth ? <Navigate to="/" /> : <Login />} />
-          </Routes>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="*" element={<NotFound />} />
+              <Route path="/" element={<Home />} />
+              <Route path="posts/:id" element={<FullPostContainer />} />
+              <Route path="user/:id" element={<ProfileContainer />}>
+                <Route index element={<Profile />} />
+                <Route path="posts" element={<Posts />} />
+                <Route path="comments" element={<UserComments />} />
+              </Route>
+              <Route
+                path="posts/create"
+                element={isAuth ? <AddPost /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="posts/edit/:id"
+                element={isAuth ? <EditPost /> : <Navigate to="/login" />}
+              />
+              <Route path="/tag/:tag" element={<PostsByTag />} />
+              <Route
+                path="registration"
+                element={isAuth ? <Navigate to="/" /> : <Registration />}
+              />
+              <Route path="login" element={isAuth ? <Navigate to="/" /> : <Login />} />
+            </Routes>
+          </Suspense>
         </Container>
       </div>
       <Footer />

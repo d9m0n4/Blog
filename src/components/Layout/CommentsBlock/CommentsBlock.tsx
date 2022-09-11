@@ -1,18 +1,21 @@
 import React, { memo } from 'react';
 
-import { SideBlock } from '../../Shared/SideBlock';
+import { Link, useLocation } from 'react-router-dom';
+
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
-import { ICommentsBlock } from '../../../models';
+
+import { SideBlock } from '../../Shared/SideBlock';
 import { UserInfo } from '../../Shared/UserAvatar';
-import { Link, useLocation } from 'react-router-dom';
+
+import { ICommentsBlock } from '../../../models';
 import { toDate } from 'utils/toDate';
 
-import styles from './commentsBlock.module.scss';
 import { useAppSelector } from 'hooks/redux';
+import styles from './commentsBlock.module.scss';
 
 export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items }) => {
   const { isLoading } = useAppSelector((state) => state.posts);

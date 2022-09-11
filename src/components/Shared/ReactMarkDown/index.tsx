@@ -16,6 +16,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 interface IMkd {
   text: string;
@@ -43,7 +44,7 @@ export const Markdown: React.FC<IMkd> = React.memo(({ text }) => {
 
         return (
           <div className="post__image">
-            <img className="img" src={image.src} alt={image.alt} />
+            <LazyLoadImage effect="blur" className="img" src={image.src} alt={image.alt} />
           </div>
         );
       }

@@ -8,6 +8,7 @@ import Skeleton from '@mui/material/Skeleton';
 import styles from './TopUsers.module.scss';
 import { IUser } from 'models';
 import { UserInfo } from 'components/Shared/UserAvatar';
+import { NavLink } from 'react-router-dom';
 
 interface ITopUsers {
   items: IUser[];
@@ -42,7 +43,13 @@ export const TopUsers: React.FC<ITopUsers> = memo(({ items, isLoading }) => {
                 <Skeleton variant="text" height={24} width={200} />
               </div>
             ) : (
-              <ListItemText primary={user.fullName} />
+              <ListItemText
+                primary={
+                  <NavLink className={styles.userLink} to={`/user/${user.id}`}>
+                    {user.fullName}
+                  </NavLink>
+                }
+              />
             )}
           </ListItem>
         ))}

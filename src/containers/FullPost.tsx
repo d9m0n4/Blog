@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { FullPost } from 'pages/FullPost';
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getPostById } from 'store/actions/post';
 
 const FullPostContainer = () => {

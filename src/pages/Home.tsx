@@ -14,22 +14,26 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { fetchAllPosts, getTags } from 'store/actions/post';
 import { postActions } from 'store/slices/post';
 import users from 'service/users';
-import { IUser } from 'models';
+import { IPost, IUser } from 'models';
 import PopularPosts from 'components/Layout/PopularPosts';
+import posts from 'service/posts';
 
 const Home = () => {
-  const dispatch = useAppDispatch();
   const [popUsers, setPopUsers] = useState<IUser[]>([]);
+  const [popPosts, setPopPosts] = React.useState<IPost[]>([]);
+
+  const dispatch = useAppDispatch();
 
   const { items, count, currentPage, tags, isLoading, error } = useAppSelector(
     (state) => state.posts,
   );
 
-  let pagesCount = Math.ceil(count / PAGE_LIMIT);
-
   useEffect(() => {
     dispatch(fetchAllPosts({ page: DEFAULT_PAGE, limit: PAGE_LIMIT }));
     dispatch(getTags());
+
+    posts.getPopularPosts().then(({ data }) => setPopPosts(data));
+
     users
       .getUsers()
       .then(({ data }) => {
@@ -37,6 +41,8 @@ const Home = () => {
       })
       .catch((error) => console.log(error));
   }, [dispatch]);
+
+  let pagesCount = Math.ceil(count / PAGE_LIMIT);
 
   const handleChangePage = React.useCallback(
     (_event: React.ChangeEvent<unknown>, page: number) => {
@@ -100,7 +106,7 @@ const Home = () => {
         <Grid xs={4} item sx={{ marginTop: 7 }}>
           <Grid item sx={{ position: 'sticky', top: '90px' }}>
             <TopUsers items={popUsers} />
-            <PopularPosts />
+            <PopularPosts items={popPosts} />
           </Grid>
         </Grid>
       </Grid>

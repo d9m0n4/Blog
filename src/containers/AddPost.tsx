@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import useUploadFile from 'hooks/useUploadFile';
-import { CreatePost } from 'pages/CreatePost';
+import CreatePost from 'pages/CreatePost';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import posts from 'service/posts';

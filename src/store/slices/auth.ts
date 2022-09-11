@@ -60,7 +60,7 @@ const authSlice = createSlice({
       state.loading = true;
       state.isAuth = false;
     },
-    [logout.fulfilled.type]: (state) => {
+    [logout.fulfilled.type]: (state, action) => {
       state.error = { message: null };
       state.loading = false;
       state.user = null;

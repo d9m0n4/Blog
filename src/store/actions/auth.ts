@@ -1,8 +1,7 @@
-import { BASEURL } from './../../constants/index';
 import { IUserPostData } from '../../models/index';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import AuthService from 'service/auth';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
 export const login = createAsyncThunk(
   'auth/login',

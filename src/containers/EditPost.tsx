@@ -1,12 +1,11 @@
 import useUploadFile from 'hooks/useUploadFile';
-import { CreatePost } from 'pages/CreatePost';
+import CreatePost from 'pages/CreatePost';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import posts from 'service/posts';
 
 const EditPost = () => {
   const [post, setPost] = React.useState<any>();
-  const [open, setOpen] = React.useState(false);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -86,7 +85,6 @@ const EditPost = () => {
           onChangeEditor={onChangeText}
           setTagNames={setTagNames}
           setTitle={onChangeTitle}
-          openDialog={open}
           loading={loading}
         />
       )}

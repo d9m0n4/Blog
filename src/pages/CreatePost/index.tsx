@@ -30,12 +30,11 @@ interface ICreatePost {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setTagNames: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  openDialog?: boolean;
   loading: boolean;
   error?: string | null;
 }
 
-export const CreatePost: React.FC<ICreatePost> = ({
+const CreatePost: React.FC<ICreatePost> = ({
   title,
   text,
   tags,
@@ -168,3 +167,5 @@ export const CreatePost: React.FC<ICreatePost> = ({
     </>
   );
 };
+
+export default CreatePost;

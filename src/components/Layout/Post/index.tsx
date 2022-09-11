@@ -22,6 +22,9 @@ import AlertDialog from 'components/Shared/Dialog';
 import { fetchAllPosts } from 'store/actions/post';
 import { PAGE_LIMIT, DEFAULT_PAGE } from '../../../constants';
 
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 export const Post: React.FC<any> = ({
   id,
   title,
@@ -174,7 +177,11 @@ export const Post: React.FC<any> = ({
         )}
         {image && (
           <div className={clsx(styles.imageWrapper, { [styles.imageHeight]: isFullPost })}>
-            <img
+            <LazyLoadImage
+              placeholderSrc="data:image/gif;base64,R0lGODlhCgAIAIABAN3d3f///yH5BAEAAAEALAAAAAAKAAgAAAINjAOnyJv2oJOrVXrzKQA7"
+              width={'100%'}
+              height={'100%'}
+              effect="blur"
               className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
               src={isFullPost ? image.url : image.thumb}
               alt={title}

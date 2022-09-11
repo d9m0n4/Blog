@@ -26,7 +26,7 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
   const setFileHandler = (e: any) => {
     const fileList = e.currentTarget.files;
     if (fileList.length > 3) {
-      alert('you may upload up maximum of free files');
+      alert('Можно загружать не более 3х файлов');
       return;
     }
     const f = [];

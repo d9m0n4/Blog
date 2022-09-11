@@ -6,18 +6,15 @@ import { Box, List, ListItem, Typography } from '@mui/material';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 import { SideBlock } from 'components/Shared/SideBlock';
-import { useAppSelector } from 'hooks/redux';
 
 import styles from './popularPosts.module.scss';
-import posts from 'service/posts';
+import { IPost } from 'models';
 
-const PopularPosts = () => {
-  const { items } = useAppSelector((state) => state.posts);
+interface IPopularPosts {
+  items: IPost[];
+}
 
-  React.useEffect(() => {
-    posts.getPopularPosts();
-  }, []);
-
+const PopularPosts: React.FC<IPopularPosts> = ({ items }) => {
   return (
     <SideBlock title="Популярные статьи">
       <List>
@@ -33,7 +30,7 @@ const PopularPosts = () => {
                     sx={{ display: 'flex', alignItems: 'center', marginRight: 1 }}>
                     <CommentIcon fontSize="small" />
                     <Typography sx={{ marginLeft: '4px', color: '#fe9870' }} variant="caption">
-                      {post.comments.length}
+                      {post.count}
                     </Typography>
                   </Typography>
                 </Box>

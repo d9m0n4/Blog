@@ -4,7 +4,6 @@ import { Post } from 'components/Layout/Post';
 import { AddComment } from '../components/Layout/AddComment';
 import { CommentsBlock } from 'components/Layout/CommentsBlock/CommentsBlock';
 import PageProgress from 'components/UI/PageProgress';
-import { useLocation } from 'react-router-dom';
 
 interface IFullPost {
   postData: IPost | null;

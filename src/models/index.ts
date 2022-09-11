@@ -56,6 +56,7 @@ export interface IPost {
   comments: IComment[];
   previewImage: IFile;
   createdAt: Date;
+  count?: string;
 }
 
 export interface IPosts {
