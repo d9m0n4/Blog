@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 
 import { PostSkeleton } from 'components/Layout/Post/Skeleton';
 import { TagsBlock } from 'components/Layout/TagsBlock/TagsBlock';
+import PopularPosts from 'components/Layout/PopularPosts';
 import { TopUsers } from 'components/Layout/TopUsers';
 import { Post } from '../components/Layout/Post';
 import Alert from 'components/Shared/Alert';
@@ -13,9 +14,8 @@ import { DEFAULT_PAGE, PAGE_LIMIT } from '../constants';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { fetchAllPosts, getTags } from 'store/actions/post';
 import { postActions } from 'store/slices/post';
-import users from 'service/users';
 import { IPost, IUser } from 'models';
-import PopularPosts from 'components/Layout/PopularPosts';
+import users from 'service/users';
 import posts from 'service/posts';
 
 const Home = () => {

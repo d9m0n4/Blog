@@ -16,7 +16,7 @@ interface IAddComment {
   postId: string;
 }
 
-export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
+export const AddComment: React.FC<IAddComment> = React.memo(({ user, postId }) => {
   const [previewFiles, setPreviewFiles] = React.useState<any>();
   const [files, setFiles] = React.useState<any>([]);
   const [comment, setComment] = React.useState('');
@@ -122,4 +122,4 @@ export const AddComment: React.FC<IAddComment> = ({ user, postId }) => {
       </div>
     </>
   );
-};
+});

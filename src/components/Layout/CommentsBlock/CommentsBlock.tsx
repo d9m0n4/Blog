@@ -16,11 +16,25 @@ import { toDate } from 'utils/toDate';
 
 import { useAppSelector } from 'hooks/redux';
 import styles from './commentsBlock.module.scss';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Modal } from '@mui/material';
 
 export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items }) => {
   const { isLoading } = useAppSelector((state) => state.posts);
 
   const { hash, pathname, key } = useLocation();
+
+  const [image, setImage] = React.useState<string>('');
+  const [open, setOpen] = React.useState(false);
+
+  const openModal = (e: any) => {
+    setImage(e.target.src);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const comments = React.useRef<HTMLDivElement>(null);
 
@@ -82,10 +96,15 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items }) => {
                           <div className={styles.commentsImagesBlock}>
                             {comment.files.map((file) => (
                               <div key={file.id} className={styles.commentsImageWrapper}>
-                                <img
+                                <LazyLoadImage
+                                  placeholderSrc="data:image/gif;base64,R0lGODlhCgAIAIABAN3d3f///yH5BAEAAAEALAAAAAAKAAgAAAINjAOnyJv2oJOrVXrzKQA7"
+                                  width={'100%'}
+                                  height={'100%'}
+                                  effect="blur"
                                   className={styles.commentsImage}
                                   src={file.thumb}
                                   alt={file.public_id}
+                                  onClick={openModal}
                                 />
                               </div>
                             ))}
@@ -101,6 +120,13 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items }) => {
           )}
         </SideBlock>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description">
+        <img src={image} alt="123" />
+      </Modal>
     </>
   );
 });
