@@ -72,12 +72,7 @@ const Home = () => {
                   id={item.id}
                   title={item.title}
                   image={item.previewImage}
-                  user={{
-                    id: item.user.id,
-                    avatarUrl: item.user.avatar,
-                    fullName: item.user.fullName,
-                    rating: item.user.rating,
-                  }}
+                  user={item.user}
                   createdAt={item.createdAt}
                   viewsCount={item.viewsCount}
                   commentsCount={item.comments?.length}

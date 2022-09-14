@@ -231,6 +231,7 @@ $blue: #4361ee;
   border-radius: 8px;
   opacity: 0;
   transition: all 0.15s ease-in-out;
+  z-index: 9;
   &.Top {
     top: 16px;
     bottom: initial;

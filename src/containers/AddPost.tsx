@@ -30,9 +30,10 @@ const AddPost = () => {
     setTags(e.target.value);
   };
 
-  const onChangeText = (e: string) => {
+  const onChangeText = React.useCallback((e: string) => {
     settext(e);
-  };
+  }, []);
+
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };

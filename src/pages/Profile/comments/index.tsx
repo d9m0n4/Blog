@@ -5,7 +5,6 @@ import { UserInfo } from 'components/Shared/UserAvatar';
 import { Link, useOutletContext } from 'react-router-dom';
 import { toDate } from 'utils/toDate';
 import { CurrentUserData } from 'models';
-import Loader from 'components/UI/Loader';
 
 const UserComments = () => {
   const userData = useOutletContext<CurrentUserData>();

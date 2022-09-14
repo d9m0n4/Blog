@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
 
@@ -17,10 +17,11 @@ import { toDate } from 'utils/toDate';
 import { useAppSelector } from 'hooks/redux';
 import styles from './commentsBlock.module.scss';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Modal } from '@mui/material';
+import ImageModal from 'components/Shared/ImageModal';
 
-export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items }) => {
+export const CommentsBlock = () => {
   const { isLoading } = useAppSelector((state) => state.posts);
+  const { currentPost } = useAppSelector((state) => state.posts);
 
   const { hash, pathname, key } = useLocation();
 
@@ -42,11 +43,8 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items }) => {
     if (comments.current) {
       if (hash) {
         setTimeout(() => {
-          const hashId = hash.replace('#', '');
-          const element = document.getElementById(hashId);
-
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+          if (comments.current) {
+            comments.current.scrollIntoView({ behavior: 'smooth' });
           }
         }, 0);
       }
@@ -55,9 +53,10 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items }) => {
 
   return (
     <>
+      <ImageModal open={open} handleClose={handleClose} image={image} />
       <div ref={comments} id="comments">
         <SideBlock title="Комментарии">
-          {items && (
+          {
             <List>
               {isLoading && (
                 <ListItem alignItems="flex-start">
@@ -70,63 +69,57 @@ export const CommentsBlock: React.FC<ICommentsBlock> = memo(({ items }) => {
                   </div>
                 </ListItem>
               )}
-              {items.map((comment) => (
-                <React.Fragment key={comment.id}>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Link to={`/user/${comment.user.id}/`}>
-                        <UserInfo
-                          avatarUrl={comment.user.avatar?.thumb}
-                          fullName={comment.user.fullName}
-                          onlyAvatar
-                        />
-                      </Link>
-                    </ListItemAvatar>
+              {currentPost &&
+                currentPost.comments.map((comment) => (
+                  <React.Fragment key={comment.id}>
+                    <ListItem alignItems="flex-start">
+                      <ListItemAvatar>
+                        <Link to={`/user/${comment.user.id}/`}>
+                          <UserInfo
+                            avatarUrl={comment.user.avatar?.thumb}
+                            fullName={comment.user.fullName}
+                            onlyAvatar
+                          />
+                        </Link>
+                      </ListItemAvatar>
 
-                    <div className={styles.commentsItem}>
-                      <div className={styles.commentsTop}>
-                        <p className={styles.commentsUserName}> {comment.user?.fullName}</p>
-                        <span className={styles.commentsDate}>
-                          {toDate(comment.createdAt, { hour: 'numeric', minute: 'numeric' })}
-                        </span>
+                      <div className={styles.commentsItem}>
+                        <div className={styles.commentsTop}>
+                          <p className={styles.commentsUserName}> {comment.user?.fullName}</p>
+                          <span className={styles.commentsDate}>
+                            {toDate(comment.createdAt, { hour: 'numeric', minute: 'numeric' })}
+                          </span>
+                        </div>
+                        <div>
+                          <p>{comment.text}</p>
+                          {comment.files && (
+                            <div className={styles.commentsImagesBlock}>
+                              {comment.files.map((file) => (
+                                <div key={file.id} className={styles.commentsImageWrapper}>
+                                  <LazyLoadImage
+                                    placeholderSrc="data:image/gif;base64,R0lGODlhCgAIAIABAN3d3f///yH5BAEAAAEALAAAAAAKAAgAAAINjAOnyJv2oJOrVXrzKQA7"
+                                    width={'100%'}
+                                    height={'100%'}
+                                    effect="blur"
+                                    className={styles.commentsImage}
+                                    src={file.thumb}
+                                    alt={file.public_id}
+                                    onClick={openModal}
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      <div>
-                        <p>{comment.text}</p>
-                        {comment.files && (
-                          <div className={styles.commentsImagesBlock}>
-                            {comment.files.map((file) => (
-                              <div key={file.id} className={styles.commentsImageWrapper}>
-                                <LazyLoadImage
-                                  placeholderSrc="data:image/gif;base64,R0lGODlhCgAIAIABAN3d3f///yH5BAEAAAEALAAAAAAKAAgAAAINjAOnyJv2oJOrVXrzKQA7"
-                                  width={'100%'}
-                                  height={'100%'}
-                                  effect="blur"
-                                  className={styles.commentsImage}
-                                  src={file.thumb}
-                                  alt={file.public_id}
-                                  onClick={openModal}
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </ListItem>
-                  <Divider variant="inset" component="li" />
-                </React.Fragment>
-              ))}
+                    </ListItem>
+                    <Divider variant="inset" component="li" />
+                  </React.Fragment>
+                ))}
             </List>
-          )}
+          }
         </SideBlock>
       </div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description">
-        <img src={image} alt="123" />
-      </Modal>
     </>
   );
-});
+};

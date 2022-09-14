@@ -14,15 +14,15 @@ const Posts = () => {
           <Grid item key={post.id}>
             <Post
               id={post.id}
-              user={{
-                id: userData.id,
-              }}
+              user={userData}
               title={post.title}
               image={post.previewImage}
               viewsCount={post.viewsCount}
               commentsCount={post.comments?.length}
               tags={post.tags}
               likesCount={post.likes}
+              createdAt={post.createdAt}
+              text={''}
             />
           </Grid>
         ))

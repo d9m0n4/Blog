@@ -42,16 +42,11 @@ const PostsByTag = () => {
               key={item.id}
               sx={{ display: 'flex', padding: 2, paddingLeft: 2, paddingTop: 2 }}>
               <Post
-                className={styles.root}
                 id={item.id}
                 title={item.title}
                 text={item.text}
                 image={item.previewImage}
-                user={{
-                  id: item.user.id,
-                  fullName: item.user.fullName,
-                  rating: item.user.rating,
-                }}
+                user={item.user}
                 createdAt={item.createdAt}
                 viewsCount={item.viewsCount}
                 commentsCount={item.comments?.length}

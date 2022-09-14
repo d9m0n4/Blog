@@ -11,8 +11,17 @@ interface IUserPage {
   handleLogout: () => void;
 }
 
-const UserPage: React.FC<IUserPage> = ({ userData, handleLogout }) => {
+const UserPage: React.FC<IUserPage> = React.memo(({ userData, handleLogout }) => {
   const { isAuth } = useAppSelector((state) => state.auth);
+
+  const profileNav = React.useMemo(
+    () => [
+      { title: 'Профиль', link: `/user/${userData?.id}` },
+      { title: 'Посты', link: `/user/${userData?.id}/posts` },
+      { title: 'Комментарии', link: `/user/${userData?.id}/comments` },
+    ],
+    [userData],
+  );
 
   return (
     <>
@@ -20,29 +29,17 @@ const UserPage: React.FC<IUserPage> = ({ userData, handleLogout }) => {
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={8}>
             <List className={styles.navList} sx={{ marginBottom: 2, display: 'flex' }}>
-              <NavLink
-                className={({ isActive }) =>
-                  [styles.navLink, isActive ? styles.active : null].filter(Boolean).join(' ')
-                }
-                end
-                to={`/user/${userData?.id}`}>
-                <Button>Профиль</Button>
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  [styles.navLink, isActive ? styles.active : null].filter(Boolean).join(' ')
-                }
-                end
-                to={`/user/${userData?.id}/posts`}>
-                <Button>Посты</Button>
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  [styles.navLink, isActive ? styles.active : null].filter(Boolean).join(' ')
-                }
-                to={`/user/${userData?.id}/comments`}>
-                <Button>Комментарии</Button>
-              </NavLink>
+              {profileNav.map((item) => (
+                <NavLink
+                  key={item.link}
+                  className={({ isActive }) =>
+                    [styles.navLink, isActive ? styles.active : null].filter(Boolean).join(' ')
+                  }
+                  end
+                  to={item.link}>
+                  <Button>{item.title}</Button>
+                </NavLink>
+              ))}
 
               {isAuth && (
                 <Link
@@ -61,6 +58,6 @@ const UserPage: React.FC<IUserPage> = ({ userData, handleLogout }) => {
       )}
     </>
   );
-};
+});
 
 export default UserPage;

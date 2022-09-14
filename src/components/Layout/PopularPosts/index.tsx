@@ -14,7 +14,7 @@ interface IPopularPosts {
   items: IPost[];
 }
 
-const PopularPosts: React.FC<IPopularPosts> = ({ items }) => {
+const PopularPosts: React.FC<IPopularPosts> = React.memo(({ items }) => {
   return (
     <SideBlock title="Популярные статьи">
       <List>
@@ -40,6 +40,6 @@ const PopularPosts: React.FC<IPopularPosts> = ({ items }) => {
       </List>
     </SideBlock>
   );
-};
+});
 
 export default PopularPosts;

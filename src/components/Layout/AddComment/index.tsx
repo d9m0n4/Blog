@@ -4,22 +4,18 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { IconButton, ImageList, ImageListItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { IUser } from 'models';
 import comments from 'service/comments';
 import { UserInfo } from 'components/Shared/UserAvatar';
 import styles from './AddComment.module.scss';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { postActions } from '../../../store/slices/post';
 
-interface IAddComment {
-  user: IUser;
-  postId: string;
-}
-
-export const AddComment: React.FC<IAddComment> = React.memo(({ user, postId }) => {
+export const AddComment = () => {
   const [previewFiles, setPreviewFiles] = React.useState<any>();
   const [files, setFiles] = React.useState<any>([]);
   const [comment, setComment] = React.useState('');
+  const { user } = useAppSelector((state) => state.auth);
+  const { currentPost } = useAppSelector((state) => state.posts);
 
   const dispatch = useAppDispatch();
 
@@ -40,31 +36,35 @@ export const AddComment: React.FC<IAddComment> = React.memo(({ user, postId }) =
   };
 
   const submit = () => {
-    dispatch(postActions.setLoading(true));
-    let formData = new FormData();
-    formData.append('comment', comment);
-    formData.append('userId', user.id);
-    formData.append('postId', postId);
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      formData.append('file', file);
-    }
+    if (user && currentPost) {
+      dispatch(postActions.setLoading(true));
+      let formData = new FormData();
+      formData.append('comment', comment);
+      formData.append('userId', user.id);
+      formData.append('postId', currentPost?.id);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        formData.append('file', file);
+      }
 
-    comments.createComment(formData).then(({ data }) => {
-      dispatch(postActions.addComment(data));
-      dispatch(postActions.setLoading(false));
-    });
-    setComment('');
-    setFiles([]);
-    setPreviewFiles(null);
+      comments.createComment(formData).then(({ data }) => {
+        dispatch(postActions.addComment(data));
+        dispatch(postActions.setLoading(false));
+      });
+      setComment('');
+      setFiles([]);
+      setPreviewFiles(null);
+    }
   };
 
   return (
     <>
       <div className={styles.root}>
-        <div className={styles.avatar}>
-          <UserInfo avatarUrl={user.avatar?.thumb} fullName={user.fullName} onlyAvatar />
-        </div>
+        {user && (
+          <div className={styles.avatar}>
+            <UserInfo avatarUrl={user.avatar?.thumb} fullName={user.fullName} onlyAvatar />
+          </div>
+        )}
         <div className={styles.form}>
           <TextField
             label="Оставьте свой комментарий"
@@ -122,4 +122,4 @@ export const AddComment: React.FC<IAddComment> = React.memo(({ user, postId }) =
       </div>
     </>
   );
-});
+};

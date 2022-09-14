@@ -1,20 +1,9 @@
-import React, { JSXElementConstructor } from 'react';
-
-type Key = string | number;
-
-interface ReactElement<
-  P = any,
-  T extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>,
-> {
-  type: T;
-  props: P;
-  key: Key | null;
-}
+import React from 'react';
 
 export interface IUserInfo {
   avatarUrl?: string;
   fullName: string;
-  rating?: string;
+  rating?: number;
   onlyAvatar?: boolean;
   onClick?: () => void;
   width?: number;
@@ -48,7 +37,7 @@ export interface IFile {
 export interface IPost {
   id: string;
   title: string;
-  tags?: string[] | null;
+  tags: string[] | null;
   text: string;
   user: IUser;
   likes: string[];

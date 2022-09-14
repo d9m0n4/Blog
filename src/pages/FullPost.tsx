@@ -11,7 +11,7 @@ interface IFullPost {
   isAuth: boolean;
 }
 
-export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
+export const FullPost: React.FC<IFullPost> = React.memo(({ postData, user, isAuth }) => {
   return (
     <>
       {postData && (
@@ -21,12 +21,7 @@ export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
             id={postData.id}
             title={postData.title}
             image={postData.previewImage}
-            user={{
-              id: postData.user.id,
-              avatar: postData.user.avatar?.thumb,
-              fullName: postData.user.fullName,
-              rating: postData.user.rating,
-            }}
+            user={postData.user}
             createdAt={postData.createdAt}
             viewsCount={postData.viewsCount}
             commentsCount={postData?.comments?.length}
@@ -34,14 +29,13 @@ export const FullPost: React.FC<IFullPost> = ({ postData, user, isAuth }) => {
             likesCount={postData.likes}
             text={postData.text}
             isFullPost
-            isEditable
           />
 
-          {isAuth && user && <AddComment user={user} postId={postData.id} />}
+          {isAuth && user && <AddComment />}
 
-          {postData.comments.length > 0 && <CommentsBlock items={postData.comments} />}
+          {postData.comments.length > 0 && <CommentsBlock />}
         </>
       )}
     </>
   );
-};
+});
