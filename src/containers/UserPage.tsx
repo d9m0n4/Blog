@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { logout } from 'store/actions/auth';
 
-const ProfileContainer = () => {
+const UserPageContainer = () => {
   const { id } = useParams();
   const { user } = useAppSelector((state) => state.auth);
   const [userData, setUserData] = React.useState<CurrentUserData | null>(null);
@@ -29,4 +29,4 @@ const ProfileContainer = () => {
   return <UserPage userData={userData} handleLogout={handleLogout} />;
 };
 
-export default ProfileContainer;
+export default UserPageContainer;

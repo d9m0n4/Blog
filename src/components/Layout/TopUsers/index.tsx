@@ -15,34 +15,21 @@ interface ITopUsers {
   isLoading?: boolean;
 }
 
-export const TopUsers: React.FC<ITopUsers> = memo(({ items, isLoading }) => {
+export const TopUsers: React.FC<ITopUsers> = memo(({ items }) => {
   return (
     <SideBlock title="Популярные авторы">
       <List>
-        {items.map((user) => (
-          <ListItem
-            key={user.id}
-            sx={{ paddingLeft: 3 }}
-            alignItems="center"
-            secondaryAction={
-              isLoading ? (
-                <Skeleton height={24} width={32} />
-              ) : (
-                <div className={styles.rating}>{user.rating}</div>
-              )
-            }>
-            <ListItemAvatar>
-              {isLoading ? (
-                <Skeleton variant="circular" width={40} height={40} />
-              ) : (
+        {items.length > 0 ? (
+          items.map((user) => (
+            <ListItem
+              key={user.id}
+              sx={{ paddingLeft: 3 }}
+              alignItems="center"
+              secondaryAction={<div className={styles.rating}>{user.rating}</div>}>
+              <ListItemAvatar>
                 <UserInfo avatarUrl={user.avatar?.thumb} fullName={user.fullName} onlyAvatar />
-              )}
-            </ListItemAvatar>
-            {isLoading ? (
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <Skeleton variant="text" height={24} width={200} />
-              </div>
-            ) : (
+              </ListItemAvatar>
+
               <ListItemText
                 primary={
                   <NavLink className={styles.userLink} to={`/user/${user.id}`}>
@@ -50,9 +37,20 @@ export const TopUsers: React.FC<ITopUsers> = memo(({ items, isLoading }) => {
                   </NavLink>
                 }
               />
-            )}
+            </ListItem>
+          ))
+        ) : (
+          <ListItem>
+            <ListItemAvatar>
+              <Skeleton variant="circular" width={40} height={40} />
+            </ListItemAvatar>
+            <ListItemText>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Skeleton variant="text" height={24} width={200} />
+              </div>
+            </ListItemText>
           </ListItem>
-        ))}
+        )}
       </List>
     </SideBlock>
   );

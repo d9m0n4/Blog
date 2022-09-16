@@ -17,7 +17,8 @@ import usePagePercent from 'hooks/usePagePercent';
 const AddPost = lazy(() => import('./containers/AddPost'));
 const EditPost = lazy(() => import('./containers/EditPost'));
 const FullPostContainer = lazy(() => import('containers/FullPost'));
-const ProfileContainer = lazy(() => import('containers/Profile'));
+const UserPageContainer = lazy(() => import('containers/UserPage'));
+const UserInfo = lazy(() => import('containers/UserInfo'));
 const HeaderContainer = lazy(() => import('containers/Header'));
 
 const Registration = lazy(() => import('pages/Registration'));
@@ -26,7 +27,6 @@ const Login = lazy(() => import('pages/Login'));
 const Home = lazy(() => import('pages/Home'));
 const Posts = lazy(() => import('pages/Profile/posts'));
 const PostsByTag = lazy(() => import('pages/PostsByTag'));
-const Profile = lazy(() => import('pages/Profile/profile'));
 const UserComments = lazy(() => import('pages/Profile/comments'));
 const NotFound = lazy(() => import('pages/NotFound'));
 
@@ -65,8 +65,8 @@ function App() {
               <Route path="*" element={<NotFound />} />
               <Route path="/" element={<Home />} />
               <Route path="posts/:id" element={<FullPostContainer />} />
-              <Route path="user/:id" element={<ProfileContainer />}>
-                <Route index element={<Profile />} />
+              <Route path="user/:id" element={<UserPageContainer />}>
+                <Route index element={<UserInfo />} />
                 <Route path="posts" element={<Posts />} />
                 <Route path="comments" element={<UserComments />} />
               </Route>

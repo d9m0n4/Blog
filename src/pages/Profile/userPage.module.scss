@@ -5,10 +5,9 @@
 .navLink {
   color: #3e5060;
   padding: 4px;
-}
-
-.active {
-  button {
-    background: rgba(28, 89, 152, 0.04);
+  &.active {
+    button {
+      background: rgba(28, 89, 152, 0.04);
+    }
   }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Grid, Link, List } from '@mui/material';
 import { NavLink, Outlet } from 'react-router-dom';
-import styles from './userPage.module.scss';
+import { Button, Grid, Link, List } from '@mui/material';
+import Loader from 'components/UI/Loader';
 import { CurrentUserData } from 'models';
 import { useAppSelector } from 'hooks/redux';
-import Loader from 'components/UI/Loader';
+import styles from './userPage.module.scss';
 
 interface IUserPage {
   userData: CurrentUserData | null;

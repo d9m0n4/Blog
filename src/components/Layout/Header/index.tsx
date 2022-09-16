@@ -7,7 +7,15 @@ import { Search } from '@mui/icons-material';
 
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
-import { ClickAwayListener, Drawer, Grid, InputBase, Paper, Typography } from '@mui/material';
+import {
+  ClickAwayListener,
+  Drawer,
+  Grid,
+  InputBase,
+  Paper,
+  Skeleton,
+  Typography,
+} from '@mui/material';
 import { UserInfo } from 'components/Shared/UserAvatar';
 import { IPost, IUser } from 'models';
 
@@ -19,10 +27,25 @@ interface IHeader {
   searchValue: string;
   setSearchValue: (e: string) => void;
   searchResult: IPost[] | null;
+  loading: boolean;
+  isAuth: boolean;
 }
 
 const Header: React.FC<IHeader> = React.memo(
-  ({ user, setOpen, open, handleClickAway, searchValue, setSearchValue, searchResult }) => {
+  ({
+    user,
+    setOpen,
+    open,
+    handleClickAway,
+    searchValue,
+    setSearchValue,
+    searchResult,
+    loading,
+    isAuth,
+  }) => {
+    React.useEffect(() => {
+      console.log(isAuth);
+    }, [isAuth]);
     return (
       <div className={styles.root}>
         <Container maxWidth="lg">
@@ -37,9 +60,17 @@ const Header: React.FC<IHeader> = React.memo(
               </Button>
               {user ? (
                 <>
-                  <Link to={`/user/${user.id}`}>
-                    <UserInfo avatarUrl={user.avatar?.thumb} fullName={user.fullName} onlyAvatar />
-                  </Link>
+                  {loading ? (
+                    <Skeleton variant="circular" width={64} height={64} />
+                  ) : (
+                    <Link to={`/user/${user.id}`}>
+                      <UserInfo
+                        avatarUrl={user.avatar?.thumb}
+                        fullName={user.fullName}
+                        onlyAvatar
+                      />
+                    </Link>
+                  )}
                   <Link to="/posts/create">
                     <Button variant="contained" sx={{ borderRadius: 16 }}>
                       Написать статью

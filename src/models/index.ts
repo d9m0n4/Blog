@@ -115,3 +115,11 @@ export type postsQuery = {
   page: number;
   limit: number;
 };
+
+export type UserFormData = {
+  fullName: string;
+  nickName?: string;
+  email: string;
+  city?: string;
+  avatar?: IFile;
+};

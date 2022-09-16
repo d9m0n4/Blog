@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { Box, List, ListItem, Typography } from '@mui/material';
+import { Box, List, ListItem, Skeleton, Typography } from '@mui/material';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 import { SideBlock } from 'components/Shared/SideBlock';
@@ -18,7 +18,7 @@ const PopularPosts: React.FC<IPopularPosts> = React.memo(({ items }) => {
   return (
     <SideBlock title="Популярные статьи">
       <List>
-        {items &&
+        {items.length > 0 ? (
           items.map((post) => (
             <ListItem color="CaptionText" key={post.id} sx={{ paddingLeft: 3, display: 'block' }}>
               <NavLink className={styles.postLink} to={`/posts/${post.id}`}>
@@ -36,7 +36,12 @@ const PopularPosts: React.FC<IPopularPosts> = React.memo(({ items }) => {
                 </Box>
               </NavLink>
             </ListItem>
-          ))}
+          ))
+        ) : (
+          <ListItem>
+            <Skeleton sx={{ marginLeft: 1 }} variant="text" height={24} width={'100%'} />
+          </ListItem>
+        )}
       </List>
     </SideBlock>
   );

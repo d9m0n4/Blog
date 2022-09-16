@@ -1,57 +1,55 @@
 import React from 'react';
 
-import { useOutletContext } from 'react-router-dom';
-
-import { Button, Grid, List, ListItem, Paper, Stack, TextField, Typography } from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Edit } from '@mui/icons-material';
+import {
+  Button,
+  Grid,
+  List,
+  ListItem,
+  Paper,
+  Skeleton,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
+import { Edit } from '@mui/icons-material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { UserInfo } from 'components/Shared/UserAvatar';
 import Loader from 'components/UI/Loader';
 
-import { CurrentUserData } from 'models';
-
 import { toDate } from 'utils/toDate';
 
-import useUploadFile from 'hooks/useUploadFile';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-
-import { updateUserInfo } from 'store/actions/user';
-
 import styles from './profile.module.scss';
+import { CurrentUserData, IUser, UserFormData } from 'models';
 
-const Profile = () => {
-  const userData = useOutletContext<CurrentUserData>();
+interface IUserInfo {
+  userData: CurrentUserData;
+  user: IUser | null;
+  imageUrl: string;
+  isAuth: boolean;
+  loading: boolean;
+  isEditable: boolean;
+  submitHandler: (e: React.FormEvent<HTMLFormElement>) => void;
+  setIsEditable: (e: React.SetStateAction<boolean>) => void;
+  avatarUpload: React.RefObject<HTMLInputElement>;
+  handleChangeFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setFormData: (e: React.SetStateAction<UserFormData>) => void;
+}
 
-  const avatarUpload = React.useRef<HTMLInputElement>(null);
-  const { user, isAuth } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
-
-  const [isEditable, setIsEditable] = React.useState(false);
-
-  const { image, imageUrl, handleChangeFile } = useUploadFile();
-
-  const [formData, setFormData] = React.useState({
-    fullName: userData.fullName,
-    nickName: userData.nickName,
-    email: userData.email,
-    city: userData.city,
-    avatar: userData.avatar,
-  });
-
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formD = new FormData();
-    formD.append('fullName', formData.fullName);
-    formD.append('nickName', formData.nickName || '');
-    formD.append('email', formData.email);
-    formD.append('city', formData.city || '');
-    formD.append('avatar', formData.avatar?.thumb || '');
-    formD.append('img', image);
-    dispatch(updateUserInfo(formD));
-    setIsEditable(false);
-  };
+const Profile: React.FC<IUserInfo> = ({
+  userData,
+  user,
+  isAuth,
+  loading,
+  submitHandler,
+  isEditable,
+  setIsEditable,
+  avatarUpload,
+  handleChangeFile,
+  imageUrl,
+  setFormData,
+}) => {
   return (
     <>
       {userData ? (
@@ -94,41 +92,53 @@ const Profile = () => {
                   </div>
                 ) : (
                   <>
-                    {userData.fullName && (
-                      <UserInfo
-                        avatarUrl={userData?.avatar?.thumb ? userData.avatar.thumb : imageUrl}
-                        fullName={userData?.fullName!}
-                        onlyAvatar
-                        width={164}
-                      />
+                    {loading ? (
+                      <Skeleton variant="circular" width={164} height={164} />
+                    ) : (
+                      userData.fullName && (
+                        <UserInfo
+                          avatarUrl={userData?.avatar?.thumb ? userData.avatar.thumb : imageUrl}
+                          fullName={userData?.fullName!}
+                          onlyAvatar
+                          width={164}
+                        />
+                      )
                     )}
                   </>
                 )}
               </Grid>
               <Grid item justifyContent="center" display="flex">
-                <Stack sx={{ marginTop: 2 }}>
-                  <Typography sx={{ textAlign: 'center' }} variant="h4">
-                    {isAuth && isEditable ? (
-                      <TextField
-                        defaultValue={user?.fullName}
-                        placeholder={user?.fullName}
-                        variant="standard"
-                        label="Имя"
-                        onChange={(e) =>
-                          setFormData((state) => ({ ...state, fullName: e.target.value }))
-                        }
-                      />
-                    ) : (
-                      `${userData.fullName}`
-                    )}
-                  </Typography>
+                <Stack sx={{ marginTop: 2 }} alignItems="center">
+                  {loading ? (
+                    <Skeleton width={215} height={36} />
+                  ) : (
+                    <Typography sx={{ textAlign: 'center' }} variant="h4">
+                      {isAuth && isEditable ? (
+                        <TextField
+                          defaultValue={user?.fullName}
+                          placeholder={user?.fullName}
+                          variant="standard"
+                          label="Имя"
+                          onChange={(e) =>
+                            setFormData((state) => ({ ...state, fullName: e.target.value }))
+                          }
+                        />
+                      ) : (
+                        `${userData.fullName}`
+                      )}
+                    </Typography>
+                  )}
                   <Box textAlign="center" marginTop={2}>
                     <Typography variant="subtitle1" sx={{ color: 'gray', whiteSpace: 'nowrap' }}>
                       Дата регистрации
                     </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                      {toDate(userData.createdAt)}
-                    </Typography>
+                    {loading ? (
+                      <Skeleton width={'100%'} height={28} />
+                    ) : (
+                      <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                        {toDate(userData.createdAt)}
+                      </Typography>
+                    )}
                   </Box>
                   {
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -157,9 +167,13 @@ const Profile = () => {
                                 sx={{ color: 'gray', whiteSpace: 'nowrap' }}>
                                 Никнейм
                               </Typography>
-                              <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                                {userData.nickName}
-                              </Typography>
+                              {loading ? (
+                                <Skeleton width={'100%'} height={28} />
+                              ) : (
+                                <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                                  {userData.nickName}
+                                </Typography>
+                              )}
                             </Box>
                           )}
                         </ListItem>
@@ -181,9 +195,13 @@ const Profile = () => {
                                 sx={{ color: 'gray', whiteSpace: 'nowrap' }}>
                                 Электронная почта
                               </Typography>
-                              <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                                {userData.email}
-                              </Typography>
+                              {loading ? (
+                                <Skeleton width={'100%'} height={28} />
+                              ) : (
+                                <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                                  {userData.email}
+                                </Typography>
+                              )}
                             </Box>
                           )}
                         </ListItem>
@@ -205,9 +223,13 @@ const Profile = () => {
                                 sx={{ color: 'gray', whiteSpace: 'nowrap' }}>
                                 Город
                               </Typography>
-                              <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                                {userData.city}
-                              </Typography>
+                              {loading ? (
+                                <Skeleton width={'100%'} height={28} />
+                              ) : (
+                                <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                                  {userData.city}
+                                </Typography>
+                              )}
                             </Box>
                           )}
                         </ListItem>

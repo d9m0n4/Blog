@@ -14,7 +14,7 @@ import { Markdown } from 'components/Shared/ReactMarkDown';
 import styles from './AddPost.module.scss';
 import 'easymde/dist/easymde.min.css';
 import Loader from 'components/UI/Loader';
-import { Backdrop } from '@mui/material';
+import { Modal } from '@mui/material';
 import Alert from 'components/Shared/Alert';
 import { Box } from '@mui/system';
 
@@ -89,9 +89,11 @@ const CreatePost: React.FC<ICreatePost> = React.memo(
     return (
       <>
         {error && <Alert openState message={error} />}
-        <Backdrop sx={{ zIndex: 99 }} open={loading}>
+        <Modal
+          sx={{ zIndex: 19, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          open={loading}>
           <Loader />
-        </Backdrop>
+        </Modal>
 
         <Paper style={{ padding: 30 }}>
           <Box component="form" onSubmit={onSubmit}>
