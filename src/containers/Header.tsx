@@ -7,7 +7,7 @@ import { IPost } from 'models';
 import posts from 'service/posts';
 
 const HeaderContainer = () => {
-  const { user, loading, isAuth } = useAppSelector((state) => state.auth);
+  const { user, loading } = useAppSelector((state) => state.auth);
   const [searchValue, setSearchValue] = React.useState('');
   const [searchResult, setSearchResult] = React.useState<IPost[] | null>(null);
   const debouncedValue = useDebounce(searchValue, 1000);
@@ -37,7 +37,6 @@ const HeaderContainer = () => {
       searchResult={searchResult}
       setSearchValue={setSearchValue}
       loading={loading}
-      isAuth={isAuth}
     />
   );
 };

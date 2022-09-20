@@ -28,7 +28,6 @@ interface IHeader {
   setSearchValue: (e: string) => void;
   searchResult: IPost[] | null;
   loading: boolean;
-  isAuth: boolean;
 }
 
 const Header: React.FC<IHeader> = React.memo(
@@ -41,11 +40,7 @@ const Header: React.FC<IHeader> = React.memo(
     setSearchValue,
     searchResult,
     loading,
-    isAuth,
   }) => {
-    React.useEffect(() => {
-      console.log(isAuth);
-    }, [isAuth]);
     return (
       <div className={styles.root}>
         <Container maxWidth="lg">
@@ -61,7 +56,7 @@ const Header: React.FC<IHeader> = React.memo(
               {user ? (
                 <>
                   {loading ? (
-                    <Skeleton variant="circular" width={64} height={64} />
+                    <Skeleton variant="circular" width={40} height={40} />
                   ) : (
                     <Link to={`/user/${user.id}`}>
                       <UserInfo

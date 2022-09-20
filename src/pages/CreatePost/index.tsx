@@ -14,7 +14,7 @@ import { Markdown } from 'components/Shared/ReactMarkDown';
 import styles from './AddPost.module.scss';
 import 'easymde/dist/easymde.min.css';
 import Loader from 'components/UI/Loader';
-import { Modal } from '@mui/material';
+import { Backdrop, Modal } from '@mui/material';
 import Alert from 'components/Shared/Alert';
 import { Box } from '@mui/system';
 
@@ -89,84 +89,94 @@ const CreatePost: React.FC<ICreatePost> = React.memo(
     return (
       <>
         {error && <Alert openState message={error} />}
-        <Modal
-          sx={{ zIndex: 19, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          open={loading}>
-          <Loader />
-        </Modal>
+        {loading && (
+          <Backdrop
+            sx={{
+              zIndex: 19,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'fixed',
+            }}
+            open={loading}>
+            <Loader />
+          </Backdrop>
+        )}
 
-        <Paper style={{ padding: 30 }}>
-          <Box component="form" onSubmit={onSubmit}>
-            <Button
-              onClick={() => inputRef.current?.click()}
-              variant="outlined"
-              size="medium"
-              sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
-              Загрузить превью
-            </Button>
-            <input
-              ref={inputRef}
-              type="file"
-              onChange={handleChangeFile}
-              hidden
-              accept=".jpg, .png, .jpeg"
-            />
-            {imageUrl && (
+        {!loading && (
+          <Paper style={{ padding: 30 }}>
+            <Box component="form" onSubmit={onSubmit}>
               <Button
-                variant="contained"
-                color="error"
-                onClick={handleRemoveImage}
+                onClick={() => inputRef.current?.click()}
+                variant="outlined"
                 size="medium"
                 sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
-                Удалить
+                Загрузить превью
               </Button>
-            )}
-            <div className={styles.previewImage}>
-              {imageUrl && <img className={styles.image} src={`${imageUrl}`} alt="Uploaded" />}
-            </div>
-
-            <TextField
-              classes={{ root: styles.title }}
-              variant="standard"
-              placeholder="Заголовок статьи..."
-              value={title}
-              onChange={setTitle}
-              fullWidth
-              required
-            />
-            <TextField
-              classes={{ root: styles.tags }}
-              variant="standard"
-              placeholder="Тэги"
-              value={tags}
-              onChange={setTagNames}
-              fullWidth
-              required
-            />
-
-            <SimpleMdeReact
-              className={styles.editor}
-              value={text}
-              onChange={onChangeEditor}
-              options={options}
-            />
-            <div className={styles.buttons}>
-              <Button
-                disabled={!title || !text || !tags}
-                type="submit"
-                size="medium"
-                sx={{ borderRadius: '16px' }}
-                variant="contained">
-                Опубликовать
-              </Button>
-              <a href="/">
-                <Button size="medium" sx={{ borderRadius: '16px' }}>
-                  Отмена
+              <input
+                ref={inputRef}
+                type="file"
+                onChange={handleChangeFile}
+                hidden
+                accept=".jpg, .png, .jpeg"
+              />
+              {imageUrl && (
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={handleRemoveImage}
+                  size="medium"
+                  sx={{ borderRadius: '16px', marginLeft: '8px', marginRight: '8px' }}>
+                  Удалить
                 </Button>
-              </a>
-            </div>
-          </Box>
-        </Paper>
+              )}
+              <div className={styles.previewImage}>
+                {imageUrl && <img className={styles.image} src={`${imageUrl}`} alt="Uploaded" />}
+              </div>
+
+              <TextField
+                classes={{ root: styles.title }}
+                variant="standard"
+                placeholder="Заголовок статьи..."
+                value={title}
+                onChange={setTitle}
+                fullWidth
+                required
+              />
+              <TextField
+                classes={{ root: styles.tags }}
+                variant="standard"
+                placeholder="Тэги"
+                value={tags}
+                onChange={setTagNames}
+                fullWidth
+                required
+              />
+
+              <SimpleMdeReact
+                className={styles.editor}
+                value={text}
+                onChange={onChangeEditor}
+                options={options}
+              />
+              <div className={styles.buttons}>
+                <Button
+                  disabled={!title || !text || !tags}
+                  type="submit"
+                  size="medium"
+                  sx={{ borderRadius: '16px' }}
+                  variant="contained">
+                  Опубликовать
+                </Button>
+                <a href="/">
+                  <Button size="medium" sx={{ borderRadius: '16px' }}>
+                    Отмена
+                  </Button>
+                </a>
+              </div>
+            </Box>
+          </Paper>
+        )}
       </>
     );
   },

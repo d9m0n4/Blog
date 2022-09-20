@@ -70,14 +70,8 @@ function App() {
                 <Route path="posts" element={<Posts />} />
                 <Route path="comments" element={<UserComments />} />
               </Route>
-              <Route
-                path="posts/create"
-                element={isAuth ? <AddPost /> : <Navigate to="/login" />}
-              />
-              <Route
-                path="posts/edit/:id"
-                element={isAuth ? <EditPost /> : <Navigate to="/login" />}
-              />
+              <Route path="posts/create" element={<AddPost />} />
+              <Route path="posts/edit/:id" element={<EditPost />} />
               <Route path="/tag/:tag" element={<PostsByTag />} />
               <Route
                 path="registration"

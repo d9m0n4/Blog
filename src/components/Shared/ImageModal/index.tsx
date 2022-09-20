@@ -1,9 +1,9 @@
 import React from 'react';
-import { Modal } from '@mui/material';
+import { Fade, Modal } from '@mui/material';
 
 interface IImageModal {
   open: boolean;
-  handleClose: () => void;
+  handleClose: (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => void;
   image: string;
 }
 
@@ -17,11 +17,13 @@ const ImageModal: React.FC<IImageModal> = React.memo(({ open, handleClose, image
         justifyContent: 'center',
       }}
       keepMounted
-      disableEnforceFocus
       open={open}
       disableAutoFocus
+      closeAfterTransition
       onClose={handleClose}>
-      <img src={image} alt="123" />
+      <Fade in={open}>
+        <img src={image} alt="123" />
+      </Fade>
     </Modal>
   );
 });

@@ -10,8 +10,6 @@ import Skeleton from '@mui/material/Skeleton';
 
 import { SideBlock } from '../../Shared/SideBlock';
 import { UserInfo } from '../../Shared/UserAvatar';
-
-import { ICommentsBlock } from '../../../models';
 import { toDate } from 'utils/toDate';
 
 import { useAppSelector } from 'hooks/redux';
@@ -28,13 +26,9 @@ export const CommentsBlock = () => {
   const [image, setImage] = React.useState<string>('');
   const [open, setOpen] = React.useState(false);
 
-  const openModal = (e: any) => {
-    setImage(e.target.src);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+  const toggleImageModal = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+    setImage(e.currentTarget.src);
+    setOpen(!open);
   };
 
   const comments = React.useRef<HTMLDivElement>(null);
@@ -53,7 +47,7 @@ export const CommentsBlock = () => {
 
   return (
     <>
-      <ImageModal open={open} handleClose={handleClose} image={image} />
+      <ImageModal open={open} handleClose={toggleImageModal} image={image} />
       <div ref={comments} id="comments">
         <SideBlock title="Комментарии">
           {
@@ -104,7 +98,7 @@ export const CommentsBlock = () => {
                                     className={styles.commentsImage}
                                     src={file.thumb}
                                     alt={file.public_id}
-                                    onClick={openModal}
+                                    onClick={toggleImageModal}
                                   />
                                 </div>
                               ))}

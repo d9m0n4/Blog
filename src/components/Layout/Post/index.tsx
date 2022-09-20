@@ -88,7 +88,6 @@ export const Post: React.FC<IFullPost> = React.memo(
     };
 
     const onClickRemove = () => {
-      console.log('remove item');
       setIsOpenModal(true);
     };
 
