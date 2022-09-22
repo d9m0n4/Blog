@@ -14,7 +14,7 @@ import { Markdown } from 'components/Shared/ReactMarkDown';
 import styles from './AddPost.module.scss';
 import 'easymde/dist/easymde.min.css';
 import Loader from 'components/UI/Loader';
-import { Backdrop, Modal } from '@mui/material';
+import { Backdrop } from '@mui/material';
 import Alert from 'components/Shared/Alert';
 import { Box } from '@mui/system';
 

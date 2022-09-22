@@ -7,7 +7,7 @@ import Footer from 'components/Layout/Footer';
 import Alert from 'components/Shared/Alert';
 import Loader from 'components/UI/Loader';
 
-import { Container } from '@mui/material';
+import { Container, useMediaQuery, useTheme } from '@mui/material';
 
 import { checkAuth } from 'store/actions/auth';
 

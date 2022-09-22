@@ -5,8 +5,10 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import useDebounce from 'hooks/useDebounce';
 import { IPost } from 'models';
 import posts from 'service/posts';
+import { useLocation } from 'react-router-dom';
 
 const HeaderContainer = () => {
+  const location = useLocation();
   const { user, loading } = useAppSelector((state) => state.auth);
   const [searchValue, setSearchValue] = React.useState('');
   const [searchResult, setSearchResult] = React.useState<IPost[] | null>(null);
@@ -14,10 +16,12 @@ const HeaderContainer = () => {
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false);
+  const [openMenu, setOpenMenu] = React.useState(false);
 
   const handleClickAway = () => {
     setSearchValue('');
     setOpen(false);
+
     setSearchResult(null);
   };
 
@@ -32,6 +36,8 @@ const HeaderContainer = () => {
       user={user}
       open={open}
       setOpen={setOpen}
+      openMenu={openMenu}
+      setOpenMenu={setOpenMenu}
       handleClickAway={handleClickAway}
       searchValue={searchValue}
       searchResult={searchResult}

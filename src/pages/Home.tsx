@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Box, Pagination, Typography } from '@mui/material';
+import { Box, Pagination, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
 import { PostSkeleton } from 'components/Layout/Post/Skeleton';
@@ -19,6 +19,9 @@ import users from 'service/users';
 import posts from 'service/posts';
 
 const Home = () => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
+
   const [popUsers, setPopUsers] = useState<IUser[]>([]);
   const [popPosts, setPopPosts] = React.useState<IPost[]>([]);
 
@@ -57,7 +60,7 @@ const Home = () => {
       {error && <Alert openState={true} message={'error'} />}
 
       <Grid container spacing={3}>
-        <Grid xs={8} item>
+        <Grid xs={12} md={8} item>
           <Box sx={{ marginBottom: 3 }}>
             <TagsBlock items={tags} isLoading={isLoading} />
           </Box>
@@ -98,12 +101,14 @@ const Home = () => {
             </Box>
           )}
         </Grid>
-        <Grid xs={4} item sx={{ marginTop: 7 }}>
-          <Grid item sx={{ position: 'sticky', top: '90px' }}>
-            <TopUsers items={popUsers} />
-            <PopularPosts items={popPosts} />
+        {matches && (
+          <Grid xs={0} md={4} item sx={{ marginTop: 7 }}>
+            <Grid item sx={{ position: 'sticky', top: '90px' }}>
+              <TopUsers items={popUsers} />
+              <PopularPosts items={popPosts} />
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
     </>
   );

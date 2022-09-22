@@ -14,3 +14,9 @@
   font-weight: bold !important;
   margin-bottom: 30px !important;
 }
+
+@media (max-width: 425px) {
+  .root {
+    width: 100%;
+  }
+}

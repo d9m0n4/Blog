@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 
 import { Search } from '@mui/icons-material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
@@ -12,9 +13,13 @@ import {
   Drawer,
   Grid,
   InputBase,
+  List,
+  ListItem,
   Paper,
   Skeleton,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { UserInfo } from 'components/Shared/UserAvatar';
 import { IPost, IUser } from 'models';
@@ -22,7 +27,9 @@ import { IPost, IUser } from 'models';
 interface IHeader {
   user: IUser | null;
   setOpen: (open: boolean) => void;
+  setOpenMenu: (openMenu: boolean) => void;
   open: boolean;
+  openMenu: boolean;
   handleClickAway: () => void;
   searchValue: string;
   setSearchValue: (e: string) => void;
@@ -35,12 +42,16 @@ const Header: React.FC<IHeader> = React.memo(
     user,
     setOpen,
     open,
+    setOpenMenu,
+    openMenu,
     handleClickAway,
     searchValue,
     setSearchValue,
     searchResult,
     loading,
   }) => {
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
     return (
       <div className={styles.root}>
         <Container maxWidth="lg">
@@ -53,38 +64,44 @@ const Header: React.FC<IHeader> = React.memo(
               <Button variant="text" sx={{ borderRadius: 16 }} onClick={() => setOpen(true)}>
                 <Search />
               </Button>
-              {user ? (
-                <>
-                  {loading ? (
-                    <Skeleton variant="circular" width={40} height={40} />
-                  ) : (
-                    <Link to={`/user/${user.id}`}>
-                      <UserInfo
-                        avatarUrl={user.avatar?.thumb}
-                        fullName={user.fullName}
-                        onlyAvatar
-                      />
+              {matches ? (
+                user ? (
+                  <>
+                    {loading ? (
+                      <Skeleton variant="circular" width={40} height={40} />
+                    ) : (
+                      <Link to={`/user/${user.id}`}>
+                        <UserInfo
+                          avatarUrl={user.avatar?.thumb}
+                          fullName={user.fullName}
+                          onlyAvatar
+                        />
+                      </Link>
+                    )}
+                    <Link to="/posts/create">
+                      <Button variant="contained" sx={{ borderRadius: 16 }}>
+                        Написать статью
+                      </Button>
                     </Link>
-                  )}
-                  <Link to="/posts/create">
-                    <Button variant="contained" sx={{ borderRadius: 16 }}>
-                      Написать статью
-                    </Button>
-                  </Link>
-                </>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login">
+                      <Button size="medium" variant="text" sx={{ borderRadius: 16 }}>
+                        Войти
+                      </Button>
+                    </Link>
+                    <Link to="/registration">
+                      <Button size="medium" variant="outlined" sx={{ borderRadius: 16 }}>
+                        Создать аккаунт
+                      </Button>
+                    </Link>
+                  </>
+                )
               ) : (
-                <>
-                  <Link to="/login">
-                    <Button size="medium" variant="text" sx={{ borderRadius: 16 }}>
-                      Войти
-                    </Button>
-                  </Link>
-                  <Link to="/registration">
-                    <Button size="medium" variant="outlined" sx={{ borderRadius: 16 }}>
-                      Создать аккаунт
-                    </Button>
-                  </Link>
-                </>
+                <Button variant="text" sx={{ borderRadius: 16 }} onClick={() => setOpenMenu(true)}>
+                  <MenuIcon />
+                </Button>
               )}
             </div>
           </div>
@@ -123,6 +140,28 @@ const Header: React.FC<IHeader> = React.memo(
               </Grid>
             </Grid>
           </Container>
+        </Drawer>
+        <Drawer open={openMenu} anchor="top" onClose={() => setOpenMenu(false)}>
+          <Grid>
+            <ClickAwayListener onClickAway={handleClickAway}>
+              <List>
+                <ListItem>
+                  <Link className={styles.mobileLinks} to="/login">
+                    <Button fullWidth size="medium" variant="text" sx={{ borderRadius: 16 }}>
+                      Войти
+                    </Button>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link className={styles.mobileLinks} to="/registration">
+                    <Button fullWidth size="medium" variant="text" sx={{ borderRadius: 16 }}>
+                      Регистрация
+                    </Button>
+                  </Link>
+                </ListItem>
+              </List>
+            </ClickAwayListener>
+          </Grid>
         </Drawer>
       </div>
     );
