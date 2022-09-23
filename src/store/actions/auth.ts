@@ -26,7 +26,10 @@ export const registration = createAsyncThunk(
       const data = await AuthService.registration(postData);
       return data;
     } catch (error) {
-      console.log(error);
+      if (error instanceof AxiosError) {
+        window.localStorage.removeItem('token');
+        return rejectWithValue(error.response?.data);
+      }
 
       return rejectWithValue(error);
     }
@@ -52,6 +55,10 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
     window.localStorage.removeItem('token');
     return await AuthService.logout();
   } catch (error) {
+    if (error instanceof AxiosError) {
+      window.localStorage.removeItem('token');
+      return rejectWithValue(error.response?.data);
+    }
     return rejectWithValue(error);
   }
 });

@@ -1,11 +1,12 @@
 import useUploadFile from 'hooks/useUploadFile';
+import { IPost } from 'models';
 import CreatePost from 'pages/CreatePost';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import posts from 'service/posts';
 
 const EditPost = () => {
-  const [post, setPost] = React.useState<any>();
+  const [post, setPost] = React.useState<IPost | null>(null);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -49,13 +50,15 @@ const EditPost = () => {
     setLoading(true);
     const formData = new FormData();
     formData.append('img', image);
-    for (const i in post) {
-      formData.append(i, post[i]);
+    if (post) {
+      for (let [key, value] of Object.entries(post)) {
+        formData.append(key, value);
+      }
+      posts.updatePost(formData, post.id).then(({ data }) => {
+        setLoading(false);
+        navigate(`/posts/${data.id}`);
+      });
     }
-    posts.updatePost(formData, post.id).then(({ data }) => {
-      setLoading(false);
-      navigate(`/posts/${data.id}`);
-    });
   };
 
   const setTagNames = (e: React.ChangeEvent<HTMLInputElement>) => {

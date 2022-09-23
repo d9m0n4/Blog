@@ -17,7 +17,7 @@ const UserComments = () => {
             <Grid item key={comment.id}>
               <Paper sx={{ marginBottom: 2, padding: '16px' }}>
                 <Link to={`/posts/${comment.postId}/#comments`}>
-                  <Typography sx={{ color: '#3e5060' }} variant="h5">
+                  <Typography sx={{ color: '#3e5060' }} variant="h6">
                     {comment.post?.title}
                   </Typography>
                 </Link>

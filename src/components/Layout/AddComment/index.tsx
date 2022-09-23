@@ -11,28 +11,32 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { postActions } from '../../../store/slices/post';
 
 export const AddComment = () => {
-  const [previewFiles, setPreviewFiles] = React.useState<any>();
-  const [files, setFiles] = React.useState<any>([]);
+  const [previewFiles, setPreviewFiles] = React.useState<string[] | null>(null);
+  const [files, setFiles] = React.useState<FileList | []>([]);
   const [comment, setComment] = React.useState('');
   const { user } = useAppSelector((state) => state.auth);
   const { currentPost } = useAppSelector((state) => state.posts);
 
   const dispatch = useAppDispatch();
 
-  const setFileHandler = (e: any) => {
-    const fileList = e.currentTarget.files;
-    if (fileList.length > 3) {
-      alert('Можно загружать не более 3х файлов');
-      return;
+  const setFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+    console.log(fileList);
+
+    if (fileList) {
+      if (fileList.length > 3) {
+        alert('Можно загружать не более 3х файлов');
+        return;
+      }
+      const f = [];
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        const fileUrl = URL.createObjectURL(file);
+        f.push(fileUrl);
+      }
+      setFiles(fileList);
+      setPreviewFiles(f);
     }
-    const f = [];
-    for (let i = 0; i < fileList.length; i++) {
-      const file = fileList[i];
-      const fileUrl = URL.createObjectURL(file);
-      f.push(fileUrl);
-    }
-    setFiles([...fileList]);
-    setPreviewFiles(f);
   };
 
   const submit = () => {

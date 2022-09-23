@@ -10,12 +10,13 @@ import { login } from 'store/actions/auth';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import Alert from 'components/Shared/Alert';
 import Loader from 'components/UI/Loader';
+import { IUserPostData } from 'models';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const { error, loading } = useAppSelector((state) => state.auth);
 
-  const submit = (data: any) => {
+  const submit = (data: IUserPostData) => {
     dispatch(login(data));
   };
 

@@ -9,7 +9,7 @@ type SliceState = {
   currentPage: number;
   currentPost: IPost | null;
   count: number;
-  tags: any;
+  tags: [];
   isLoading: boolean;
   error: string | null;
 };
@@ -32,7 +32,7 @@ const setCurrentPage: CaseReducer<SliceState, PayloadAction<number>> = (state, a
   state.currentPage = action.payload;
 };
 
-const setError: CaseReducer<SliceState, PayloadAction<any>> = (state, action) => {
+const setError: CaseReducer<SliceState, PayloadAction<string | null>> = (state, action) => {
   state.error = action.payload;
 };
 

@@ -7,7 +7,7 @@ class UserService {
   getUserById = async (id: string) => {
     return await API.get(`/users/${id}`);
   };
-  updateUserInfo = async (postData: any) => {
+  updateUserInfo = async (postData: FormData) => {
     return await API.post('/users/update', postData);
   };
 }

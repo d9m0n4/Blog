@@ -1,3 +1,7 @@
+.formContainer {
+  padding: 24px;
+}
+
 .title {
   input {
     font-size: 42px;
@@ -30,7 +34,7 @@
 }
 
 .editor {
-  margin: 30px -30px;
+  margin: 24px -24px;
 
   :global {
     .cm-s-easymde {
@@ -64,4 +68,15 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 425px) {
+  .image {
+    height: 200px;
+  }
+  .title {
+    input {
+      font-size: 27px;
+    }
+  }
 }

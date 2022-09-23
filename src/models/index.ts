@@ -90,7 +90,7 @@ export interface IPostData {
 }
 
 export interface IUserPostData {
-  fullName: string;
+  fullName?: string;
   email: string;
   password: string;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Fade, Modal } from '@mui/material';
+import styles from './imageModal.module.scss';
 
 interface IImageModal {
   open: boolean;
@@ -22,7 +23,7 @@ const ImageModal: React.FC<IImageModal> = React.memo(({ open, handleClose, image
       closeAfterTransition
       onClose={handleClose}>
       <Fade in={open}>
-        <img src={image} alt="123" />
+        <img className={styles.image} src={image} alt="123" />
       </Fade>
     </Modal>
   );

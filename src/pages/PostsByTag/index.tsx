@@ -39,6 +39,7 @@ const PostsByTag = () => {
               lg={6}
               md={9}
               xl={6}
+              sm={12}
               key={item.id}
               sx={{ display: 'flex', padding: 2, paddingLeft: 2, paddingTop: 2 }}>
               <Post

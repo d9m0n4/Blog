@@ -247,3 +247,18 @@ $blue: #4361ee;
     color: #1c5998;
   }
 }
+
+@media (max-width: 425px) {
+  .imageWrapper {
+    height: 210px;
+    &.imageHeight {
+      height: 100%;
+    }
+  }
+  .imageFull {
+    height: 100%;
+  }
+  .titleFull {
+    font-size: 27px;
+  }
+}

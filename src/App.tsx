@@ -31,6 +31,8 @@ const UserComments = lazy(() => import('pages/Profile/comments'));
 const NotFound = lazy(() => import('pages/NotFound'));
 
 function App() {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('sm'));
   const [scrollBtnVisible, setScrollBtnVisible] = React.useState(false);
 
   const dispatch = useAppDispatch();
@@ -55,7 +57,7 @@ function App() {
 
   return (
     <>
-      {scrollBtnVisible && <ScrollTop />}
+      {!matches && scrollBtnVisible && <ScrollTop />}
       {error.message && <Alert openState message={error.message} />}
       <HeaderContainer />
       <div className="main__content">

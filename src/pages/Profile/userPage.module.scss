@@ -11,3 +11,17 @@
     }
   }
 }
+
+@media (max-width: 425px) {
+  .navLink {
+    button {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .navList {
+    flex-wrap: wrap;
+  }
+}

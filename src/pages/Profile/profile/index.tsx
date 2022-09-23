@@ -143,6 +143,7 @@ const Profile: React.FC<IUserInfo> = ({
                   {
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                       <List
+                        className={styles.formInputs}
                         sx={{
                           padding: 2,
                           display: 'flex',
@@ -240,6 +241,7 @@ const Profile: React.FC<IUserInfo> = ({
               </Grid>
               {isAuth && isEditable && (
                 <Grid
+                className={styles.formButtons}
                   sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',

@@ -2,7 +2,7 @@ import React from 'react';
 
 const useUploadFile = () => {
   const [imageUrl, setImageUrl] = React.useState('');
-  const [image, setImage] = React.useState<any>();
+  const [image, setImage] = React.useState<Blob | string>('');
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files;
@@ -16,7 +16,7 @@ const useUploadFile = () => {
   };
   const handleRemoveImage = () => {
     setImageUrl('');
-    setImage(null);
+    setImage('');
   };
   return { imageUrl, image, handleChangeFile, handleRemoveImage, setImage, setImageUrl };
 };

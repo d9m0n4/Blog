@@ -12,7 +12,7 @@ export const fetchUsers = createAsyncThunk('users/getPopular', async (_, { rejec
 
 export const updateUserInfo = createAsyncThunk(
   'users/updateInfo',
-  async (postData: any, { rejectWithValue }) => {
+  async (postData: FormData, { rejectWithValue }) => {
     try {
       const { data } = await users.updateUserInfo(postData);
       return data;

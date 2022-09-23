@@ -1,7 +1,7 @@
 import API from './axios';
 
 class CommentsService {
-  createComment = async (postData: any) => {
+  createComment = async (postData: FormData) => {
     return await API.post('/comments', postData);
   };
   getUserComments = async (id: string) => {

@@ -57,7 +57,7 @@ const Home = () => {
 
   return (
     <>
-      {error && <Alert openState={true} message={'error'} />}
+      {error && <Alert openState={true} message={error} />}
 
       <Grid container spacing={3}>
         <Grid xs={12} md={8} item>

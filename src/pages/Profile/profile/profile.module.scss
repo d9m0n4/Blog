@@ -37,3 +37,15 @@
   right: 32px;
   padding: 0 16px;
 }
+
+@media (max-width: 425px) {
+  .formInputs {
+    flex-direction: column;
+    li {
+      justify-content: center;
+    }
+  }
+  .formButtons {
+    justify-content: center;
+  }
+}

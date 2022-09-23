@@ -10,11 +10,12 @@ import BasicForm from 'components/Shared/BasicForm';
 import AuthService from '../../service/auth';
 import styles from './Login.module.scss';
 import Alert from 'components/Shared/Alert';
+import { IUserPostData } from 'models';
 
 const Registration = () => {
   const [modalData, setModalData] = React.useState<string | null>(null);
 
-  const submit = async (data: any) => {
+  const submit = async (data: IUserPostData) => {
     setModalData(null);
     await AuthService.registration(data)
       .then(({ data }) => {

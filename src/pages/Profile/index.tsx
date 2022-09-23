@@ -26,8 +26,8 @@ const UserPage: React.FC<IUserPage> = React.memo(({ userData, handleLogout }) =>
   return (
     <>
       {userData ? (
-        <Grid container spacing={4} justifyContent="center">
-          <Grid item xs={8}>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} md={8}>
             <List className={styles.navList} sx={{ marginBottom: 2, display: 'flex' }}>
               {profileNav.map((item) => (
                 <NavLink

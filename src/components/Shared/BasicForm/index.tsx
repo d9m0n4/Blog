@@ -1,9 +1,9 @@
 import React from 'react';
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { IUserPostData } from 'models';
 
 interface IForm {
-  onSubmit: SubmitHandler<FieldValues>;
+  onSubmit: SubmitHandler<IUserPostData>;
   children: React.ReactElement | React.ReactElement[];
 }
 
@@ -35,7 +35,7 @@ const BasicForm: React.FC<IForm> = ({ onSubmit, children }) => {
     },
   };
 
-  const submiForm = async (data: any) => {
+  const submiForm = async (data: IUserPostData) => {
     await onSubmit(data);
     reset();
   };

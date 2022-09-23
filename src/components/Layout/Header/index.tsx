@@ -143,24 +143,60 @@ const Header: React.FC<IHeader> = React.memo(
         </Drawer>
         <Drawer open={openMenu} anchor="top" onClose={() => setOpenMenu(false)}>
           <Grid>
-            <ClickAwayListener onClickAway={handleClickAway}>
-              <List>
-                <ListItem>
+            <List>
+              <ListItem>
+                {user ? (
+                  <Link className={styles.mobileLinks} to={`/user/${user.id}`}>
+                    <Button onClick={() => setOpenMenu(false)} fullWidth>
+                      <UserInfo
+                        avatarUrl={user.avatar?.thumb}
+                        fullName={user.fullName}
+                        onlyAvatar
+                      />
+                      <Typography variant="body2" sx={{ marginLeft: 2 }}>
+                        {user.fullName}
+                      </Typography>
+                    </Button>
+                  </Link>
+                ) : (
                   <Link className={styles.mobileLinks} to="/login">
-                    <Button fullWidth size="medium" variant="text" sx={{ borderRadius: 16 }}>
+                    <Button
+                      onClick={() => setOpenMenu(false)}
+                      fullWidth
+                      size="medium"
+                      variant="text"
+                      sx={{ borderRadius: 16 }}>
                       Войти
                     </Button>
                   </Link>
-                </ListItem>
-                <ListItem>
+                )}
+              </ListItem>
+              <ListItem>
+                {user ? (
+                  <Link className={styles.mobileLinks} to="/posts/create">
+                    <Button
+                      onClick={() => setOpenMenu(false)}
+                      fullWidth
+                      size="medium"
+                      variant="text"
+                      sx={{ borderRadius: 16 }}>
+                      Написать статью
+                    </Button>
+                  </Link>
+                ) : (
                   <Link className={styles.mobileLinks} to="/registration">
-                    <Button fullWidth size="medium" variant="text" sx={{ borderRadius: 16 }}>
+                    <Button
+                      onClick={() => setOpenMenu(false)}
+                      fullWidth
+                      size="medium"
+                      variant="text"
+                      sx={{ borderRadius: 16 }}>
                       Регистрация
                     </Button>
                   </Link>
-                </ListItem>
-              </List>
-            </ClickAwayListener>
+                )}
+              </ListItem>
+            </List>
           </Grid>
         </Drawer>
       </div>

@@ -46,7 +46,7 @@ export const TagsBlock: React.FC<ITagsblock> = ({ items, isLoading }) => {
             label={`#${name}`}
             className={clsx(styles.link, activeItem === name ? styles.activeLink : '')}
             component="span"
-            key={i}
+            key={i + name}
             clickable
             onClick={() => fetchPosts(name, fetchPostsByTag(name))}
           />

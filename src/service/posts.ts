@@ -23,7 +23,7 @@ class PostService {
   async getTags() {
     return await API.get('/tags');
   }
-  async likePost(id: any) {
+  async likePost(id: string) {
     return await API.post('/posts/like', { id });
   }
   async uploadImage(file: FormData) {

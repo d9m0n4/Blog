@@ -21,7 +21,7 @@ import { Box } from '@mui/system';
 interface ICreatePost {
   title: string;
   text: string;
-  tags: string;
+  tags: string | string[] | null;
   imageUrl: string;
   inputRef: React.RefObject<HTMLInputElement>;
   handleRemoveImage: () => void;
@@ -104,7 +104,7 @@ const CreatePost: React.FC<ICreatePost> = React.memo(
         )}
 
         {!loading && (
-          <Paper style={{ padding: 30 }}>
+          <Paper className={styles.formContainer}>
             <Box component="form" onSubmit={onSubmit}>
               <Button
                 onClick={() => inputRef.current?.click()}
