@@ -7,6 +7,7 @@ import posts from 'service/posts';
 
 const EditPost = () => {
   const [post, setPost] = React.useState<IPost | null>(null);
+  const [error, setError] = React.useState('');
 
   const [loading, setLoading] = React.useState(false);
 
@@ -54,10 +55,16 @@ const EditPost = () => {
       for (let [key, value] of Object.entries(post)) {
         formData.append(key, value);
       }
-      posts.updatePost(formData, post.id).then(({ data }) => {
-        setLoading(false);
-        navigate(`/posts/${data.id}`);
-      });
+      posts
+        .updatePost(formData, post.id)
+        .then(({ data }) => {
+          setLoading(false);
+          navigate(`/post/${data.id}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          setError('qweqwe');
+        });
     }
   };
 
@@ -89,6 +96,7 @@ const EditPost = () => {
           setTagNames={setTagNames}
           setTitle={onChangeTitle}
           loading={loading}
+          error={error}
         />
       )}
     </div>

@@ -16,13 +16,21 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const { error, loading } = useAppSelector((state) => state.auth);
 
+  const [openAlert, setOpenAlert] = React.useState(false);
+
   const submit = (data: IUserPostData) => {
     dispatch(login(data));
   };
 
+  React.useEffect(() => {
+    setOpenAlert(true);
+  }, [error]);
+
   return (
     <>
-      {error.message && <Alert message={error.message} openState={true} />}
+      {error?.message && (
+        <Alert message={error.message} open={openAlert} handleClose={() => setOpenAlert(false)} />
+      )}
       {loading ? (
         <Loader />
       ) : (

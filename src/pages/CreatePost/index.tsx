@@ -31,7 +31,7 @@ interface ICreatePost {
   setTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setTagNames: (e: React.ChangeEvent<HTMLInputElement>) => void;
   loading: boolean;
-  error?: string | null;
+  error: string | null;
 }
 
 const CreatePost: React.FC<ICreatePost> = React.memo(
@@ -88,7 +88,7 @@ const CreatePost: React.FC<ICreatePost> = React.memo(
 
     return (
       <>
-        {error && <Alert openState message={error} />}
+        {/* <Alert open={!!error} message={error} /> */}
         {loading && (
           <Backdrop
             sx={{

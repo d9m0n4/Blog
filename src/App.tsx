@@ -37,7 +37,7 @@ function App() {
 
   const dispatch = useAppDispatch();
 
-  const { error, isAuth } = useAppSelector((state) => state.auth);
+  const { isAuth } = useAppSelector((state) => state.auth);
 
   const percent = usePagePercent();
 
@@ -58,7 +58,7 @@ function App() {
   return (
     <>
       {!matches && scrollBtnVisible && <ScrollTop />}
-      {error.message && <Alert openState message={error.message} />}
+
       <HeaderContainer />
       <div className="main__content">
         <Container maxWidth="lg">

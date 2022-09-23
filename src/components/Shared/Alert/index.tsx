@@ -4,39 +4,24 @@ import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 export interface State extends SnackbarOrigin {
-  open: boolean;
+  openState: boolean;
 }
 
 interface IAlert {
-  openState: boolean;
+  open: boolean;
   message: string | null;
+  handleClose: () => void;
 }
 
-export default function Alert({ openState, message }: IAlert) {
-  const [state, setState] = React.useState<State>({
-    open: false,
-    vertical: 'top',
-    horizontal: 'right',
-  });
-
-  const { vertical, horizontal, open } = state;
-
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
-
-  React.useEffect(() => {
-    setState({ ...state, open: openState });
-  }, [openState]);
-
+export default function Alert({ open, message, handleClose }: IAlert) {
   return (
     <Snackbar
-      anchorOrigin={{ vertical, horizontal }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={open}
       onClose={handleClose}
       autoHideDuration={3000}
       message={message}
-      key={vertical + horizontal}
+      key={message}
       action={
         <IconButton aria-label="close" color="inherit" sx={{ p: 0.5 }} onClick={handleClose}>
           <CloseIcon />

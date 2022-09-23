@@ -6,14 +6,14 @@ import { createSlice } from '@reduxjs/toolkit';
 interface IAuth {
   user: IUser | null;
   isAuth: boolean;
-  error: { message: string | null };
+  error: { message: string; errors: [] } | null;
   loading: boolean;
 }
 
 const initialState: IAuth = {
   user: null,
   isAuth: false,
-  error: { message: '' },
+  error: null,
   loading: false,
 };
 
@@ -23,12 +23,12 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: {
     [login.pending.type]: (state) => {
-      state.error = { message: null };
+      state.error = null;
       state.loading = true;
       state.user = null;
     },
     [login.fulfilled.type]: (state, action) => {
-      state.error = { message: null };
+      state.error = null;
       state.loading = false;
       state.user = action.payload;
       state.isAuth = true;
@@ -40,11 +40,11 @@ const authSlice = createSlice({
     },
 
     [checkAuth.pending.type]: (state) => {
-      state.error = { message: null };
+      state.error = null;
       state.loading = true;
     },
     [checkAuth.fulfilled.type]: (state, action) => {
-      state.error = { message: null };
+      state.error = null;
       state.loading = false;
       state.user = action.payload;
       state.isAuth = true;
@@ -56,12 +56,12 @@ const authSlice = createSlice({
     },
 
     [logout.pending.type]: (state) => {
-      state.error = { message: null };
+      state.error = null;
       state.loading = true;
       state.isAuth = false;
     },
     [logout.fulfilled.type]: (state, action) => {
-      state.error = { message: null };
+      state.error = null;
       state.loading = false;
       state.user = null;
       state.isAuth = false;
@@ -73,11 +73,11 @@ const authSlice = createSlice({
     },
 
     [updateUserInfo.pending.type]: (state) => {
-      state.error = { message: null };
+      state.error = null;
       state.loading = true;
     },
     [updateUserInfo.fulfilled.type]: (state, action) => {
-      state.error = { message: null };
+      state.error = null;
       state.loading = false;
       state.user = action.payload;
       state.isAuth = true;

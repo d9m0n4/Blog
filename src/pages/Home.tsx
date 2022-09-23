@@ -27,9 +27,7 @@ const Home = () => {
 
   const dispatch = useAppDispatch();
 
-  const { items, count, currentPage, tags, isLoading, error } = useAppSelector(
-    (state) => state.posts,
-  );
+  const { items, count, currentPage, tags, isLoading } = useAppSelector((state) => state.posts);
 
   useEffect(() => {
     dispatch(fetchAllPosts({ page: DEFAULT_PAGE, limit: PAGE_LIMIT }));
@@ -57,8 +55,6 @@ const Home = () => {
 
   return (
     <>
-      {error && <Alert openState={true} message={error} />}
-
       <Grid container spacing={3}>
         <Grid xs={12} md={8} item>
           <Box sx={{ marginBottom: 3 }}>

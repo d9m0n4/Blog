@@ -76,7 +76,7 @@ const AddPost = () => {
       setTagNames={setTagNames}
       setTitle={onChangeTitle}
       loading={loading}
-      error={error}
+      error={error.message}
     />
   );
 };

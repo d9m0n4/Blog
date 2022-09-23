@@ -26,7 +26,7 @@ const PostsByTag = () => {
 
   return (
     <>
-      {error && <Alert openState={true} message="error" />}
+      {/* <Alert open={!!error} message={error} /> */}
       <Typography className={styles.title} variant="h4">{`Статьи по тегу #${tag}`}</Typography>
       {isLoading ? (
         <Loader />

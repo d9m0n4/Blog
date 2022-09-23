@@ -11,7 +11,7 @@ type SliceState = {
   count: number;
   tags: [];
   isLoading: boolean;
-  error: string | null;
+  error: { message: string | null; errors: [] };
 };
 
 const initialState: SliceState = {
@@ -21,7 +21,7 @@ const initialState: SliceState = {
   count: 0,
   tags: [],
   isLoading: false,
-  error: null,
+  error: { message: null, errors: [] },
 };
 
 const addComment: CaseReducer<SliceState, PayloadAction<IComment>> = (state, action) => {
@@ -33,7 +33,7 @@ const setCurrentPage: CaseReducer<SliceState, PayloadAction<number>> = (state, a
 };
 
 const setError: CaseReducer<SliceState, PayloadAction<string | null>> = (state, action) => {
-  state.error = action.payload;
+  state.error.message = action.payload;
 };
 
 const setLoading: CaseReducer<SliceState, PayloadAction<boolean>> = (state, action) => {
@@ -52,7 +52,7 @@ const postSlice = createSlice({
   extraReducers: {
     [fetchAllPosts.pending.type]: (state) => {
       state.isLoading = true;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.items = [];
     },
     [fetchAllPosts.rejected.type]: (state, action) => {
@@ -62,14 +62,14 @@ const postSlice = createSlice({
     },
     [fetchAllPosts.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.items = action.payload.posts;
       state.count = action.payload.count;
     },
 
     [fetchPostsByTag.pending.type]: (state) => {
       state.isLoading = true;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.items = [];
     },
     [fetchPostsByTag.rejected.type]: (state, action) => {
@@ -79,14 +79,14 @@ const postSlice = createSlice({
     },
     [fetchPostsByTag.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.items = action.payload;
       state.count = 0;
     },
 
     [getPostById.pending.type]: (state) => {
       state.isLoading = true;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.currentPost = null;
     },
     [getPostById.rejected.type]: (state, action) => {
@@ -96,13 +96,13 @@ const postSlice = createSlice({
     },
     [getPostById.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.currentPost = action.payload;
     },
 
     [getTags.pending.type]: (state) => {
       state.isLoading = true;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.tags = [];
     },
     [getTags.rejected.type]: (state, action) => {
@@ -112,13 +112,13 @@ const postSlice = createSlice({
     },
     [getTags.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.tags = action.payload;
     },
 
     [searchPosts.pending.type]: (state) => {
       state.isLoading = true;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.items = [];
     },
     [searchPosts.rejected.type]: (state, action) => {
@@ -128,7 +128,7 @@ const postSlice = createSlice({
     },
     [searchPosts.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.error = null;
+      state.error = { message: null, errors: [] };
       state.items = action.payload.posts;
     },
   },

@@ -21,7 +21,6 @@ export const AddComment = () => {
 
   const setFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
-    console.log(fileList);
 
     if (fileList) {
       if (fileList.length > 3) {
