@@ -59,7 +59,7 @@ const EditPost = () => {
         .updatePost(formData, post.id)
         .then(({ data }) => {
           setLoading(false);
-          navigate(`/post/${data.id}`);
+          navigate(`/posts/${data.id}`);
         })
         .catch((error) => {
           console.log(error);
